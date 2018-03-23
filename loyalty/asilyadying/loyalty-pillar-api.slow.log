@@ -1,0 +1,230 @@
+
+[22-Mar-2018 14:49:26.160008]  [pool loyalty-pillar-api] pid 25015
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133535038] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534ef8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007fb133534d50] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:188
+[0x00007fb133534bf8] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/models/Merchant.php:169
+[0x00007fb133534ae0] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:95
+[0x00007ffdbc53d800] getAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb133534988] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 14:49:34.829658]  [pool loyalty-pillar-api] pid 25009
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133535038] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534ef8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007fb133534d50] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:188
+[0x00007fb133534bf8] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/models/Merchant.php:169
+[0x00007fb133534ae0] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:95
+[0x00007ffdbc53d800] getAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb133534988] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 14:49:42.833274]  [pool loyalty-pillar-api] pid 24802
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133535038] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534ef8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007fb133534d50] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:188
+[0x00007fb133534bf8] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/models/Merchant.php:169
+[0x00007fb133534ae0] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:95
+[0x00007ffdbc53d800] getAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb133534988] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 14:50:07.509896]  [pool loyalty-pillar-api] pid 26222
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133535038] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534ef8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007fb133534d50] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:188
+[0x00007fb133534bf8] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/models/Merchant.php:169
+[0x00007fb133534ae0] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:95
+[0x00007ffdbc53d800] getAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb133534988] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 14:50:37.521674]  [pool loyalty-pillar-api] pid 25009
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133535038] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534ef8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007fb133534d50] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:188
+[0x00007fb133534bf8] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/models/Merchant.php:169
+[0x00007fb133534ae0] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:95
+[0x00007ffdbc53d800] getAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb133534988] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 14:50:45.525404]  [pool loyalty-pillar-api] pid 24802
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133535038] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534ef8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007fb133534d50] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:188
+[0x00007fb133534bf8] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/models/Merchant.php:169
+[0x00007fb133534ae0] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:95
+[0x00007ffdbc53d800] getAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb133534988] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 14:51:14.204083]  [pool loyalty-pillar-api] pid 25015
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133535038] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534ef8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007fb133534d50] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:188
+[0x00007fb133534bf8] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/models/Merchant.php:169
+[0x00007fb133534ae0] getMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:95
+[0x00007ffdbc53d800] getAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb133534988] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 14:51:19.539256]  [pool loyalty-pillar-api] pid 25009
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133534f60] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534e20] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007fb133534c58] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Jpos.php:113
+[0x00007fb133534b00] listTerminal() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/TerminalsController.php:69
+[0x00007ffdbc53d800] listAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb1335349b0] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 14:51:33.545330]  [pool loyalty-pillar-api] pid 26222
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133534f60] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534e20] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007fb133534c58] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Jpos.php:113
+[0x00007fb133534b00] listTerminal() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/TerminalsController.php:69
+[0x00007ffdbc53d800] listAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb1335349b0] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 14:52:59.579899]  [pool loyalty-pillar-api] pid 25015
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133534f60] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534e20] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007fb133534c58] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Jpos.php:113
+[0x00007fb133534b00] listTerminal() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/TerminalsController.php:69
+[0x00007ffdbc53d800] listAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb1335349b0] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 17:00:25.857280]  [pool loyalty-pillar-api] pid 25009
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007fb133534c28] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007fb133534ad8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:182
+[0x00007fb133534930] post() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:169
+[0x00007fb133534768] createOrUpdateMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:71
+[0x00007ffdbc53d800] createAction() unknown:0
+[0x00007ffdbc53db90] callActionMethod() unknown:0
+[0x00007ffdbc53e1f0] _dispatch() unknown:0
+[0x00007ffdbc53e5f0] dispatch() unknown:0
+[0x00007fb1335345f8] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 19:13:48.554735]  [pool loyalty-pillar-api] pid 27411
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007f88abb15c38] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007f88abb15ae8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:182
+[0x00007f88abb15910] post() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Reference.php:370
+[0x00007f88abb15788] createCard() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/CardsController.php:39
+[0x00007ffd97644150] createAction() unknown:0
+[0x00007ffd976444e0] callActionMethod() unknown:0
+[0x00007ffd97644b40] _dispatch() unknown:0
+[0x00007ffd97644f40] dispatch() unknown:0
+[0x00007f88abb155f8] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 19:37:59.735010]  [pool loyalty-pillar-api] pid 27411
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007f88abb16088] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/vendor/eben-hk/amazon-s3-php-namespace/S3.php:2244
+[0x00007f88abb15e58] getResponse() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/vendor/eben-hk/amazon-s3-php-namespace/S3.php:701
+[0x00007f88abb15c78] putObject() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/vendor/eben-hk/amazon-s3-php-namespace/S3.php:730
+[0x00007f88abb15b48] putObjectFile() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/AmazonS3.php:27
+[0x00007f88abb159d0] upload() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/models/Badge.php:258
+[0x00007f88abb158e0] _uploadImage() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/models/Badge.php:119
+[0x00007ffd97642f90] afterCreate() unknown:0
+[0x00007ffd976433a0] fireEvent() unknown:0
+[0x00007ffd97643790] _postSave() unknown:0
+[0x00007ffd97643c60] save() unknown:0
+[0x00007f88abb15768] create() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/BadgesController.php:43
+[0x00007ffd97644150] createAction() unknown:0
+[0x00007ffd976444e0] callActionMethod() unknown:0
+[0x00007ffd97644b40] _dispatch() unknown:0
+[0x00007ffd97644f40] dispatch() unknown:0
+[0x00007f88abb155f8] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 19:39:33.105600]  [pool loyalty-pillar-api] pid 27411
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007f88abb15c28] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007f88abb15ad8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:182
+[0x00007f88abb15910] post() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Reference.php:490
+[0x00007f88abb15788] createMasterCard() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/CardsController.php:129
+[0x00007ffd97644150] createMasterAction() unknown:0
+[0x00007ffd976444e0] callActionMethod() unknown:0
+[0x00007ffd97644b40] _dispatch() unknown:0
+[0x00007ffd97644f40] dispatch() unknown:0
+[0x00007f88abb155f8] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[22-Mar-2018 19:46:09.919323]  [pool loyalty-pillar-api] pid 27412
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007f88abb16070] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007f88abb15f30] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:169
+[0x00007f88abb15d88] get() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:134
+[0x00007f88abb15c10] topupHistory() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/TopupsController.php:27
+[0x00007ffd97644150] listAction() unknown:0
+[0x00007ffd976444e0] callActionMethod() unknown:0
+[0x00007ffd97644b40] _dispatch() unknown:0
+[0x00007ffd97644f40] dispatch() unknown:0
+[0x00007f88abb15a80] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[23-Mar-2018 14:23:20.542918]  [pool loyalty-pillar-api] pid 27411
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007f88abb15c28] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007f88abb15ad8] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:182
+[0x00007f88abb15930] post() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:169
+[0x00007f88abb15768] createOrUpdateMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:71
+[0x00007ffd97644150] createAction() unknown:0
+[0x00007ffd976444e0] callActionMethod() unknown:0
+[0x00007ffd97644b40] _dispatch() unknown:0
+[0x00007ffd97644f40] dispatch() unknown:0
+[0x00007f88abb155f8] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[23-Mar-2018 14:24:08.561517]  [pool loyalty-pillar-api] pid 27411
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007f88abb15c50] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007f88abb15b00] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:182
+[0x00007f88abb15958] post() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:169
+[0x00007f88abb15770] createOrUpdateMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:199
+[0x00007ffd97644150] updateAction() unknown:0
+[0x00007ffd976444e0] callActionMethod() unknown:0
+[0x00007ffd97644b40] _dispatch() unknown:0
+[0x00007ffd97644f40] dispatch() unknown:0
+[0x00007f88abb155f8] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
+
+[23-Mar-2018 14:24:45.909072]  [pool loyalty-pillar-api] pid 27411
+script_filename = /home/loyalty-pillar-api/apps/current/public/index.php
+[0x00007f88abb15c50] curl_exec() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:117
+[0x00007f88abb15b00] send() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Curl.php:182
+[0x00007f88abb15958] post() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Wallet.php:169
+[0x00007f88abb15770] createOrUpdateMerchant() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/controllers/MerchantsController.php:199
+[0x00007ffd97644150] updateAction() unknown:0
+[0x00007ffd976444e0] callActionMethod() unknown:0
+[0x00007ffd97644b40] _dispatch() unknown:0
+[0x00007ffd97644f40] dispatch() unknown:0
+[0x00007f88abb155f8] handle() /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/public/index.php:45
