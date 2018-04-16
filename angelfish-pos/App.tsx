@@ -3,6 +3,9 @@ import { AsyncStorage, ActivityIndicator, StatusBar, StyleSheet, Text, View } fr
 import { StackNavigator, SwitchNavigator } from "react-navigation";
 import SignInScreen from "./src/screens/Signin";
 import HomeScreen from "./src/screens/Home";
+import WelcomeScreen from "./src/screens/Welcome";
+import { LocaleProvider } from "antd-mobile";
+import en_US from "antd-mobile/lib/locale-provider/en_US";
 
 import { YellowBox } from "react-native";
 YellowBox.ignoreWarnings(["Warning: componentWillMount", "Warning: componentWillReceiveProps"]);
@@ -47,11 +50,6 @@ const styles = StyleSheet.create({
   }
 });
 
-// export default StackNavigator({
-//   Home: {
-//     screen: Signin
-//   }
-// });
 class AuthLoadingScreen extends React.Component<any> {
   constructor(props: any) {
     super(props);
@@ -64,7 +62,7 @@ class AuthLoadingScreen extends React.Component<any> {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? "App" : "Auth");
+    this.props.navigation.navigate(userToken ? "App" : "Welcome");
   };
 
   // Render any loading content that you like here
@@ -78,16 +76,27 @@ class AuthLoadingScreen extends React.Component<any> {
   }
 }
 
-const AppStack = StackNavigator({ Home: HomeScreen },{headerMode:'none'});
-const AuthStack = StackNavigator({ SignIn: SignInScreen },{headerMode:'none'});
+const AppStack = StackNavigator({ Home: HomeScreen }, { headerMode: "none" });
+const AuthStack = StackNavigator({ SignIn: SignInScreen }, { headerMode: "none" });
+const WelcomeStack = StackNavigator({ Welcome: WelcomeScreen }, { headerMode: "none" });
 
-export default SwitchNavigator(
+const RootNavigator = SwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     App: AppStack,
-    Auth: AuthStack
+    Auth: AuthStack,
+    Welcome: WelcomeStack
   },
   {
     initialRouteName: "AuthLoading"
   }
 );
+
+const App = () => {
+  return (
+    <LocaleProvider locale={en_US}>
+      <RootNavigator />
+    </LocaleProvider>
+  );
+};
+export default App;
