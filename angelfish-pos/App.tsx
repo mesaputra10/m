@@ -6,9 +6,11 @@ import HomeScreen from "./src/screens/Home";
 import WelcomeScreen from "./src/screens/Welcome";
 import { LocaleProvider } from "antd-mobile";
 import en_US from "antd-mobile/lib/locale-provider/en_US";
-
+import { Provider } from 'react-redux'
 import { YellowBox } from "react-native";
+import configureStore from './src/store/store.js'
 YellowBox.ignoreWarnings(["Warning: componentWillMount", "Warning: componentWillReceiveProps"]);
+const store = configureStore();
 
 class HomeScreenOld extends React.Component<any, any> {
   constructor(props: any) {
@@ -94,9 +96,11 @@ const RootNavigator = SwitchNavigator(
 
 const App = () => {
   return (
-    <LocaleProvider locale={en_US}>
-      <RootNavigator />
-    </LocaleProvider>
+    <Provider store={store}>
+      <LocaleProvider locale={en_US}>
+        <RootNavigator />
+      </LocaleProvider>
+    </Provider>
   );
 };
 export default App;

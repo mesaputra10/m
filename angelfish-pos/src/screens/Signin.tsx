@@ -12,11 +12,12 @@ import {
 } from "react-native";
 import { Button, Card, Icon, Input } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
+import { connect } from 'react-redux';
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const BG_IMAGE = require("../../assets/images/ilLoginGetAccess.png");
-export default class Signin extends React.Component<any, any> {
+export class Signin extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
@@ -108,10 +109,36 @@ export default class Signin extends React.Component<any, any> {
   }
 
   _signinAsync = async () => {
+    login('email@email.com', 'rahasia');
     await AsyncStorage.setItem("userToken", "abc");
     this.props.navigation.navigate("App");
   };
 }
+
+const login = (email: string, password: string) => {
+  // return fetch({
+  //   url: '/auth',
+  //   params: { email, password },
+  //   callback: () => {}
+  // });
+  console.log('jalanin ini');
+  console.log('email: ', email);
+  console.log('password: ', password);
+  return {
+    type: "ACTION_LOGIN",
+    loggedIn: true
+  };
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  login: (email: string, password: string) => dispatch(login(email, password))
+});
+
+const mapStateToProps = (state: any) => ({
+  isLoggedIn: state.isLoggedIn
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Signin);
 
 const styles = StyleSheet.create({
   container: {
