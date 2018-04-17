@@ -1,12 +1,14 @@
 const initialState = {
-    loggedIn: false
+    loggedIn: false,
+    status: '',
   }
   
   const SignInReducer = (state = initialState, action) => {
     switch (action.type) {
       case "ACTION_LOGIN": {
         return Object.assign({}, state, {
-          loggedIn: action.loggedIn
+          loggedIn: action.loggedIn,
+          status: action.status,
         })
       }
       default: {

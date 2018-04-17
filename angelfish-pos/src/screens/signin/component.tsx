@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Component } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,7 +8,8 @@ import {
   KeyboardAvoidingView,
   Dimensions,
   ImageBackground,
-  TouchableHighlight
+  TouchableHighlight,
+  Alert
 } from "react-native";
 import { Button, Card, Icon, Input } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,13 +18,13 @@ const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const BG_IMAGE = require("../../../assets/images/ilLoginGetAccess.png");
 
-export class SigninComponent extends React.Component<any, any> {
+export class SigninComponent extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
       text: "",
       password: "",
-      securePassword: true
+      securePassword: true,
     };
   }
   toggleShowPassword(value) {
@@ -54,7 +55,8 @@ export class SigninComponent extends React.Component<any, any> {
                   containerStyle={{ borderBottomColor: "rgba(0, 0, 0, 0.38)" }}
                   // ref={input => this.emailInput = input}
                   // onSubmitEditing={() => this.passwordInput.focus()}
-                  // onChangeText={email => this.setState({ email })}
+                  onChangeText={email => this.setState({ email })}
+                  value={this.state.email}
                   // errorMessage={isEmailValid ? null : 'Please enter a valid email address'}
                 />
                 <Input
@@ -82,7 +84,8 @@ export class SigninComponent extends React.Component<any, any> {
                   placeholder={"Password"}
                   // ref={input => this.passwordInput = input}
                   // onSubmitEditing={() => isSignUpPage ? this.confirmationInput.focus() : this.login()}
-                  // onChangeText={(password) => this.setState({password})}
+                  onChangeText={(password) => this.setState({password})}
+                  value={this.state.password}
                   // errorMessage={isPasswordValid ? null : 'Please enter at least 8 characters'}
                 />
               </View>
@@ -109,8 +112,15 @@ export class SigninComponent extends React.Component<any, any> {
   }
 
   _signinAsync = async () => {
-    await AsyncStorage.setItem("userToken", "abc");
-    this.props.navigation.navigate("App");
+    const email: string = this.state.email;
+    const password: string = this.state.password;
+    if (email === "" || password === "") {
+      Alert.alert("Can not login!");
+    } else {
+      this.props.login(email, password);
+      await AsyncStorage.setItem("userToken", "abc");
+      this.props.navigation.navigate("App");
+    }
   };
 }
 
