@@ -7,7 +7,8 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Dimensions,
-  ImageBackground
+  ImageBackground,
+  TouchableHighlight
 } from "react-native";
 import { Button, Card, Icon, Input } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,10 +21,13 @@ export default class Signin extends React.Component<any, any> {
     super(props);
     this.state = {
       text: "",
-      password: ""
+      password: "",
+      securePassword: true
     };
   }
-
+  toggleShowPassword(value) {
+    this.setState({ securePassword: !value });
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -54,18 +58,22 @@ export default class Signin extends React.Component<any, any> {
                 />
                 <Input
                   rightIcon={
-                    <Ionicons
-                      name="ios-eye-off-outline"
-                      color="rgba(0, 0, 0, 0.38)"
-                      size={25}
-                      style={{ backgroundColor: "transparent" }}
-                    />
+                    <TouchableHighlight
+                      onPress={() => this.toggleShowPassword(this.state.securePassword)}
+                    >
+                      <Ionicons
+                        name="ios-eye-off-outline"
+                        color="rgba(0, 0, 0, 0.38)"
+                        size={25}
+                        style={{ backgroundColor: "transparent" }}
+                      />
+                    </TouchableHighlight>
                   }
                   // value={password}
                   keyboardAppearance="light"
                   autoCapitalize="none"
                   autoCorrect={false}
-                  secureTextEntry={true}
+                  secureTextEntry={this.state.securePassword}
                   // returnKeyType={isSignUpPage ? 'next' : 'done'}
                   blurOnSubmit={true}
                   // containerStyle={{marginTop: 16, borderBottomColor: 'rgba(0, 0, 0, 0.38)'}}
