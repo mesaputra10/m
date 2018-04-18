@@ -3,11 +3,11 @@ import { login } from './action';
 import { SigninComponent } from './component';
 
 const mapStateToProps = (state: any) => ({
-  isLoggedIn: state.isLoggedIn
+  isLoggedIn: state.isLoggedIn,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  login: (email: string, password: string) => dispatch(login(email, password))
+const mapDispatchToProps = dispatch => ({
+  login: (email: string, password: string) => dispatch(login(email, password)),
 });
 
 export const SigninContainer = connect(

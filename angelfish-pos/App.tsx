@@ -8,40 +8,10 @@ import { LocaleProvider } from "antd-mobile";
 import en_US from "antd-mobile/lib/locale-provider/en_US";
 import { Provider } from 'react-redux'
 import { YellowBox } from "react-native";
-import configureStore from './src/store/store.js'
+import configureStore from './src/store/store';
 YellowBox.ignoreWarnings(["Warning: componentWillMount", "Warning: componentWillReceiveProps"]);
+
 const store = configureStore();
-
-class HomeScreenOld extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
-  static navigationOptions = {
-    title: "Home"
-  };
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text>Open up App.ts to start working on your app!</Text>
-        <Text>Changes you make will automatically reload.</Text>
-        <Text>Shake your phone to open the developer menu.</Text>
-        <Text onPress={this._handlePress}>HomeScreen!</Text>
-        {/*<Button onClick={this._signOutAsync}>Signout</Button>*/}
-      </View>
-    );
-  }
-
-  _handlePress = () => {
-    this.props.navigation.navigate("Home");
-  };
-
-  _signOutAsync = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate("Auth");
-  };
-}
 
 const styles = StyleSheet.create({
   container: {
@@ -61,6 +31,7 @@ class AuthLoadingScreen extends React.Component<any> {
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem("userToken");
+    console.log('userToken: ', userToken);
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
@@ -82,17 +53,14 @@ const AppStack = StackNavigator({ Home: HomeScreen }, { headerMode: "none" });
 const AuthStack = StackNavigator({ SignIn: Signin }, { headerMode: "none" });
 const WelcomeStack = StackNavigator({ Welcome: WelcomeScreen }, { headerMode: "none" });
 
-const RootNavigator = SwitchNavigator(
-  {
-    AuthLoading: AuthLoadingScreen,
-    App: AppStack,
-    Auth: AuthStack,
-    Welcome: WelcomeStack
-  },
-  {
-    initialRouteName: "AuthLoading"
-  }
-);
+const RootNavigator = SwitchNavigator({
+  AuthLoading: AuthLoadingScreen,
+  App: AppStack,
+  Auth: AuthStack,
+  Welcome: WelcomeStack,
+},{
+  initialRouteName: "AuthLoading",
+});
 
 const App = () => {
   return (

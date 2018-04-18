@@ -1,3 +1,5 @@
+import ActionTypes from '../../store/action-types';
+
 const initialState = {
     loggedIn: false,
     status: '',
@@ -5,11 +7,15 @@ const initialState = {
   
   const SignInReducer = (state = initialState, action) => {
     switch (action.type) {
-      case "ACTION_LOGIN": {
-        return Object.assign({}, state, {
-          loggedIn: action.loggedIn,
-          status: action.status,
-        })
+      case ActionTypes.ACTION_LOGIN: {
+        if (action.loggedIn) {
+          return Object.assign({}, state, {
+            loggedIn: action.loggedIn,
+            status: action.status,
+          });
+        } else {
+          return initialState;
+        }
       }
       default: {
         return initialState
