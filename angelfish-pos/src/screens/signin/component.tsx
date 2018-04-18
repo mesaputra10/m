@@ -97,8 +97,6 @@ export class SigninComponent extends Component<any, any> {
   _signinAsync = async () => {
     const email: string = this.state.email;
     const password: string = this.state.password;
-    console.log('email: ', email.length);
-    console.log('password: ', password.length);
     if (email === "" || password === "") {
       Alert.alert("Gagal", "Email atau Password yang anda masukkan salah.");
     } else {

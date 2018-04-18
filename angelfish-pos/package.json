@@ -8,6 +8,7 @@
     "@types/react-native": "^0.55.1",
     "@types/react-navigation": "^1.5.5",
     "@types/react-test-renderer": "^16.0.0",
+    "@types/redux": "^3.6.0",
     "babel-plugin-import": "^1.6.7",
     "jest-expo": "26.0.0",
     "prettier": "^1.11.1",
@@ -58,9 +59,12 @@
     "react-native-elements": "1.0.0-beta4",
     "react-native-vector-icons": "^4.2.0",
     "react-navigation": "^1.5.11",
+    "react-redux": "^5.0.7",
     "redux-thunk": "^2.2.0"
   },
   "prettier": {
-    "printWidth": 100
+    "printWidth": 100,
+    "indent_size": 2,
+    "indent_char": " "
   }
 }
