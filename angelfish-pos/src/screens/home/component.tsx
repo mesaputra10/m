@@ -1,6 +1,6 @@
 import React from "react";
 import Expo from "expo";
-import { AsyncStorage, StyleSheet, View, Text, Alert, ScrollView, Image } from "react-native";
+import { AsyncStorage, StyleSheet, View, Text, Alert, ScrollView, Image, ActivityIndicator } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { Button, Divider } from "react-native-elements";
 import { SearchBar, Grid, List } from "antd-mobile";
@@ -41,83 +41,15 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       </View>
     );
   };
-  _searchAutoComplete = () => {
-    if (this.state.searchAutoComplete) {
-      return (
-        <View style={{ paddingTop: 5 }}>
-          <List>
-            <Item
-              multipleLine
-              onClick={() => {console.log("list item click")}}
-            >
-              <View style={styles.searchResultListItemContainer}>
-                <View style={styles.searchResultListItemLeft}>
-                  <Image
-                    source={{ uri: 'https://assets.bmdstatic.com/assets/Data/image_product_500x500/5a6700f5b59fd.jpg' }}
-                    style={styles.searchResultImage}
-                  />
-                </View>
-                <View style={styles.searchResultListItemRight}>
-                  <Text style={styles.searchResultText}>SAMSUNG Galaxy J7 Pro - Black</Text>
-                  <View style={styles.searchResultPriceContainer}>
-                    <Text style={styles.searchResultPriceDiscountText}>Rp. 4.000.000</Text>
-                    <Text style={styles.searchResultDiscountText}> -5%</Text>
-                  </View>
-                  <Text style={styles.searchResultText}>Rp. 3.799.000</Text>
-                </View>
-              </View>
-            </Item>
-            <Item
-              multipleLine
-              onClick={() => {console.log("list item click")}}
-            >
-              <View style={styles.searchResultListItemContainer}>
-                <View style={styles.searchResultListItemLeft}>
-                  <Image
-                    source={{ uri: 'https://assets.bmdstatic.com/assets/Data/image_product_500x500/5a6700f5b59fd.jpg' }}
-                    style={styles.searchResultImage}
-                  />
-                </View>
-                <View style={styles.searchResultListItemRight}>
-                  <Text style={styles.searchResultText}>SAMSUNG Galaxy J2 Prime [SM-G532] - Gold/White Gold</Text>
-                  <View style={styles.searchResultPriceContainer}>
-                    <Text style={styles.searchResultPriceDiscountText}>Rp. 1.599.999</Text>
-                    <Text style={styles.searchResultDiscountText}> -5%</Text>
-                  </View>
-                  <Text style={styles.searchResultText}>Rp. 1.550.000</Text>
-                </View>
-              </View>
-            </Item>
-            <Item
-              multipleLine
-              onClick={() => {console.log("list item click")}}
-            >
-              <View style={styles.searchResultListItemContainer}>
-                <View style={styles.searchResultListItemLeft}>
-                  <Image
-                    source={{ uri: 'https://assets.bmdstatic.com/assets/Data/image_product_500x500/5a6700f5b59fd.jpg' }}
-                    style={styles.searchResultImage}
-                  />
-                </View>
-                <View style={styles.searchResultListItemRight}>
-                  <Text style={styles.searchResultText}>MERTUA Sambel Bawang Level Pedas 5 180gr [SM02]</Text>
-                  <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
-                </View>
-              </View>
-            </Item>
-          </List>
-        </View> 
-      );
-    }
-  }
   onChangeTextSearch = (text) => {
-    setTimeout(() => {
-      if (text.length >= 3) {
-        this.setState({ searchAutoComplete: true });
-      }
-    }, 500);
+    if (text.length >= 3) {
+      setTimeout(() => {
+        this.props.search(text).then(() => this.setState({ searchAutoComplete: true }))
+      }, 500);
+    }
   };
   render() {
+    const products = this.props.products;
     return (
       <View style={styles.container}>
         <View style={styles.containerColumn}>
@@ -132,7 +64,36 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
               />
             </View>
             <ScrollView>
-              {this._searchAutoComplete()}
+              {this.state.searchAutoComplete && products.map((product, index) => {
+                return (
+                  <View key={Math.random(index)}>
+                    <List>
+                      <Item
+                        multipleLine
+                        onClick={() => {console.log("list item click SKU: ", product.variantSkuNo)}}
+                      >
+                        <View style={styles.searchResultListItemContainer}>
+                          <View style={styles.searchResultListItemLeft}>
+                            <Image
+                              source={{ uri: product.variantImageThumbnail }}
+                              style={styles.searchResultImage}
+                            />
+                          </View>
+                          <View style={styles.searchResultListItemRight}>
+                            <Text style={styles.searchResultText}>{product.productName}</Text>
+                            <View style={styles.searchResultPriceContainer}>
+                              {product.variantPrice !== product.offerNormalPrice && <Text style={styles.searchResultPriceDiscountText}>{product.offerNormalPrice}</Text>}
+                              {product.offerDiscountPercentage > 0 && <Text style={styles.searchResultDiscountText}> -{product.offerDiscountPercentage}%</Text>}
+                            </View>
+                            {product.variantPrice !== product.offerNormalPrice && <Text style={styles.searchResultText}>{product.offerSpecialPrice}</Text>}
+                            {product.variantPrice === product.offerNormalPrice && <Text style={styles.searchResultText}>{product.variantPrice}</Text>}
+                          </View>
+                        </View>
+                      </Item>
+                    </List>
+                  </View>
+                );
+              })}
               {(!this.state.searchAutoComplete) &&
                 <Grid
                   data={categories}

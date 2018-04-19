@@ -8,10 +8,8 @@ import { LocaleProvider } from "antd-mobile";
 import en_US from "antd-mobile/lib/locale-provider/en_US";
 import { Provider } from 'react-redux'
 import { YellowBox } from "react-native";
-import configureStore from './src/store/store';
+import store from './src/store/store';
 YellowBox.ignoreWarnings(["Warning: componentWillMount", "Warning: componentWillReceiveProps"]);
-
-const store = configureStore();
 
 const styles = StyleSheet.create({
   container: {
