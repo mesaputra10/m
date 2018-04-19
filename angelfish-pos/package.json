@@ -51,7 +51,7 @@
     }
   },
   "dependencies": {
-    "antd-mobile": "^2.1.8",
+    "antd-mobile": "https://github.com/yudapc/ant-design-mobile.git#bhinneka",
     "axios": "^0.18.0",
     "expo": "^26.0.0",
     "react": "^16.3.1",
