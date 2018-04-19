@@ -1,18 +1,28 @@
 import * as React from "react";
-import { AsyncStorage, StyleSheet, View, Text, Alert } from "react-native";
+import Expo from "expo";
+import { AsyncStorage, StyleSheet, View, Text, Alert, ScrollView, Image } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { Button, Divider } from "react-native-elements";
 import { SearchBar, Grid, List } from "antd-mobile";
-import Expo from "expo";
 import { DataItem } from "antd-mobile/lib/grid/PropsType";
 
-const data = Array.from(new Array(3)).map((_val, i) => ({
-  icon:
-    "https://ae01.alicdn.com/kf/HTB1JG5HntnJ8KJjSszdq6yxuFXao/MIFA-Black-Graffiti-Bluetooth-Speaker-IPX5-Waterproof-Bluetooth-4-2-Wireless-Speaker-Micro-SD-Built-in.jpg",
-  text: `name${i}`
-}));
-
 const categories: Array<DataItem> = [
+  { name: "Aksesoris Komputer" },
+  { name: "Desktop & Notebooks" },
+  { name: "Alat Tulis & Peralatan Kantor" },
+  { name: "Server, Network & Power System" },
+  { name: "Tablets & Gadgets" },
+  { name: "Foto & Videografi" },
+  { name: "Alat Musik & Pro Audio" },
+  { name: "Sport & Fitness" },
+  { name: "Tablets & Gadgets" },
+  { name: "Foto & Videografi" },
+  { name: "Alat Musik & Pro Audio" },
+  { name: "Sport & Fitness" },
+  { name: "Tablets & Gadgets" },
+  { name: "Foto & Videografi" },
+  { name: "Alat Musik & Pro Audio" },
+  { name: "Sport & Fitness" },
   { name: "Aksesoris Komputer" },
   { name: "Desktop & Notebooks" },
   { name: "Alat Tulis & Peralatan Kantor" },
@@ -61,60 +71,90 @@ export default class Home extends React.Component<HomeProps, any> {
           <List>
             <Item
               multipleLine
-              thumb="https://assets.bmdstatic.com/assets/Data/image_product_500x500/5a6700f5b59fd.jpg"
               onClick={() => {console.log("list item click")}}
             >
-              <View style={{ paddingBottom: 10 }}>
-                <Text style={styles.searchResultText}>Laptop Macbook Pro X</Text>
+              <View style={styles.searchResultListItemContainer}>
+                <View style={styles.searchResultListItemLeft}>
+                  <Image
+                    source={{ uri: 'https://assets.bmdstatic.com/assets/Data/image_product_500x500/5a6700f5b59fd.jpg' }}
+                    style={styles.searchResultImage}
+                  />
+                </View>
+                <View style={styles.searchResultListItemRight}>
+                  <Text style={styles.searchResultText}>SAMSUNG Galaxy J7 Pro - Black</Text>
+                  <View style={styles.searchResultPriceContainer}>
+                    <Text style={[styles.searchResultText, {textDecorationLine: 'line-through', paddingRight: 5}]}>Rp. 4.000.000</Text>
+                    <Text style={styles.searchResultDiscountText}> -5%</Text>
+                  </View>
+                  <Text style={styles.searchResultText}>Rp 3.799.000</Text>
+                </View>
               </View>
-              <View>
-                <Text style={styles.searchResultText}>Rp. 30.000.000</Text>
-                <Text style={styles.searchResultText}>5%</Text>
-              </View>
-              <Text style={styles.searchResultText}>Rp. 30.000.000</Text>
             </Item>
-            <View style={styles.searchResultLine} />
             <Item
               multipleLine
-              thumb="https://assets.bmdstatic.com/assets/Data/image_product_500x500/5a6700f5b59fd.jpg"
               onClick={() => {console.log("list item click")}}
             >
-              <View style={{ paddingBottom: 10 }}>
-                <Text style={styles.searchResultText}>Laptop Macbook Pro X</Text>
+              <View style={styles.searchResultListItemContainer}>
+                <View style={styles.searchResultListItemLeft}>
+                  <Image
+                    source={{ uri: 'https://assets.bmdstatic.com/assets/Data/image_product_500x500/5a6700f5b59fd.jpg' }}
+                    style={styles.searchResultImage}
+                  />
+                </View>
+                <View style={styles.searchResultListItemRight}>
+                  <Text style={styles.searchResultText}>SAMSUNG Galaxy J2 Prime [SM-G532] - Gold/White Gold</Text>
+                  <View style={styles.searchResultPriceContainer}>
+                    <Text style={[styles.searchResultText, {textDecorationLine: 'line-through', paddingRight: 5}]}>Rp. 1.599.999</Text>
+                    <Text style={styles.searchResultDiscountText}> -5%</Text>
+                  </View>
+                  <Text style={styles.searchResultText}>Rp. 1.550.000</Text>
+                </View>
               </View>
-              <View>
-                <Text style={styles.searchResultText}>Rp. 30.000.000</Text>
-                <Text style={styles.searchResultText}>5%</Text>
+            </Item>
+            <Item
+              multipleLine
+              onClick={() => {console.log("list item click")}}
+            >
+              <View style={styles.searchResultListItemContainer}>
+                <View style={styles.searchResultListItemLeft}>
+                  <Image
+                    source={{ uri: 'https://assets.bmdstatic.com/assets/Data/image_product_500x500/5a6700f5b59fd.jpg' }}
+                    style={styles.searchResultImage}
+                  />
+                </View>
+                <View style={styles.searchResultListItemRight}>
+                  <Text style={styles.searchResultText}>MERTUA Sambel Bawang Level Pedas 5 180gr [SM02]</Text>
+                  <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
+                </View>
               </View>
-              <Text style={styles.searchResultText}>Rp. 30.000.000</Text>
             </Item>
           </List>
         </View> 
       );
     }
   }
+  onChangeTextSearch = (text) => {
+    setTimeout(() => {
+      if (text.length >= 3) {
+        this.setState({ searchAutoComplete: true });
+      }
+    }, 500);
+  };
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.containerColumn}>
           <View style={styles.leftPart}>
-            <View style={{padding: 10}}>
+            <View style={{ padding: 10 }}>
               <SearchBar
+                cancelText="Batal"
                 placeholder="Cari"
-                onFocus={() => {
-                  this.setState({ blur: { backgroundColor: '#000' } });
-                }}
-                onChange={(text) => {
-                  setTimeout(() => {
-                    if (text.length >= 3) {
-                      this.setState({ searchAutoComplete: true });
-                    }
-                  }, 500);
-                }}
+                maxLength={50}
+                onChange={this.onChangeTextSearch}
                 onCancel={() => this.setState({ searchAutoComplete: false })}
               />
             </View>
-            <View>
+            <ScrollView>
               {this._searchAutoComplete()}
               {(!this.state.searchAutoComplete) &&
                 <Grid
@@ -130,8 +170,7 @@ export default class Home extends React.Component<HomeProps, any> {
                   hasLine={false}
                 />
               }
-              
-            </View>
+            </ScrollView>
           </View>
           <View style={styles.rightPart}>
             <View style={styles.titleRight}>
@@ -163,10 +202,12 @@ const styles = StyleSheet.create({
   },
   rightPart: {
     flex: 2,
+    flexDirection: 'column',
+    justifyContent: "space-between",
   },
   titleRight: {
     paddingTop: 16,
-    paddingBottom: 32,
+    paddingBottom: 31,
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 0.5,
@@ -191,11 +232,36 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  searchResultListItemContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  searchResultListItemLeft: {
+    flex: 2,
+  },
+  searchResultImage: {
+    width: 85,
+    height: 100,
+  },
+  searchResultListItemRight: {
+    flex: 9,
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
   searchResultText: {
     fontSize: 16,
   },
-  searchResultLine: { 
-    borderBottomWidth: 0.5,
-    borderBottomColor: '#ddd',
+  searchResultPriceContainer: {
+    flexDirection: 'row',
+    paddingTop: 15,
+  },
+  searchResultDiscountText: {
+    fontSize: 16,
+    color: 'red',
+  },
+  searchResultEmptyStockText: {
+    fontSize: 16,
+    color: 'red',
+    paddingTop: 16,
   },
 });
