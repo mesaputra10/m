@@ -1,10 +1,11 @@
-import * as React from "react";
+import React from "react";
 import Expo from "expo";
 import { AsyncStorage, StyleSheet, View, Text, Alert, ScrollView, Image } from "react-native";
 import { NavigationScreenProps } from "react-navigation";
 import { Button, Divider } from "react-native-elements";
 import { SearchBar, Grid, List } from "antd-mobile";
 import { DataItem } from "antd-mobile/lib/grid/PropsType";
+import styles from "./styles";
 
 const categories: Array<DataItem> = [
   { name: "Aksesoris Komputer" },
@@ -15,37 +16,13 @@ const categories: Array<DataItem> = [
   { name: "Foto & Videografi" },
   { name: "Alat Musik & Pro Audio" },
   { name: "Sport & Fitness" },
-  { name: "Tablets & Gadgets" },
-  { name: "Foto & Videografi" },
-  { name: "Alat Musik & Pro Audio" },
-  { name: "Sport & Fitness" },
-  { name: "Tablets & Gadgets" },
-  { name: "Foto & Videografi" },
-  { name: "Alat Musik & Pro Audio" },
-  { name: "Sport & Fitness" },
-  { name: "Aksesoris Komputer" },
-  { name: "Desktop & Notebooks" },
-  { name: "Alat Tulis & Peralatan Kantor" },
-  { name: "Server, Network & Power System" },
-  { name: "Tablets & Gadgets" },
-  { name: "Foto & Videografi" },
-  { name: "Alat Musik & Pro Audio" },
-  { name: "Sport & Fitness" },
-  { name: "Tablets & Gadgets" },
-  { name: "Foto & Videografi" },
-  { name: "Alat Musik & Pro Audio" },
-  { name: "Sport & Fitness" },
-  { name: "Tablets & Gadgets" },
-  { name: "Foto & Videografi" },
-  { name: "Alat Musik & Pro Audio" },
-  { name: "Sport & Fitness" },
 ];
 
-interface HomeProps extends NavigationScreenProps<any, any> {}
+interface HomeComponentProps extends NavigationScreenProps<any, any> {}
 const Item = List.Item;
 
-export default class Home extends React.Component<HomeProps, any> {
-  constructor(props: HomeProps) {
+export class HomeComponent extends React.Component<HomeComponentProps, any> {
+  constructor(props: HomeComponentProps) {
     super(props);
     this.state = {
       searchAutoComplete: false,
@@ -83,10 +60,10 @@ export default class Home extends React.Component<HomeProps, any> {
                 <View style={styles.searchResultListItemRight}>
                   <Text style={styles.searchResultText}>SAMSUNG Galaxy J7 Pro - Black</Text>
                   <View style={styles.searchResultPriceContainer}>
-                    <Text style={[styles.searchResultText, {textDecorationLine: 'line-through', paddingRight: 5}]}>Rp. 4.000.000</Text>
+                    <Text style={styles.searchResultPriceDiscountText}>Rp. 4.000.000</Text>
                     <Text style={styles.searchResultDiscountText}> -5%</Text>
                   </View>
-                  <Text style={styles.searchResultText}>Rp 3.799.000</Text>
+                  <Text style={styles.searchResultText}>Rp. 3.799.000</Text>
                 </View>
               </View>
             </Item>
@@ -104,7 +81,7 @@ export default class Home extends React.Component<HomeProps, any> {
                 <View style={styles.searchResultListItemRight}>
                   <Text style={styles.searchResultText}>SAMSUNG Galaxy J2 Prime [SM-G532] - Gold/White Gold</Text>
                   <View style={styles.searchResultPriceContainer}>
-                    <Text style={[styles.searchResultText, {textDecorationLine: 'line-through', paddingRight: 5}]}>Rp. 1.599.999</Text>
+                    <Text style={styles.searchResultPriceDiscountText}>Rp. 1.599.999</Text>
                     <Text style={styles.searchResultDiscountText}> -5%</Text>
                   </View>
                   <Text style={styles.searchResultText}>Rp. 1.550.000</Text>
@@ -186,82 +163,4 @@ export default class Home extends React.Component<HomeProps, any> {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "row",
-    paddingTop: Expo.Constants.statusBarHeight,
-    backgroundColor: "#fff",
-  },
-  containerColumn: {
-    flex: 1,
-    flexDirection: "row"
-  },
-  leftPart: {
-    flex: 4,
-  },
-  rightPart: {
-    flex: 2,
-    flexDirection: 'column',
-    justifyContent: "space-between",
-  },
-  titleRight: {
-    paddingTop: 16,
-    paddingBottom: 31,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomWidth: 0.5,
-    borderColor: '#ddd',
-  },
-  titleRightText: {
-    fontSize: 17,
-    color: "rgb(0, 0, 0)",
-  },
-  contentContainer: {
-    paddingTop: 10,
-  },
-  itemContainer: {
-    backgroundColor: '#fff',
-    flex: 1,
-    padding: 10,
-  },
-  itemBox: {
-    backgroundColor: 'rgb(236, 236, 236)',
-    flex: 1,
-    padding: 12.5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  searchResultListItemContainer: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  searchResultListItemLeft: {
-    flex: 2,
-  },
-  searchResultImage: {
-    width: 85,
-    height: 100,
-  },
-  searchResultListItemRight: {
-    flex: 9,
-    paddingTop: 10,
-    paddingBottom: 10,
-  },
-  searchResultText: {
-    fontSize: 16,
-  },
-  searchResultPriceContainer: {
-    flexDirection: 'row',
-    paddingTop: 15,
-  },
-  searchResultDiscountText: {
-    fontSize: 16,
-    color: 'red',
-  },
-  searchResultEmptyStockText: {
-    fontSize: 16,
-    color: 'red',
-    paddingTop: 16,
-  },
-});
+export default { HomeComponent };

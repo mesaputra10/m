@@ -2,7 +2,7 @@ import * as React from "react";
 import { AsyncStorage, ActivityIndicator, StatusBar, StyleSheet, Text, View } from "react-native";
 import { StackNavigator, SwitchNavigator } from "react-navigation";
 import { Signin } from "./src/screens/signin";
-import HomeScreen from "./src/screens/Home";
+import { Home } from "./src/screens/home";
 import WelcomeScreen from "./src/screens/Welcome";
 import { LocaleProvider } from "antd-mobile";
 import en_US from "antd-mobile/lib/locale-provider/en_US";
@@ -49,7 +49,7 @@ class AuthLoadingScreen extends React.Component<any> {
   }
 }
 
-const AppStack = StackNavigator({ Home: HomeScreen }, { headerMode: "none" });
+const AppStack = StackNavigator({ Home: Home }, { headerMode: "none" });
 const AuthStack = StackNavigator({ SignIn: Signin }, { headerMode: "none" });
 const WelcomeStack = StackNavigator({ Welcome: WelcomeScreen }, { headerMode: "none" });
 
