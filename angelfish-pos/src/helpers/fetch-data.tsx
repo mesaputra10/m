@@ -1,12 +1,13 @@
 import axios from 'axios';
 import { AsyncStorage } from "react-native";
-
+import Expo from 'expo';
 
 const keyAccessToken = '@KeyAccessToken';
 const keyRefreshToken = '@KeyRefreshToken';
 const keyAuthorization = 'Basic NDlmZTc3NTQtZjgyZS00OTA3LTkyMjgtN2MyNmE1Y2Q2MjQ0OkRySkxGMDhDYTR3SUVwUFlHOGl0aUxha3gyU0pZTmdu';
 const headerContentType = 'application/x-www-form-urlencoded';
 const baseURL: string = 'https://b2c-api-staging.bhinneka.com';
+const deviceId = Expo.Constants.deviceId;
 
 export const fetchDataLogin = async (inputParams: object={}) => {
   try {
@@ -18,7 +19,7 @@ export const fetchDataLogin = async (inputParams: object={}) => {
         'grantType': 'password',
         'username': 'naufal.prasetyo@bhinneka.com',
         'password': 'wannabenakeD1',
-        'deviceId': 'bhinneka-babb5b61-775a-4f1e-9b75-11b1a528d2f9',
+        'deviceId': deviceId,
       },
       headers: {
         'Authorization': keyAuthorization,
@@ -27,6 +28,7 @@ export const fetchDataLogin = async (inputParams: object={}) => {
     });
     await setUserToken(requestApi.data);
     console.log('Response: ', requestApi);
+    console.log('Device ID: ', deviceId);
     if (requestApi.status === 200) return requestApi.data;
   } catch(e) {
     console.log('there was an error');
