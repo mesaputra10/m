@@ -5,10 +5,9 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ImageBackground,
-  TouchableHighlight,
+  TouchableWithoutFeedback,
   Alert
 } from "react-native";
-import { Button, Card, Icon, Input } from "react-native-elements";
 import { Ionicons } from "@expo/vector-icons";
 import styles from "./styles";
 
@@ -27,67 +26,69 @@ export class SigninComponent extends Component<any, any> {
     this.setState({ securePassword: !value });
   }
   render() {
+    const iconSecretClassName: string = this.state.securePassword ? 'ios-eye-off-outline' : 'ios-eye-outline';
     return (
       <View style={styles.container}>
         <ImageBackground source={BG_IMAGE} style={styles.bgImage}>
           <KeyboardAvoidingView style={styles.loginContainer} behavior="position">
-            <Card
-              title="Login"
-              wrapperStyle={{ width: 400 }}
-              containerStyle={styles.formContainer}
-              dividerStyle={{ display: "none" }}
+            <View
+              style={styles.formContainer}
             >
+              <View style={styles.loginHeaderContainer}>
+                <Text style={styles.loginHeaderText}>Login</Text>
+              </View>
               <View style={styles.fieldContainer}>
-                <Input
-                  keyboardAppearance="light"
-                  autoFocus={false}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  keyboardType="email-address"
-                  returnKeyType="next"
-                  inputStyle={{ marginLeft: 10 }}
-                  placeholder={"Email Bhinneka"}
-                  containerStyle={{ borderBottomColor: "rgba(0, 0, 0, 0.38)" }}
-                  onChangeText={email => this.setState({ email })}
-                  value={this.state.email}
-                />
-                <Input
-                  rightIcon={
-                    <TouchableHighlight
-                      onPress={() => this.toggleShowPassword(this.state.securePassword)}
-                    >
+                <View style={styles.inputEmailContainer}>
+                  <TextInput
+                    keyboardAppearance="light"
+                    autoFocus={false}
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    keyboardType="email-address"
+                    returnKeyType="next"
+                    style={styles.inputTextStyle}
+                    placeholder="Email Bhinneka"
+                    onChangeText={email => this.setState({ email })}
+                    value={this.state.email}
+                  />
+                </View>
+                <View style={styles.inputPasswordContainer}>
+                  <TextInput
+                    keyboardAppearance="light"
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    secureTextEntry={this.state.securePassword}
+                    blurOnSubmit={true}
+                    style={styles.inputTextStyle}
+                    placeholder="Password"
+                    onChangeText={(password) => this.setState({password})}
+                    value={this.state.password}
+                  />
+                  <TouchableWithoutFeedback
+                    onPress={() => this.toggleShowPassword(this.state.securePassword)}
+                  >
+                    <View style={styles.buttonSecret}>
                       <Ionicons
-                        name="ios-eye-off-outline"
+                        name={iconSecretClassName}
                         color="rgba(0, 0, 0, 0.38)"
                         size={25}
-                        style={{ backgroundColor: "transparent" }}
+                        style={styles.iconSecretStyle}
                       />
-                    </TouchableHighlight>
-                  }
-                  keyboardAppearance="light"
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  secureTextEntry={this.state.securePassword}
-                  blurOnSubmit={true}
-                  inputStyle={{ marginLeft: 10 }}
-                  placeholder={"Password"}
-                  onChangeText={(password) => this.setState({password})}
-                  value={this.state.password}
-                />
+                    </View>
+                  </TouchableWithoutFeedback>
+                </View>
               </View>
-              <Button
-                buttonStyle={{
-                  borderRadius: 5,
-                  marginLeft: 0,
-                  marginRight: 0,
-                  marginBottom: 0,
-                  marginTop: 20,
-                  flexDirection: "row"
+              <TouchableWithoutFeedback
+                style={{
+                  
                 }}
-                title="Login"
                 onPress={this._signinAsync}
-              />
-            </Card>
+              >
+                <View style={styles.buttonLoginContainer}>
+                  <Text style={styles.buttonLoginText}>LOGIN</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
           </KeyboardAvoidingView>
         </ImageBackground>
       </View>
