@@ -6,6 +6,7 @@ import { Button, Divider } from "react-native-elements";
 import { SearchBar, Grid, List } from "antd-mobile";
 import { DataItem } from "antd-mobile/lib/grid/PropsType";
 import styles from "./styles";
+import numberFormat from "../../helpers/number-format";
 
 const categories: Array<DataItem> = [
   { name: "Aksesoris Komputer" },
@@ -65,6 +66,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             </View>
             <ScrollView>
               {this.state.searchAutoComplete && products.map((product, index) => {
+                const productImage = (product.variantImageThumbnail !== "") ? { uri: product.variantImageThumbnail } : require('./assets/icGreyNoImage.png');
                 return (
                   <View key={Math.random(index)}>
                     <List>
@@ -75,18 +77,18 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                         <View style={styles.searchResultListItemContainer}>
                           <View style={styles.searchResultListItemLeft}>
                             <Image
-                              source={{ uri: product.variantImageThumbnail }}
+                              source={productImage }
                               style={styles.searchResultImage}
                             />
                           </View>
                           <View style={styles.searchResultListItemRight}>
                             <Text style={styles.searchResultText}>{product.productName}</Text>
                             <View style={styles.searchResultPriceContainer}>
-                              {product.variantPrice !== product.offerNormalPrice && <Text style={styles.searchResultPriceDiscountText}>{product.offerNormalPrice}</Text>}
+                              {product.variantPrice !== product.offerNormalPrice && <Text style={styles.searchResultPriceDiscountText}>Rp. {numberFormat(product.offerNormalPrice)}</Text>}
                               {product.offerDiscountPercentage > 0 && <Text style={styles.searchResultDiscountText}> -{product.offerDiscountPercentage}%</Text>}
                             </View>
-                            {product.variantPrice !== product.offerNormalPrice && <Text style={styles.searchResultText}>{product.offerSpecialPrice}</Text>}
-                            {product.variantPrice === product.offerNormalPrice && <Text style={styles.searchResultText}>{product.variantPrice}</Text>}
+                            {product.variantPrice !== product.offerNormalPrice && <Text style={styles.searchResultText}>Rp. {numberFormat(product.offerSpecialPrice)}</Text>}
+                            {product.variantPrice === product.offerNormalPrice && <Text style={styles.searchResultText}>Rp. {numberFormat(product.variantPrice)}</Text>}
                           </View>
                         </View>
                       </Item>

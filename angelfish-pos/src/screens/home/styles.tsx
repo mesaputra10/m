@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textDecorationLine: 'line-through',
     paddingRight: 5,
+    color: 'rgba(0, 0, 0, 0.38)',
   },
   searchResultPriceContainer: {
     flexDirection: 'row',
