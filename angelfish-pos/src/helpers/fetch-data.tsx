@@ -1,27 +1,113 @@
 import axios from 'axios';
+import { AsyncStorage } from "react-native";
 
-export const fetchData = (url: string, method: string, params: object, callback: any) => {
-  const accessToken = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI0OWZlNzc1NC1mODJlLTQ5MDctOTIyOC03YzI2YTVjZDYyNDQiLCJhdXRob3Jpc2VkIjp0cnVlLCJkZXZpY2VJZCI6ImJoaW5uZWthLWJhYmI1YjYxLTc3NWEtNGYxZS05Yjc1LTExYjFhNTI4ZDJmOSIsImV4cCI6MTUyNDE5ODgyMCwiaWF0IjoxNTI0MTk3NjIwLCJpc3MiOiJiaGlubmVrYS5jb20iLCJzdWIiOiJVU1IxNjEwMDAwMDMifQ.SMNBDryfr7wyZrtC_ByxzdrcF6gwEZjtqMgMZw9Z6x5pt388d0iecGStxodbKTcJ9lSp8eqdUJlKy54aCDbVcLCBQT-704W3AVZqrXbN3PgejEFjCnBXZw8Y5uGR2nBFhYZTksqiLUP4K5GIlj0qEfQp_V7RtoQ9HYM_Oqw_ngq36fKuqs2L3uVhOtkLCSOMoWcIvpU-UXM0JACWKmgZb6rHp3w0McYWbNGNKXrXQA-bwTXHdb8RSmWojkIQVnj0K2_4nuRQJYxQZ8D5up44IbhNG3ZVzExgH7twjJ71kUZcfQ_VxKZ80YNBDtzlKwYMd69sm40Az0U5gPftgsgCHg';
-  return axios({
-    baseURL: 'https://b2c-api-staging.bhinneka.com',
-    method,
-    url,
-    params,
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  })
-  .then((response) => {
-    console.log('Response: ', response);
-    callback(response.data);
-  })
-  .catch((thrown) => {
-    if (axios.isCancel(thrown)) {
-      console.log('Request canceled: ', thrown.message);
-    } else {
-      console.log('Request error: ', thrown.message);
-    }
-  });
+
+const keyAccessToken = '@KeyAccessToken';
+const keyRefreshToken = '@KeyRefreshToken';
+const keyAuthorization = 'Basic NDlmZTc3NTQtZjgyZS00OTA3LTkyMjgtN2MyNmE1Y2Q2MjQ0OkRySkxGMDhDYTR3SUVwUFlHOGl0aUxha3gyU0pZTmdu';
+const headerContentType = 'application/x-www-form-urlencoded';
+const baseURL: string = 'https://b2c-api-staging.bhinneka.com';
+
+export const fetchDataLogin = async (inputParams: object={}) => {
+  try {
+    const requestApi = await axios({
+      baseURL,
+      method: 'POST',
+      url: '/api/auth',
+      params: {
+        'grantType': 'password',
+        'username': 'naufal.prasetyo@bhinneka.com',
+        'password': 'wannabenakeD1',
+        'deviceId': 'bhinneka-babb5b61-775a-4f1e-9b75-11b1a528d2f9',
+      },
+      headers: {
+        'Authorization': keyAuthorization,
+        'Content-Type': headerContentType,
+      },
+    });
+    await setUserToken(requestApi.data);
+    console.log('Response: ', requestApi);
+    if (requestApi.status === 200) return requestApi.data;
+  } catch(e) {
+    console.log('there was an error');
+    console.log(e);
+  }
 };
 
-export default fetchData;
+export const fetchData = async (url: string, method: string, inputParams: object={}) => {
+  const accessToken = await AsyncStorage.getItem(keyAccessToken);
+  try {
+    const requestApi = await axios({
+      baseURL,
+      method,
+      url,
+      headers: {
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${accessToken}`,
+      },
+      params: inputParams,
+    });
+    console.log('Response data: ', requestApi.data);
+    console.log('Response status: ', requestApi.status);
+    if (requestApi.status === 200) return requestApi.data;
+  } catch(e) {
+    console.log('there was an error fetchData()');
+    console.log('Error: ', e);
+    refreshToken(fetchData(url, method, inputParams));
+  }
+};
+
+const setUserToken = async (data) => {
+  await AsyncStorage.multiSet([
+    [keyAccessToken, data.accessToken],
+    [keyRefreshToken, data.refreshToken],
+  ]);
+};
+
+const refreshToken = async (cb) => {
+  const oldAccessToken = await AsyncStorage.getItem(keyAccessToken);
+  const refreshToken = await AsyncStorage.getItem(keyRefreshToken);
+  try {
+    const requestRefreshToken = await axios({
+      baseURL,
+      method: 'POST',
+      url: '/api/auth',
+      headers: {
+        'Authorization': keyAuthorization,
+        'Content-Type': headerContentType,
+      },
+      params: {
+        grantType: 'refresh_token',
+        refreshToken,
+        oldAccessToken,
+      },
+    });
+    if (requestRefreshToken.status === 200) {
+      await removeUserToken();
+      await setUserToken(requestRefreshToken.data);
+      cb();
+      console.log('Response: ', requestRefreshToken);
+      return requestRefreshToken.data;
+    } else {
+      //force logout
+      console.log('force logout');
+      await removeUserToken();
+    }
+  } catch (e) {
+    console.log('Error refresh token');
+    console.log(e);
+    await removeUserToken();
+  } 
+};
+
+const removeUserToken = async () => {
+  await AsyncStorage.multiRemove([
+    keyAccessToken,
+    keyRefreshToken,
+  ]);
+};
+
+export default {
+  fetchDataLogin,
+  fetchData,
+};
