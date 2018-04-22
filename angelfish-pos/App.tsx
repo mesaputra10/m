@@ -2,16 +2,14 @@ import * as React from "react";
 import { AsyncStorage, ActivityIndicator, StatusBar, StyleSheet, Text, View } from "react-native";
 import { StackNavigator, SwitchNavigator } from "react-navigation";
 import { Signin } from "./src/screens/signin";
-import HomeScreen from "./src/screens/Home";
+import { Home } from "./src/screens/home";
 import WelcomeScreen from "./src/screens/Welcome";
 import { LocaleProvider } from "antd-mobile";
 import en_US from "antd-mobile/lib/locale-provider/en_US";
 import { Provider } from 'react-redux'
 import { YellowBox } from "react-native";
-import configureStore from './src/store/store';
+import store from './src/store/store';
 YellowBox.ignoreWarnings(["Warning: componentWillMount", "Warning: componentWillReceiveProps"]);
-
-const store = configureStore();
 
 const styles = StyleSheet.create({
   container: {
@@ -30,8 +28,13 @@ class AuthLoadingScreen extends React.Component<any> {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    const userToken = await AsyncStorage.getItem("userToken");
+    const keyAccessToken = '@KeyAccessToken';
+    const keyRefreshToken = '@KeyRefreshToken';
+
+    const userToken = await AsyncStorage.getItem(keyAccessToken);
+    const refreshToken = await AsyncStorage.getItem(keyRefreshToken);
     console.log('userToken: ', userToken);
+    console.log('refreshToken: ', refreshToken);
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
@@ -49,7 +52,7 @@ class AuthLoadingScreen extends React.Component<any> {
   }
 }
 
-const AppStack = StackNavigator({ Home: HomeScreen }, { headerMode: "none" });
+const AppStack = StackNavigator({ Home: Home }, { headerMode: "none" });
 const AuthStack = StackNavigator({ SignIn: Signin }, { headerMode: "none" });
 const WelcomeStack = StackNavigator({ Welcome: WelcomeScreen }, { headerMode: "none" });
 

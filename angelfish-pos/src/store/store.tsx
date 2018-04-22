@@ -1,12 +1,19 @@
-import { createStore, applyMiddleware } from 'redux'
+import {
+  createStore,
+  combineReducers,
+  applyMiddleware,
+} from 'redux';
 import thunk from 'redux-thunk';
-import SignInReducer from '../screens/signin/reducer'
+import signInReducer from '../screens/signin/reducer';
+import searchReducer from '../screens/home/reducer';
 
-export default function configureStore() {
-  let store = createStore(
-    SignInReducer,
-    applyMiddleware(thunk),
-  )
+const reducers = combineReducers({
+  signInReducer,
+  searchReducer,
+});
+export const store = createStore(
+  reducers,
+  applyMiddleware(thunk),
+);
 
-  return store;
-}
+export default store;
