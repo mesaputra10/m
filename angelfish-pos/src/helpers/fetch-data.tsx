@@ -9,17 +9,17 @@ const headerContentType = 'application/x-www-form-urlencoded';
 const baseURL: string = 'https://b2c-api-staging.bhinneka.com';
 const deviceId = Expo.Constants.deviceId;
 
-export const fetchDataLogin = async (inputParams: object={}) => {
+export const fetchDataLogin = async (username: string, password: string) => {
   try {
     const requestApi = await axios({
       baseURL,
       method: 'POST',
       url: '/api/auth',
       params: {
-        'grantType': 'password',
-        'username': 'naufal.prasetyo@bhinneka.com',
-        'password': 'wannabenakeD1',
-        'deviceId': deviceId,
+        grantType: 'password',
+        username,
+        password,
+        deviceId,
       },
       headers: {
         'Authorization': keyAuthorization,
