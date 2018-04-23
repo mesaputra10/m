@@ -1,14 +1,18 @@
 import * as React from "react";
+import store from './src/store/store';
 import { AsyncStorage, ActivityIndicator, StatusBar, StyleSheet, Text, View } from "react-native";
-import { StackNavigator, SwitchNavigator } from "react-navigation";
+import { StackNavigator } from "react-navigation";
 import { Signin } from "./src/screens/signin";
 import { Home } from "./src/screens/home";
-import WelcomeScreen from "./src/screens/Welcome";
+import Welcome from "./src/screens/Welcome";
 import { LocaleProvider } from "antd-mobile";
 import en_US from "antd-mobile/lib/locale-provider/en_US";
 import { Provider } from 'react-redux'
 import { YellowBox } from "react-native";
-import store from './src/store/store';
+import { PageCategory } from "./src/screens/page-category";
+import { PageProductDetail } from "./src/screens/page-product-detail";
+
+
 YellowBox.ignoreWarnings(["Warning: componentWillMount", "Warning: componentWillReceiveProps"]);
 
 const styles = StyleSheet.create({
@@ -21,6 +25,10 @@ const styles = StyleSheet.create({
 });
 
 class AuthLoadingScreen extends React.Component<any> {
+  static navigationOptions = {
+    header: null,
+  }
+
   constructor(props: any) {
     super(props);
     this._bootstrapAsync();
@@ -38,7 +46,7 @@ class AuthLoadingScreen extends React.Component<any> {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? "App" : "Welcome");
+    this.props.navigation.navigate(userToken ? "Home" : "Welcome");
   };
 
   // Render any loading content that you like here
@@ -52,17 +60,15 @@ class AuthLoadingScreen extends React.Component<any> {
   }
 }
 
-const AppStack = StackNavigator({ Home: Home }, { headerMode: "none" });
-const AuthStack = StackNavigator({ SignIn: Signin }, { headerMode: "none" });
-const WelcomeStack = StackNavigator({ Welcome: WelcomeScreen }, { headerMode: "none" });
-
-const RootNavigator = SwitchNavigator({
-  AuthLoading: AuthLoadingScreen,
-  App: AppStack,
-  Auth: AuthStack,
-  Welcome: WelcomeStack,
-},{
-  initialRouteName: "AuthLoading",
+const RootNavigator = StackNavigator({
+  AuthLoading: { screen: AuthLoadingScreen },
+  Auth: { screen: Signin },
+  Welcome: { screen: Welcome },
+  Home: { screen: Home },
+  PageCategory: { screen: PageCategory },
+  PageProductDetail: { screen: PageProductDetail },
+}, {
+  initialRouteName: 'AuthLoading',
 });
 
 const App = () => {

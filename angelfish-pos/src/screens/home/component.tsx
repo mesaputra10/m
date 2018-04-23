@@ -7,6 +7,7 @@ import { SearchBar, Grid, List } from "antd-mobile";
 import { DataItem } from "antd-mobile/lib/grid/PropsType";
 import styles from "./styles";
 import numberFormat from "../../helpers/number-format";
+import generateUniqKey from '../../helpers/generate-uniq-key';
 
 const categories: Array<DataItem> = [
   { name: "Aksesoris Komputer" },
@@ -19,10 +20,16 @@ const categories: Array<DataItem> = [
   { name: "Sport & Fitness" },
 ];
 
-interface HomeComponentProps extends NavigationScreenProps<any, any> {}
+interface HomeComponentProps extends NavigationScreenProps<any, any> {
+  search: any,
+  products: any,
+}
 const Item = List.Item;
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
+  static navigationOptions = {
+    header: null,
+  }
   constructor(props: HomeComponentProps) {
     super(props);
     this.state = {
@@ -68,11 +75,14 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
               {this.state.searchAutoComplete && products.map((product, index) => {
                 const productImage = (product.variantImageThumbnail !== "") ? { uri: product.variantImageThumbnail } : require('./assets/icGreyNoImage.png');
                 return (
-                  <View key={Math.random(index)}>
+                  <View key={generateUniqKey(index)}>
                     <List>
                       <Item
                         multipleLine
-                        onClick={() => {console.log("list item click SKU: ", product.variantSkuNo)}}
+                        onClick={() => {
+                          const passProps = { title: product.productName, sku: product.variantSkuNo };
+                          this.props.navigation.navigate('PageProductDetail', passProps);
+                        }}
                       >
                         <View style={styles.searchResultListItemContainer}>
                           <View style={styles.searchResultListItemLeft}>
@@ -105,6 +115,8 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                   }}
                   onClick={(el, i) => {
                     console.log(`el: ${JSON.stringify(el)} | i: ${i}`);
+                    const passProps = { title: el.name };
+                    this.props.navigation.navigate('PageCategory', passProps);
                   }}
                   renderItem={(el, i) => this._renderItem(el, i)}
                   hasLine={false}

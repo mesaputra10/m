@@ -14,6 +14,9 @@ import styles from "./styles";
 const BG_IMAGE = require("../../../assets/images/ilLoginGetAccess.png");
 
 export class SigninComponent extends Component<any, any> {
+  static navigationOptions = {
+    header: null,
+  }
   constructor(props: any) {
     super(props);
     this.state = {
@@ -102,7 +105,7 @@ export class SigninComponent extends Component<any, any> {
       Alert.alert("Gagal", "Email atau Password yang anda masukkan salah.");
     } else {
       this.props.login(email, password);
-      this.props.navigation.navigate("App");
+      this.props.navigation.navigate("Home");
     }
   };
 }

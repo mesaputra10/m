@@ -15,7 +15,10 @@ import { Ionicons } from "@expo/vector-icons";
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const BG_IMAGE = require("../../assets/images/ilLoginGetAccess.png");
-export default class WelcomeScreen extends React.Component<any, any> {
+export default class Welcome extends React.Component<any, any> {
+  static navigationOptions = {
+    header: null,
+  }
   constructor(props: any) {
     super(props);
     this.state = {
