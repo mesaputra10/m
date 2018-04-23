@@ -1,1 +1,1 @@
-export { PageProductDetailComponent as PageProductDetail } from "./component";
+export { PageProductDetailComponent as PageProductDetail } from './component';

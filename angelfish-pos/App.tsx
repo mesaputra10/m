@@ -1,26 +1,26 @@
-import * as React from "react";
+import * as React from 'react';
 import store from './src/store/store';
-import { AsyncStorage, ActivityIndicator, StatusBar, StyleSheet, Text, View } from "react-native";
-import { StackNavigator } from "react-navigation";
-import { Signin } from "./src/screens/signin";
-import { Home } from "./src/screens/home";
-import Welcome from "./src/screens/Welcome";
-import { LocaleProvider } from "antd-mobile";
-import en_US from "antd-mobile/lib/locale-provider/en_US";
+import { AsyncStorage, ActivityIndicator, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { StackNavigator } from 'react-navigation';
+import { Signin } from './src/screens/signin';
+import { Home } from './src/screens/home';
+import Welcome from './src/screens/Welcome';
+import { LocaleProvider } from 'antd-mobile';
+import en_US from 'antd-mobile/lib/locale-provider/en_US';
 import { Provider } from 'react-redux'
-import { YellowBox } from "react-native";
-import { PageCategory } from "./src/screens/page-category";
-import { PageProductDetail } from "./src/screens/page-product-detail";
+import { YellowBox } from 'react-native';
+import { PageCategory } from './src/screens/page-category';
+import { PageProductDetail } from './src/screens/page-product-detail';
 
 
-YellowBox.ignoreWarnings(["Warning: componentWillMount", "Warning: componentWillReceiveProps"]);
+YellowBox.ignoreWarnings(['Warning: componentWillMount', 'Warning: componentWillReceiveProps']);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 
@@ -46,7 +46,7 @@ class AuthLoadingScreen extends React.Component<any> {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? "Home" : "Welcome");
+    this.props.navigation.navigate(userToken ? 'Home' : 'Welcome');
   };
 
   // Render any loading content that you like here

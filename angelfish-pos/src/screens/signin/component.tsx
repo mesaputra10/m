@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -7,11 +7,11 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Alert
-} from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import styles from "./styles";
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import styles from './styles';
 
-const BG_IMAGE = require("../../../assets/images/ilLoginGetAccess.png");
+const BG_IMAGE = require('../../../assets/images/ilLoginGetAccess.png');
 
 export class SigninComponent extends Component<any, any> {
   static navigationOptions = {
@@ -20,8 +20,8 @@ export class SigninComponent extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      text: "",
-      password: "",
+      text: '',
+      password: '',
       securePassword: true,
     };
   }
@@ -82,9 +82,6 @@ export class SigninComponent extends Component<any, any> {
                 </View>
               </View>
               <TouchableWithoutFeedback
-                style={{
-                  
-                }}
                 onPress={this._signinAsync}
               >
                 <View style={styles.buttonLoginContainer}>
@@ -101,11 +98,11 @@ export class SigninComponent extends Component<any, any> {
   _signinAsync = async () => {
     const email: string = this.state.email;
     const password: string = this.state.password;
-    if (email === "" || password === "") {
-      Alert.alert("Gagal", "Email atau Password yang anda masukkan salah.");
+    if (email === '' || password === '') {
+      Alert.alert('Gagal', 'Email atau Password yang anda masukkan salah.');
     } else {
       this.props.login(email, password);
-      this.props.navigation.navigate("Home");
+      this.props.navigation.navigate('Home');
     }
   };
 }

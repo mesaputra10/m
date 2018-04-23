@@ -1,1 +1,1 @@
-export { PageCategoryComponent as PageCategory } from "./component";
+export { PageCategoryComponent as PageCategory } from './component';

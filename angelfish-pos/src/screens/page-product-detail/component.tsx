@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   View,
   Text,
   TouchableWithoutFeedback,
 } from 'react-native';
-import { NavigationScreenProps } from "react-navigation";
+import { NavigationScreenProps } from 'react-navigation';
 
 interface PageProductDetailComponentProps extends NavigationScreenProps<any, any> {
   navigation: any,
