@@ -6,7 +6,8 @@ import {
   KeyboardAvoidingView,
   ImageBackground,
   TouchableWithoutFeedback,
-  Alert
+  Alert,
+  AsyncStorage,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
@@ -101,8 +102,11 @@ export class SigninComponent extends Component<any, any> {
     if (email === '' || password === '') {
       Alert.alert('Gagal', 'Email atau Password yang anda masukkan salah.');
     } else {
-      this.props.login(email, password);
-      this.props.navigation.navigate('Home');
+      await this.props.login(email, password);
+      const accessToken = AsyncStorage.getItem('@KeyAccessToken');
+      if (accessToken !== null) {
+        this.props.navigation.navigate('Home');
+      }
     }
   };
 }

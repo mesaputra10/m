@@ -4,10 +4,7 @@ import ActionTypes from '../../store/action-types';
 
 export const login = (email: string, password: string) => (dispatch) => {
   console.log('login processing...');
-  return fetchDataLogin({
-    email,
-    password,
-  });
+  return fetchDataLogin(email, password);
 };
 
 export const loginData = data => ({
