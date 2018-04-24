@@ -10,7 +10,8 @@ import {
   Image,
   ActivityIndicator,
   ImageBackground,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Button, Divider } from 'react-native-elements';
@@ -114,9 +115,11 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   onChangeTextSearch = text => {
     if (text.length >= 3) {
-      setTimeout(() => {
-        this.props.search(text).then(() => this.setState({ searchAutoComplete: true }));
-      }, 500);
+      this.props.search(text).then(() => {
+        this.setState({ searchAutoComplete: true });
+      });
+    } else {
+      this.setState({ searchAutoComplete: false });
     }
   };
   onSubmitSearch = (keyword: string) => {
@@ -136,8 +139,14 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                 placeholder="Cari"
                 maxLength={50}
                 onChange={this.onChangeTextSearch}
-                onCancel={() => this.setState({ searchAutoComplete: false, searchResults: false })}
-                onSubmit={keyword => this.onSubmitSearch(keyword)}
+                onSubmit={keyword => {
+                  Keyboard.dismiss();
+                  this.onSubmitSearch(keyword);
+                }}
+                onCancel={() => {
+                  Keyboard.dismiss();
+                  this.setState({ searchAutoComplete: false, searchResults: false });
+                }}
               />
             </View>
             <ScrollView>
