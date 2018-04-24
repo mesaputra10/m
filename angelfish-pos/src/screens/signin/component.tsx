@@ -7,7 +7,7 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Alert,
-  AsyncStorage,
+  AsyncStorage
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
@@ -16,28 +16,35 @@ const BG_IMAGE = require('../../../assets/images/ilLoginGetAccess.png');
 
 export class SigninComponent extends Component<any, any> {
   static navigationOptions = {
-    header: null,
-  }
+    header: null
+  };
   constructor(props: any) {
     super(props);
     this.state = {
-      text: '',
+      email: '',
       password: '',
       securePassword: true,
+      buttonLoginDisabled: true
     };
   }
   toggleShowPassword(value) {
     this.setState({ securePassword: !value });
   }
   render() {
-    const iconSecretClassName: string = this.state.securePassword ? 'ios-eye-off-outline' : 'ios-eye-outline';
+    const iconSecretClassName: string = this.state.securePassword
+      ? 'ios-eye-off-outline'
+      : 'ios-eye-outline';
+    const buttonLoginContainer = this.state.buttonLoginDisabled
+      ? styles.buttonLoginContainerDisabled
+      : styles.buttonLoginContainer;
+    const buttonLoginText = this.state.buttonLoginDisabled
+      ? styles.buttonLoginTextDisabled
+      : styles.buttonLoginText;
     return (
       <View style={styles.container}>
         <ImageBackground source={BG_IMAGE} style={styles.bgImage}>
           <KeyboardAvoidingView style={styles.loginContainer} behavior="position">
-            <View
-              style={styles.formContainer}
-            >
+            <View style={styles.formContainer}>
               <View style={styles.loginHeaderContainer}>
                 <Text style={styles.loginHeaderText}>Login</Text>
               </View>
@@ -45,14 +52,18 @@ export class SigninComponent extends Component<any, any> {
                 <View style={styles.inputEmailContainer}>
                   <TextInput
                     keyboardAppearance="light"
-                    autoFocus={false}
+                    autoFocus={true}
                     autoCapitalize="none"
                     autoCorrect={false}
                     keyboardType="email-address"
                     returnKeyType="next"
                     style={styles.inputTextStyle}
                     placeholder="Email Bhinneka"
-                    onChangeText={email => this.setState({ email })}
+                    onChangeText={email => {
+                      const { password } = this.state;
+                      const buttonLoginDisabled = email !== '' && password !== '' ? false : true;
+                      this.setState({ email, buttonLoginDisabled });
+                    }}
                     value={this.state.email}
                   />
                 </View>
@@ -65,7 +76,11 @@ export class SigninComponent extends Component<any, any> {
                     blurOnSubmit={true}
                     style={styles.inputTextStyle}
                     placeholder="Password"
-                    onChangeText={(password) => this.setState({password})}
+                    onChangeText={password => {
+                      const { email } = this.state;
+                      const buttonLoginDisabled = email !== '' && password !== '' ? false : true;
+                      this.setState({ password, buttonLoginDisabled });
+                    }}
                     value={this.state.password}
                   />
                   <TouchableWithoutFeedback
@@ -83,10 +98,11 @@ export class SigninComponent extends Component<any, any> {
                 </View>
               </View>
               <TouchableWithoutFeedback
+                disabled={this.state.buttonLoginDisabled}
                 onPress={this._signinAsync}
               >
-                <View style={styles.buttonLoginContainer}>
-                  <Text style={styles.buttonLoginText}>LOGIN</Text>
+                <View style={buttonLoginContainer}>
+                  <Text style={buttonLoginText}>LOGIN</Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -97,15 +113,20 @@ export class SigninComponent extends Component<any, any> {
   }
 
   _signinAsync = async () => {
-    const email: string = this.state.email;
-    const password: string = this.state.password;
-    if (email === '' || password === '') {
-      Alert.alert('Gagal', 'Email atau Password yang anda masukkan salah.');
-    } else {
-      await this.props.login(email, password);
-      const accessToken = AsyncStorage.getItem('@KeyAccessToken');
-      if (accessToken !== null) {
-        this.props.navigation.navigate('Home');
+    if (!this.state.buttonLoginDisabled) {
+      const email: string = this.state.email;
+      const password: string = this.state.password;
+      if (email === '' || password === '') {
+        Alert.alert('Gagal', 'Email atau Password yang anda masukkan salah.');
+      } else {
+        await this.props.login(email, password);
+        AsyncStorage.getItem('@KeyAccessToken').then(accessToken => {
+          if (accessToken !== null) {
+            this.props.navigation.navigate('Home');
+          } else {
+            Alert.alert('Gagal', 'Email atau Password yang anda masukkan salah.');
+          }
+        });
       }
     }
   };

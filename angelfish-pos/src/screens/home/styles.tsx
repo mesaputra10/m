@@ -6,19 +6,19 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     paddingTop: Expo.Constants.statusBarHeight,
-    backgroundColor: '#fff',
+    backgroundColor: '#fff'
   },
   containerColumn: {
     flex: 1,
     flexDirection: 'row'
   },
   leftPart: {
-    flex: 4,
+    flex: 4
   },
   rightPart: {
     flex: 2,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   titleRight: {
     paddingTop: 16,
@@ -26,101 +26,101 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 0.5,
-    borderColor: '#ddd',
+    borderColor: '#ddd'
   },
   titleRightText: {
     fontSize: 17,
-    color: 'rgb(0, 0, 0)',
+    color: 'rgb(0, 0, 0)'
   },
   contentContainer: {
-    paddingTop: 10,
+    paddingTop: 10
   },
   itemContainer: {
     backgroundColor: '#fff',
     flex: 1,
-    padding: 10,
+    padding: 10
   },
   itemBox: {
     backgroundColor: 'rgb(236, 236, 236)',
     flex: 1,
     padding: 12.5,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   searchResultListItemContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   searchResultListItemLeft: {
-    flex: 2,
+    flex: 2
   },
   searchResultImage: {
     width: 85,
-    height: 100,
+    height: 100
   },
   searchResultListItemRight: {
     flex: 9,
     paddingTop: 10,
-    paddingBottom: 10,
+    paddingBottom: 10
   },
   searchResultText: {
-    fontSize: 16,
+    fontSize: 16
   },
   searchResultPriceDiscountText: {
     fontSize: 16,
     textDecorationLine: 'line-through',
     paddingRight: 5,
-    color: 'rgba(0, 0, 0, 0.38)',
+    color: 'rgba(0, 0, 0, 0.38)'
   },
   searchResultPriceContainer: {
     flexDirection: 'row',
-    paddingTop: 15,
+    paddingTop: 15
   },
   searchResultDiscountText: {
     fontSize: 16,
-    color: 'red',
+    color: 'red'
   },
   searchResultEmptyStockText: {
     fontSize: 16,
     color: 'red',
-    paddingTop: 16,
+    paddingTop: 16
   },
   productItemContainer: {
     backgroundColor: '#fff',
     flex: 1,
-    padding: 8,
+    padding: 8
   },
-  productItemBox: { 
+  productItemBox: {
     backgroundColor: '#fff',
     flex: 1,
-    padding: 12.5,
+    padding: 12.5
   },
-  productItemImage: { 
-    width: '100%', 
-    height: 170,
+  productItemImage: {
+    width: '100%',
+    height: 170
   },
-  productItemPriceContainer: { 
-    paddingVertical: 8, 
-    paddingBottom: 16,
+  productItemPriceContainer: {
+    paddingVertical: 8,
+    paddingBottom: 16
   },
-  productItemName: { 
-    fontSize: 16, 
-    lineHeight: 22, 
-    textAlign: 'left', 
-    color: 'rgba(0, 0, 0, 0.87)',
+  productItemName: {
+    fontSize: 16,
+    lineHeight: 22,
+    textAlign: 'left',
+    color: 'rgba(0, 0, 0, 0.87)'
   },
-  buttonBeliContainer: { 
-    height: 40, 
-    borderRadius: 3, 
+  buttonBeliContainer: {
+    height: 40,
+    borderRadius: 3,
     backgroundColor: 'rgb(255, 202, 4)',
-    justifyContent: 'center', 
-    alignItems: 'center',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  buttonBeliText: { 
+  buttonBeliText: {
     color: '#000',
     fontWeight: '500',
-    fontSize: 16,
-  },
+    fontSize: 16
+  }
 });
 
 export default styles;

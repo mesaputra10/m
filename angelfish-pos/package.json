@@ -33,19 +33,9 @@
         "useBabelrc": true
       }
     },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
-    ],
+    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
     "preset": "jest-expo",
-    "testMatch": [
-      "**/__tests__/**/*.[tj]s?(x)",
-      "**/?(*.)(spec|test).[tj]s?(x)"
-    ],
+    "testMatch": ["**/__tests__/**/*.[tj]s?(x)", "**/?(*.)(spec|test).[tj]s?(x)"],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     }
@@ -65,6 +55,12 @@
   "prettier": {
     "printWidth": 100,
     "indent_size": 2,
-    "indent_char": " "
+    "indent_char": " ",
+    "singleQuote": true,
+    "trallingComma": {
+      "array": true,
+      "object": true,
+      "function": false
+    }
   }
 }
