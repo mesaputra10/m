@@ -151,6 +151,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             </View>
             <ScrollView>
               {this.state.searchAutoComplete &&
+                products.length > 0 &&
                 products.slice(0, 5).map((product, index) => {
                   const productImage =
                     product.variantImageThumbnail !== ''
