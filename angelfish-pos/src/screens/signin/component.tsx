@@ -21,9 +21,10 @@ export class SigninComponent extends Component<any, any> {
   constructor(props: any) {
     super(props);
     this.state = {
-      text: '',
+      email: '',
       password: '',
-      securePassword: true
+      securePassword: true,
+      buttonLoginDisabled: true
     };
   }
   toggleShowPassword(value) {
@@ -33,6 +34,12 @@ export class SigninComponent extends Component<any, any> {
     const iconSecretClassName: string = this.state.securePassword
       ? 'ios-eye-off-outline'
       : 'ios-eye-outline';
+    const buttonLoginContainer = this.state.buttonLoginDisabled
+      ? styles.buttonLoginContainerDisabled
+      : styles.buttonLoginContainer;
+    const buttonLoginText = this.state.buttonLoginDisabled
+      ? styles.buttonLoginTextDisabled
+      : styles.buttonLoginText;
     return (
       <View style={styles.container}>
         <ImageBackground source={BG_IMAGE} style={styles.bgImage}>
@@ -52,7 +59,11 @@ export class SigninComponent extends Component<any, any> {
                     returnKeyType="next"
                     style={styles.inputTextStyle}
                     placeholder="Email Bhinneka"
-                    onChangeText={email => this.setState({ email })}
+                    onChangeText={email => {
+                      const { password } = this.state;
+                      const buttonLoginDisabled = email !== '' && password !== '' ? false : true;
+                      this.setState({ email, buttonLoginDisabled });
+                    }}
                     value={this.state.email}
                   />
                 </View>
@@ -65,7 +76,11 @@ export class SigninComponent extends Component<any, any> {
                     blurOnSubmit={true}
                     style={styles.inputTextStyle}
                     placeholder="Password"
-                    onChangeText={password => this.setState({ password })}
+                    onChangeText={password => {
+                      const { email } = this.state;
+                      const buttonLoginDisabled = email !== '' && password !== '' ? false : true;
+                      this.setState({ password, buttonLoginDisabled });
+                    }}
                     value={this.state.password}
                   />
                   <TouchableWithoutFeedback
@@ -82,9 +97,12 @@ export class SigninComponent extends Component<any, any> {
                   </TouchableWithoutFeedback>
                 </View>
               </View>
-              <TouchableWithoutFeedback onPress={this._signinAsync}>
-                <View style={styles.buttonLoginContainer}>
-                  <Text style={styles.buttonLoginText}>LOGIN</Text>
+              <TouchableWithoutFeedback
+                disabled={this.state.buttonLoginDisabled}
+                onPress={this._signinAsync}
+              >
+                <View style={buttonLoginContainer}>
+                  <Text style={buttonLoginText}>LOGIN</Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>
@@ -95,15 +113,20 @@ export class SigninComponent extends Component<any, any> {
   }
 
   _signinAsync = async () => {
-    const email: string = this.state.email;
-    const password: string = this.state.password;
-    if (email === '' || password === '') {
-      Alert.alert('Gagal', 'Email atau Password yang anda masukkan salah.');
-    } else {
-      await this.props.login(email, password);
-      const accessToken = AsyncStorage.getItem('@KeyAccessToken');
-      if (accessToken !== null) {
-        this.props.navigation.navigate('Home');
+    if (!this.state.buttonLoginDisabled) {
+      const email: string = this.state.email;
+      const password: string = this.state.password;
+      if (email === '' || password === '') {
+        Alert.alert('Gagal', 'Email atau Password yang anda masukkan salah.');
+      } else {
+        await this.props.login(email, password);
+        AsyncStorage.getItem('@KeyAccessToken').then(accessToken => {
+          if (accessToken !== null) {
+            this.props.navigation.navigate('Home');
+          } else {
+            Alert.alert('Gagal', 'Email atau Password yang anda masukkan salah.');
+          }
+        });
       }
     }
   };

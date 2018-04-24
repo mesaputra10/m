@@ -1,6 +1,17 @@
 import React from 'react';
 import Expo from 'expo';
-import { AsyncStorage, StyleSheet, View, Text, Alert, ScrollView, Image, ActivityIndicator, ImageBackground, TouchableWithoutFeedback } from 'react-native';
+import {
+  AsyncStorage,
+  StyleSheet,
+  View,
+  Text,
+  Alert,
+  ScrollView,
+  Image,
+  ActivityIndicator,
+  ImageBackground,
+  TouchableWithoutFeedback
+} from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Button, Divider } from 'react-native-elements';
 import { SearchBar, Grid, List } from 'antd-mobile';
@@ -8,6 +19,7 @@ import { DataItem } from 'antd-mobile/lib/grid/PropsType';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
 import generateUniqKey from '../../helpers/generate-uniq-key';
+import { Product } from '../home/reducer';
 
 const categories: Array<DataItem> = [
   { name: 'Aksesoris Komputer' },
@@ -17,24 +29,25 @@ const categories: Array<DataItem> = [
   { name: 'Tablets & Gadgets' },
   { name: 'Foto & Videografi' },
   { name: 'Alat Musik & Pro Audio' },
-  { name: 'Sport & Fitness' },
+  { name: 'Sport & Fitness' }
 ];
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
-  search: any,
-  products: any,
+  search: any;
+  products: Product[];
 }
+
 const Item = List.Item;
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
   static navigationOptions = {
-    header: null,
-  }
+    header: null
+  };
   constructor(props: HomeComponentProps) {
     super(props);
     this.state = {
       searchAutoComplete: false,
-      searchResults: false,
+      searchResults: false
     };
   }
   _signOutAsync = async () => {
@@ -51,19 +64,39 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     );
   };
   _renderProductItem = (product, index) => {
-    const productImage = (product.variantImageThumbnail !== '') ? { uri: product.variantImageThumbnail } : require('./assets/icGreyNoImage.png');
+    const productImage =
+      product.variantImageThumbnail !== ''
+        ? { uri: product.variantImageThumbnail }
+        : require('./assets/icGreyNoImage.png');
     return (
       <View style={styles.productItemContainer}>
         <View style={styles.productItemBox}>
           <Image source={productImage} style={styles.productItemImage} />
           <View style={styles.productItemPriceContainer}>
-            <Text numberOfLines={2} style={styles.productItemName}>{product.productName}</Text>
-            {product.variantPrice > 0 && <View style={[styles.searchResultPriceContainer, {paddingTop: 4}]}>
-              {product.variantPrice !== product.offerNormalPrice && <Text style={styles.searchResultPriceDiscountText}>Rp. {numberFormat(product.offerNormalPrice)}</Text>}
-            </View>}
-            {((product.variantPrice > 0) && product.variantPrice !== product.offerNormalPrice) && <Text style={styles.searchResultText}>Rp. {numberFormat(product.offerSpecialPrice)}</Text>}
-            {product.variantPrice === product.offerNormalPrice && <Text style={styles.searchResultText}>Rp. {numberFormat(product.variantPrice)}</Text>}
-            {product.variantPrice === 0 && <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>}
+            <Text numberOfLines={2} style={styles.productItemName}>
+              {product.productName}
+            </Text>
+            {product.variantPrice > 0 && (
+              <View style={[styles.searchResultPriceContainer, { paddingTop: 4 }]}>
+                {product.variantPrice !== product.offerNormalPrice && (
+                  <Text style={styles.searchResultPriceDiscountText}>
+                    Rp. {numberFormat(product.offerNormalPrice)}
+                  </Text>
+                )}
+              </View>
+            )}
+            {product.variantPrice > 0 &&
+              product.variantPrice !== product.offerNormalPrice && (
+                <Text style={styles.searchResultText}>
+                  Rp. {numberFormat(product.offerSpecialPrice)}
+                </Text>
+              )}
+            {product.variantPrice === product.offerNormalPrice && (
+              <Text style={styles.searchResultText}>Rp. {numberFormat(product.variantPrice)}</Text>
+            )}
+            {product.variantPrice === 0 && (
+              <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
+            )}
           </View>
           <TouchableWithoutFeedback
             onPress={() => {
@@ -79,10 +112,10 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       </View>
     );
   };
-  onChangeTextSearch = (text) => {
+  onChangeTextSearch = text => {
     if (text.length >= 3) {
       setTimeout(() => {
-        this.props.search(text).then(() => this.setState({ searchAutoComplete: true }))
+        this.props.search(text).then(() => this.setState({ searchAutoComplete: true }));
       }, 500);
     }
   };
@@ -104,67 +137,94 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                 maxLength={50}
                 onChange={this.onChangeTextSearch}
                 onCancel={() => this.setState({ searchAutoComplete: false, searchResults: false })}
-                onSubmit={(keyword) => this.onSubmitSearch(keyword)}
+                onSubmit={keyword => this.onSubmitSearch(keyword)}
               />
             </View>
             <ScrollView>
-              {this.state.searchAutoComplete && products.slice(0, 5).map((product, index) => {
-                const productImage = (product.variantImageThumbnail !== '') ? { uri: product.variantImageThumbnail } : require('./assets/icGreyNoImage.png');
-                return (
-                  <View key={generateUniqKey(index)}>
-                    <List>
-                      <Item
-                        multipleLine
-                        onClick={() => {
-                          const passProps = { title: product.productName, sku: product.variantSkuNo };
-                          this.props.navigation.navigate('PageProductDetail', passProps);
-                        }}
-                      >
-                        <View style={styles.searchResultListItemContainer}>
-                          <View style={styles.searchResultListItemLeft}>
-                            <Image
-                              source={productImage}
-                              style={styles.searchResultImage}
-                            />
+              {this.state.searchAutoComplete &&
+                products.slice(0, 5).map((product, index) => {
+                  const productImage =
+                    product.variantImageThumbnail !== ''
+                      ? { uri: product.variantImageThumbnail }
+                      : require('./assets/icGreyNoImage.png');
+                  return (
+                    <View key={generateUniqKey(index)}>
+                      <List>
+                        <Item
+                          multipleLine
+                          onClick={() => {
+                            const passProps = {
+                              title: product.productName,
+                              sku: product.variantSkuNo
+                            };
+                            this.props.navigation.navigate('PageProductDetail', passProps);
+                          }}
+                        >
+                          <View style={styles.searchResultListItemContainer}>
+                            <View style={styles.searchResultListItemLeft}>
+                              <Image source={productImage} style={styles.searchResultImage} />
+                            </View>
+                            <View style={styles.searchResultListItemRight}>
+                              <Text style={styles.searchResultText}>{product.productName}</Text>
+                              {product.variantPrice > 0 && (
+                                <View style={styles.searchResultPriceContainer}>
+                                  {product.variantPrice !== product.offerNormalPrice && (
+                                    <Text style={styles.searchResultPriceDiscountText}>
+                                      Rp. {numberFormat(product.offerNormalPrice)}
+                                    </Text>
+                                  )}
+                                  {product.offerDiscountPercentage > 0 && (
+                                    <Text style={styles.searchResultDiscountText}>
+                                      {' '}
+                                      -{product.offerDiscountPercentage}%
+                                    </Text>
+                                  )}
+                                </View>
+                              )}
+                              {product.variantPrice > 0 &&
+                                product.variantPrice !== product.offerNormalPrice && (
+                                  <Text style={styles.searchResultText}>
+                                    Rp. {numberFormat(product.offerSpecialPrice)}
+                                  </Text>
+                                )}
+                              {product.variantPrice === product.offerNormalPrice && (
+                                <Text style={styles.searchResultText}>
+                                  Rp. {numberFormat(product.variantPrice)}
+                                </Text>
+                              )}
+                              {product.variantPrice === 0 && (
+                                <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
+                              )}
+                            </View>
                           </View>
-                          <View style={styles.searchResultListItemRight}>
-                            <Text style={styles.searchResultText}>{product.productName}</Text>
-                            {product.variantPrice > 0 && <View style={styles.searchResultPriceContainer}>
-                              {product.variantPrice !== product.offerNormalPrice && <Text style={styles.searchResultPriceDiscountText}>Rp. {numberFormat(product.offerNormalPrice)}</Text>}
-                              {product.offerDiscountPercentage > 0 && <Text style={styles.searchResultDiscountText}> -{product.offerDiscountPercentage}%</Text>}
-                            </View>}
-                            {((product.variantPrice > 0) && product.variantPrice !== product.offerNormalPrice) && <Text style={styles.searchResultText}>Rp. {numberFormat(product.offerSpecialPrice)}</Text>}
-                            {product.variantPrice === product.offerNormalPrice && <Text style={styles.searchResultText}>Rp. {numberFormat(product.variantPrice)}</Text>}
-                            {product.variantPrice === 0 && <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>}
-                          </View>
-                        </View>
-                      </Item>
-                    </List>
-                  </View>
-                );
-              })}
-              {(!this.state.searchAutoComplete && !this.state.searchResults) &&
-                <Grid
-                  data={categories}
-                  itemStyle={{ 
-                    width: 145,
-                    height: 145,
-                  }}
-                  onClick={(el, i) => {
-                    console.log(`el: ${JSON.stringify(el)} | i: ${i}`);
-                    const passProps = { title: el.name };
-                    this.props.navigation.navigate('PageCategory', passProps);
-                  }}
-                  renderItem={(el, i) => this._renderItem(el, i)}
-                  hasLine={false}
-                />
-              }
-              {(this.state.searchResults) &&
+                        </Item>
+                      </List>
+                    </View>
+                  );
+                })}
+              {!this.state.searchAutoComplete &&
+                !this.state.searchResults && (
+                  <Grid
+                    data={categories}
+                    itemStyle={{
+                      width: 145,
+                      height: 145
+                    }}
+                    onClick={(el, i) => {
+                      console.log(`el: ${JSON.stringify(el)} | i: ${i}`);
+                      const passProps = { title: el.name };
+                      this.props.navigation.navigate('PageCategory', passProps);
+                    }}
+                    renderItem={(el, i) => this._renderItem(el, i)}
+                    hasLine={false}
+                  />
+                )}
+              {this.state.searchResults && (
                 <Grid
                   data={products}
-                  itemStyle={{ 
+                  itemStyle={{
                     width: 168,
-                    height: 350,
+                    height: 350
                   }}
                   onClick={(product, i) => {
                     const passProps = { title: product.productName, sku: product.variantSkuNo };
@@ -174,7 +234,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                   hasLine={false}
                   columnNum={3}
                 />
-              }
+              )}
             </ScrollView>
           </View>
           <View style={styles.rightPart}>
@@ -182,7 +242,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
               <Text style={styles.titleRightText}>Keranjang</Text>
             </View>
             <View style={styles.contentContainer}>
-              <Button title='Logout' onPress={this._signOutAsync} />
+              <Button title="Logout" onPress={this._signOutAsync} />
             </View>
           </View>
         </View>
