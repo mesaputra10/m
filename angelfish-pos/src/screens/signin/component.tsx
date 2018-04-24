@@ -7,7 +7,7 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Alert,
-  AsyncStorage,
+  AsyncStorage
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
@@ -16,28 +16,28 @@ const BG_IMAGE = require('../../../assets/images/ilLoginGetAccess.png');
 
 export class SigninComponent extends Component<any, any> {
   static navigationOptions = {
-    header: null,
-  }
+    header: null
+  };
   constructor(props: any) {
     super(props);
     this.state = {
       text: '',
       password: '',
-      securePassword: true,
+      securePassword: true
     };
   }
   toggleShowPassword(value) {
     this.setState({ securePassword: !value });
   }
   render() {
-    const iconSecretClassName: string = this.state.securePassword ? 'ios-eye-off-outline' : 'ios-eye-outline';
+    const iconSecretClassName: string = this.state.securePassword
+      ? 'ios-eye-off-outline'
+      : 'ios-eye-outline';
     return (
       <View style={styles.container}>
         <ImageBackground source={BG_IMAGE} style={styles.bgImage}>
           <KeyboardAvoidingView style={styles.loginContainer} behavior="position">
-            <View
-              style={styles.formContainer}
-            >
+            <View style={styles.formContainer}>
               <View style={styles.loginHeaderContainer}>
                 <Text style={styles.loginHeaderText}>Login</Text>
               </View>
@@ -45,7 +45,7 @@ export class SigninComponent extends Component<any, any> {
                 <View style={styles.inputEmailContainer}>
                   <TextInput
                     keyboardAppearance="light"
-                    autoFocus={false}
+                    autoFocus={true}
                     autoCapitalize="none"
                     autoCorrect={false}
                     keyboardType="email-address"
@@ -65,7 +65,7 @@ export class SigninComponent extends Component<any, any> {
                     blurOnSubmit={true}
                     style={styles.inputTextStyle}
                     placeholder="Password"
-                    onChangeText={(password) => this.setState({password})}
+                    onChangeText={password => this.setState({ password })}
                     value={this.state.password}
                   />
                   <TouchableWithoutFeedback
@@ -82,9 +82,7 @@ export class SigninComponent extends Component<any, any> {
                   </TouchableWithoutFeedback>
                 </View>
               </View>
-              <TouchableWithoutFeedback
-                onPress={this._signinAsync}
-              >
+              <TouchableWithoutFeedback onPress={this._signinAsync}>
                 <View style={styles.buttonLoginContainer}>
                   <Text style={styles.buttonLoginText}>LOGIN</Text>
                 </View>
