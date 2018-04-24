@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
     padding: 16,
     width: '85%',
     fontSize: 14,
-    lineHeight: 20,
     color: 'rgba(0, 0, 0, 0.87)'
   },
   inputEmailContainer: {
