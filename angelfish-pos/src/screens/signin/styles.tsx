@@ -1,7 +1,7 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions } from 'react-native';
 
-const SCREEN_WIDTH = Dimensions.get("window").width;
-const SCREEN_HEIGHT = Dimensions.get("window").height;
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 const styles = StyleSheet.create({
   container: {
     flex: 1
@@ -12,25 +12,25 @@ const styles = StyleSheet.create({
     left: 0,
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   loginContainer: {
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   formContainer: {
     justifyContent: 'center',   
-    alignItems: "center",
+    alignItems: 'center',
     paddingVertical: 24,
     paddingHorizontal: 32, 
     width: 400,
     height: 313,
     borderRadius: 12,
-    backgroundColor: "rgb(255, 255, 255)",
+    backgroundColor: 'rgb(255, 255, 255)',
   },
   fieldContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     width: '100%',
     borderWidth: 1,
     borderColor: 'rgb(193, 195, 201)',
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     width: '85%', 
     fontSize: 14,
     lineHeight: 20,
-    color: "rgba(0, 0, 0, 0.87)",
+    color: 'rgba(0, 0, 0, 0.87)',
   },
   inputEmailContainer: {
     height: 52, width: '100%',
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   iconSecretStyle: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
   },
   buttonLoginContainer: {
     borderRadius: 5,
     marginTop: 24,
-    flexDirection: "row",
+    flexDirection: 'row',
     height: 56,
     width: 336,
     justifyContent: 'center',
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   buttonLoginText: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     color: '#fff',
   },
 });

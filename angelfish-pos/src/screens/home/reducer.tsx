@@ -1,5 +1,5 @@
 import ActionTypes from '../../store/action-types';
-import {Action} from 'redux';
+import { Action } from 'redux';
 
 // type productType = {
 //   productId: number;
