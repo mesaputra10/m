@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AsyncStorage } from "react-native";
+import { AsyncStorage } from 'react-native';
 import Expo from 'expo';
 
 const keyAccessToken = '@KeyAccessToken';
@@ -55,7 +55,9 @@ export const fetchData = async (url: string, method: string, inputParams: object
   } catch(e) {
     console.log('there was an error fetchData()');
     console.log('Error: ', e);
-    refreshToken(fetchData(url, method, inputParams));
+    if (e.response.status === 401) {
+      refreshToken(fetchData(url, method, inputParams));
+    }
   }
 };
 
