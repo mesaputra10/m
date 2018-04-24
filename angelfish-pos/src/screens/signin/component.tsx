@@ -116,18 +116,14 @@ export class SigninComponent extends Component<any, any> {
     if (!this.state.buttonLoginDisabled) {
       const email: string = this.state.email;
       const password: string = this.state.password;
-      if (email === '' || password === '') {
-        Alert.alert('Gagal', 'Email atau Password yang anda masukkan salah.');
-      } else {
-        await this.props.login(email, password);
-        AsyncStorage.getItem('@KeyAccessToken').then(accessToken => {
-          if (accessToken !== null) {
-            this.props.navigation.navigate('Home');
-          } else {
-            Alert.alert('Gagal', 'Email atau Password yang anda masukkan salah.');
-          }
-        });
-      }
+      await this.props.login(email, password);
+      AsyncStorage.getItem('@KeyAccessToken').then(accessToken => {
+        if (accessToken !== null) {
+          this.props.navigation.navigate('Home');
+        } else {
+          Alert.alert('Gagal', 'Email atau password yang Anda masukan salah', [{ text: 'Tutup' }]);
+        }
+      });
     }
   };
 }

@@ -80,7 +80,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
               <View style={[styles.searchResultPriceContainer, { paddingTop: 4 }]}>
                 {product.variantPrice !== product.offerNormalPrice && (
                   <Text style={styles.searchResultPriceDiscountText}>
-                    Rp. {numberFormat(product.offerNormalPrice)}
+                    Rp {numberFormat(product.offerNormalPrice)}
                   </Text>
                 )}
               </View>
@@ -88,11 +88,11 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             {product.variantPrice > 0 &&
               product.variantPrice !== product.offerNormalPrice && (
                 <Text style={styles.searchResultText}>
-                  Rp. {numberFormat(product.offerSpecialPrice)}
+                  Rp {numberFormat(product.offerSpecialPrice)}
                 </Text>
               )}
             {product.variantPrice === product.offerNormalPrice && (
-              <Text style={styles.searchResultText}>Rp. {numberFormat(product.variantPrice)}</Text>
+              <Text style={styles.searchResultText}>Rp {numberFormat(product.variantPrice)}</Text>
             )}
             {product.variantPrice === 0 && (
               <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
@@ -170,7 +170,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                                 <View style={styles.searchResultPriceContainer}>
                                   {product.variantPrice !== product.offerNormalPrice && (
                                     <Text style={styles.searchResultPriceDiscountText}>
-                                      Rp. {numberFormat(product.offerNormalPrice)}
+                                      Rp {numberFormat(product.offerNormalPrice)}
                                     </Text>
                                   )}
                                   {product.offerDiscountPercentage > 0 && (
@@ -184,12 +184,12 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                               {product.variantPrice > 0 &&
                                 product.variantPrice !== product.offerNormalPrice && (
                                   <Text style={styles.searchResultText}>
-                                    Rp. {numberFormat(product.offerSpecialPrice)}
+                                    Rp {numberFormat(product.offerSpecialPrice)}
                                   </Text>
                                 )}
                               {product.variantPrice === product.offerNormalPrice && (
                                 <Text style={styles.searchResultText}>
-                                  Rp. {numberFormat(product.variantPrice)}
+                                  Rp {numberFormat(product.variantPrice)}
                                 </Text>
                               )}
                               {product.variantPrice === 0 && (
