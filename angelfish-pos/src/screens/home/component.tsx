@@ -10,7 +10,8 @@ import {
   Image,
   ActivityIndicator,
   ImageBackground,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Keyboard
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Button, Divider } from 'react-native-elements';
@@ -80,7 +81,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
               <View style={[styles.searchResultPriceContainer, { paddingTop: 4 }]}>
                 {product.variantPrice !== product.offerNormalPrice && (
                   <Text style={styles.searchResultPriceDiscountText}>
-                    Rp. {numberFormat(product.offerNormalPrice)}
+                    Rp {numberFormat(product.offerNormalPrice)}
                   </Text>
                 )}
               </View>
@@ -88,11 +89,11 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             {product.variantPrice > 0 &&
               product.variantPrice !== product.offerNormalPrice && (
                 <Text style={styles.searchResultText}>
-                  Rp. {numberFormat(product.offerSpecialPrice)}
+                  Rp {numberFormat(product.offerSpecialPrice)}
                 </Text>
               )}
             {product.variantPrice === product.offerNormalPrice && (
-              <Text style={styles.searchResultText}>Rp. {numberFormat(product.variantPrice)}</Text>
+              <Text style={styles.searchResultText}>Rp {numberFormat(product.variantPrice)}</Text>
             )}
             {product.variantPrice === 0 && (
               <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
@@ -114,9 +115,11 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   onChangeTextSearch = text => {
     if (text.length >= 3) {
-      setTimeout(() => {
-        this.props.search(text).then(() => this.setState({ searchAutoComplete: true }));
-      }, 500);
+      this.props.search(text).then(() => {
+        this.setState({ searchAutoComplete: true });
+      });
+    } else {
+      this.setState({ searchAutoComplete: false });
     }
   };
   onSubmitSearch = (keyword: string) => {
@@ -136,12 +139,19 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                 placeholder="Cari"
                 maxLength={50}
                 onChange={this.onChangeTextSearch}
-                onCancel={() => this.setState({ searchAutoComplete: false, searchResults: false })}
-                onSubmit={keyword => this.onSubmitSearch(keyword)}
+                onSubmit={keyword => {
+                  Keyboard.dismiss();
+                  this.onSubmitSearch(keyword);
+                }}
+                onCancel={() => {
+                  Keyboard.dismiss();
+                  this.setState({ searchAutoComplete: false, searchResults: false });
+                }}
               />
             </View>
             <ScrollView>
               {this.state.searchAutoComplete &&
+                products.length > 0 &&
                 products.slice(0, 5).map((product, index) => {
                   const productImage =
                     product.variantImageThumbnail !== ''
@@ -170,7 +180,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                                 <View style={styles.searchResultPriceContainer}>
                                   {product.variantPrice !== product.offerNormalPrice && (
                                     <Text style={styles.searchResultPriceDiscountText}>
-                                      Rp. {numberFormat(product.offerNormalPrice)}
+                                      Rp {numberFormat(product.offerNormalPrice)}
                                     </Text>
                                   )}
                                   {product.offerDiscountPercentage > 0 && (
@@ -184,12 +194,12 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                               {product.variantPrice > 0 &&
                                 product.variantPrice !== product.offerNormalPrice && (
                                   <Text style={styles.searchResultText}>
-                                    Rp. {numberFormat(product.offerSpecialPrice)}
+                                    Rp {numberFormat(product.offerSpecialPrice)}
                                   </Text>
                                 )}
                               {product.variantPrice === product.offerNormalPrice && (
                                 <Text style={styles.searchResultText}>
-                                  Rp. {numberFormat(product.variantPrice)}
+                                  Rp {numberFormat(product.variantPrice)}
                                 </Text>
                               )}
                               {product.variantPrice === 0 && (
