@@ -47,22 +47,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  searchResultListItemContainer: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  searchResultListItemLeft: {
-    flex: 2
-  },
-  searchResultImage: {
-    width: 85,
-    height: 100
-  },
-  searchResultListItemRight: {
-    flex: 9,
-    paddingTop: 10,
-    paddingBottom: 10
-  },
   searchResultText: {
     fontSize: 16
   },

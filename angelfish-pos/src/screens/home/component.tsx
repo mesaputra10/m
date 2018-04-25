@@ -19,8 +19,8 @@ import { SearchBar, Grid, List } from 'antd-mobile';
 import { DataItem } from 'antd-mobile/lib/grid/PropsType';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
-import generateUniqKey from '../../helpers/generate-uniq-key';
 import { Product } from '../home/reducer';
+import { SearchResultList } from '../../components/search-result-list';
 
 const categories: Array<DataItem> = [
   { name: 'Aksesoris Komputer' },
@@ -116,7 +116,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   onChangeTextSearch = text => {
     if (text.length >= 3) {
       this.props.search(text).then(() => {
-        this.setState({ searchAutoComplete: true });
+        this.setState({ searchAutoComplete: true, searchResults: false });
       });
     } else {
       this.setState({ searchAutoComplete: false });
@@ -151,67 +151,14 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             </View>
             <ScrollView>
               {this.state.searchAutoComplete &&
-                products.length > 0 &&
-                products.slice(0, 5).map((product, index) => {
-                  const productImage =
-                    product.variantImageThumbnail !== ''
-                      ? { uri: product.variantImageThumbnail }
-                      : require('./assets/icGreyNoImage.png');
-                  return (
-                    <View key={generateUniqKey(index)}>
-                      <List>
-                        <Item
-                          multipleLine
-                          onClick={() => {
-                            const passProps = {
-                              title: product.productName,
-                              sku: product.variantSkuNo
-                            };
-                            this.props.navigation.navigate('PageProductDetail', passProps);
-                          }}
-                        >
-                          <View style={styles.searchResultListItemContainer}>
-                            <View style={styles.searchResultListItemLeft}>
-                              <Image source={productImage} style={styles.searchResultImage} />
-                            </View>
-                            <View style={styles.searchResultListItemRight}>
-                              <Text style={styles.searchResultText}>{product.productName}</Text>
-                              {product.variantPrice > 0 && (
-                                <View style={styles.searchResultPriceContainer}>
-                                  {product.variantPrice !== product.offerNormalPrice && (
-                                    <Text style={styles.searchResultPriceDiscountText}>
-                                      Rp {numberFormat(product.offerNormalPrice)}
-                                    </Text>
-                                  )}
-                                  {product.offerDiscountPercentage > 0 && (
-                                    <Text style={styles.searchResultDiscountText}>
-                                      {' '}
-                                      -{product.offerDiscountPercentage}%
-                                    </Text>
-                                  )}
-                                </View>
-                              )}
-                              {product.variantPrice > 0 &&
-                                product.variantPrice !== product.offerNormalPrice && (
-                                  <Text style={styles.searchResultText}>
-                                    Rp {numberFormat(product.offerSpecialPrice)}
-                                  </Text>
-                                )}
-                              {product.variantPrice === product.offerNormalPrice && (
-                                <Text style={styles.searchResultText}>
-                                  Rp {numberFormat(product.variantPrice)}
-                                </Text>
-                              )}
-                              {product.variantPrice === 0 && (
-                                <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
-                              )}
-                            </View>
-                          </View>
-                        </Item>
-                      </List>
-                    </View>
-                  );
-                })}
+                products.length > 0 && (
+                  <SearchResultList
+                    products={products}
+                    maxItem={3}
+                    navigation={this.props.navigation}
+                  />
+                )}
+
               {!this.state.searchAutoComplete &&
                 !this.state.searchResults && (
                   <Grid
