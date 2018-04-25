@@ -84,6 +84,9 @@ const styles = StyleSheet.create({
     height: 170
   },
   productItemPriceContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
     paddingVertical: 8,
     paddingBottom: 16
   },
