@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
+import { isOffline } from '../../helpers/check-connection';
 
 const BG_IMAGE = require('../../../assets/images/ilLoginGetAccess.png');
 
@@ -26,6 +27,9 @@ export class SigninComponent extends Component<any, any> {
       securePassword: true,
       buttonLoginDisabled: true
     };
+  }
+  componentWillMount() {
+    isOffline(this.props.navigation);
   }
   toggleShowPassword(value) {
     this.setState({ securePassword: !value });

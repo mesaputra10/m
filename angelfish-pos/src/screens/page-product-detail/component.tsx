@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Text,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+import { isOffline } from '../../helpers/check-connection';
 
 interface PageProductDetailComponentProps extends NavigationScreenProps<any, any> {
-  navigation: any,
+  navigation: any;
 }
 
 export class PageProductDetailComponent extends Component<PageProductDetailComponentProps, any> {
   static navigationOptions = ({ navigation }) => {
     const { params } = navigation.state;
     return {
-      title: params ? params.title : 'Product Name',
-    }
+      title: params ? params.title : 'Product Name'
+    };
   };
   constructor(props) {
     super(props);
+  }
+  componentWillMount() {
+    isOffline(this.props.navigation);
   }
   render() {
     const { params } = this.props.navigation.state;

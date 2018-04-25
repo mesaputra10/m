@@ -7,18 +7,21 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Dimensions,
-  ImageBackground
+  ImageBackground,
+  NetInfo
 } from 'react-native';
 import { Button, Card, Icon, Input } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
+import store from '../store/store';
+import { isOffline } from '../helpers/check-connection';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const BG_IMAGE = require('../../assets/images/ilLoginGetAccess.png');
 export default class Welcome extends React.Component<any, any> {
   static navigationOptions = {
-    header: null,
-  }
+    header: null
+  };
   constructor(props: any) {
     super(props);
     this.state = {
@@ -26,7 +29,9 @@ export default class Welcome extends React.Component<any, any> {
       password: ''
     };
   }
-
+  componentWillMount() {
+    isOffline(this.props.navigation);
+  }
   render() {
     return (
       <View style={styles.container}>
