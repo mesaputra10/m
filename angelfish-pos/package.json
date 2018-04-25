@@ -33,9 +33,19 @@
         "useBabelrc": true
       }
     },
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
     "preset": "jest-expo",
-    "testMatch": ["**/__tests__/**/*.[tj]s?(x)", "**/?(*.)(spec|test).[tj]s?(x)"],
+    "testMatch": [
+      "**/__tests__/**/*.[tj]s?(x)",
+      "**/?(*.)(spec|test).[tj]s?(x)"
+    ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     }
