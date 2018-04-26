@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import { isOffline } from '../../helpers/check-connection';
 
 interface PageProductDetailComponentProps extends NavigationScreenProps<any, any> {
   navigation: any;
@@ -16,9 +15,6 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
   };
   constructor(props) {
     super(props);
-  }
-  componentWillMount() {
-    isOffline(this.props.navigation);
   }
   render() {
     const { params } = this.props.navigation.state;

@@ -1,22 +1,9 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import ActionTypes from './action-types';
 import signInReducer from '../screens/signin/reducer';
 import searchReducer from '../screens/home/reducer';
-import { NetInfo } from 'react-native';
-import { ActionTypes } from './action-types';
-
-const globalReducer = async () => {
-  const isConnected = await NetInfo.isConnected.fetch().then(isConnected => isConnected);
-  if (ActionTypes.GLOBAL_CONNECTION) {
-    return Object.assign(
-      {},
-      {
-        type: ActionTypes.GLOBAL_CONNECTION,
-        isConnected
-      }
-    );
-  }
-};
+import globalReducer from './global-state';
 
 const reducers = combineReducers({
   signInReducer,

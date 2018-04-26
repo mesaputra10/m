@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import { isOffline } from '../../helpers/check-connection';
 
 interface PageCategoryComponentProps extends NavigationScreenProps<any, any> {
   navigation: any;
@@ -19,9 +18,6 @@ export class PageCategoryComponent extends Component<PageCategoryComponentProps,
     this.props.navigation.setParams({
       hideHeader: false
     });
-  }
-  componentWillMount() {
-    isOffline(this.props.navigation);
   }
   render() {
     return (

@@ -1,1 +1,1 @@
-export { PageOfflineComponent as PageOffline } from './component';
+export { PageOfflineContainer as PageOffline } from './container';

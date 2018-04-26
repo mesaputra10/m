@@ -3,20 +3,25 @@ import store from '../store/store';
 import { NetInfo } from 'react-native';
 
 function handleFirstConnectivityChange(isConnected) {
-  console.log('is ' + (isConnected ? 'online' : 'offline'));
+  console.log('your connection is ' + (isConnected ? 'online' : 'offline'));
   store.dispatch({ type: ActionTypes.GLOBAL_CONNECTION, isConnected });
-  NetInfo.isConnected.removeEventListener('connectionChange', handleFirstConnectivityChange);
+  if (isConnected == false) {
+    NetInfo.isConnected.removeEventListener('connectionChange', handleFirstConnectivityChange);
+  }
 }
-export const checkConnection = async () =>
-  await NetInfo.isConnected.addEventListener('connectionChange', handleFirstConnectivityChange);
+export const registerConnectionChange = () =>
+  NetInfo.isConnected.addEventListener('connectionChange', handleFirstConnectivityChange);
 
-export const isOffline = async navigation => {
-  checkConnection();
-  setTimeout(async () => {
-    const isConnected = await store.getState().globalReducer.then(red => red.isConnected);
-    console.log('store connection: ', isConnected);
-    if (!isConnected) {
-      navigation.navigate('PageOffline');
-    }
-  }, 500);
+export const isOffline = props => {
+  const isConnected = props.isConnected;
+  if (!isConnected) {
+    props.navigation.navigate('PageOffline');
+  }
+};
+
+export const isOnline = props => {
+  const isConnected = props.isConnected;
+  if (isConnected) {
+    props.navigation.goBack();
+  }
 };

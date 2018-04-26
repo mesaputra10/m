@@ -5,11 +5,12 @@ import {
   Image,
   TouchableWithoutFeedback,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  NetInfo
 } from 'react-native';
 import styles from './styles';
 import store from '../../store/store';
-import { checkConnection } from '../../helpers/check-connection';
+import { isOffline, registerConnectionChange, isOnline } from '../../helpers/check-connection';
 
 export class PageOfflineComponent extends Component<any, any> {
   static navigationOptions = {
@@ -22,16 +23,21 @@ export class PageOfflineComponent extends Component<any, any> {
       loading: false
     };
   }
-  tryAgain = async () => {
-    this.setState({ loading: true });
-    await checkConnection();
-    setTimeout(async () => {
-      const isConnected = await store.getState().globalReducer.then(red => red.isConnected);
-      if (isConnected) {
-        this.props.navigation.goBack();
-      }
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.isConnected !== this.props.isConnected) {
+      return true;
+    }
+    return false;
+  }
+  componentDidUpdate() {
+    setTimeout(() => {
       this.setState({ loading: false });
-    }, 2000);
+      isOnline(this.props);
+    }, 1000);
+  }
+  tryAgain = () => {
+    this.setState({ loading: true });
+    registerConnectionChange();
   };
   render() {
     return (

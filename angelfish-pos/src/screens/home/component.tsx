@@ -21,7 +21,6 @@ import styles from './styles';
 import numberFormat from '../../helpers/number-format';
 import { Product } from '../home/reducer';
 import { SearchResultList } from '../../components/search-result-list';
-import { isOffline } from '../../helpers/check-connection';
 
 const categories: Array<DataItem> = [
   { name: 'Aksesoris Komputer' },
@@ -51,9 +50,6 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       searchAutoComplete: false,
       searchResults: false
     };
-  }
-  componentWillMount() {
-    isOffline(this.props.navigation);
   }
   _signOutAsync = async () => {
     await AsyncStorage.clear();

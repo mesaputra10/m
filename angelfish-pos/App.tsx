@@ -13,7 +13,7 @@ import { PageCategory } from './src/screens/page-category';
 import { PageProductDetail } from './src/screens/page-product-detail';
 import { PageOffline } from './src/screens/page-offline';
 import { ActionTypes } from './src/store/action-types';
-import { checkConnection } from './src/helpers/check-connection';
+import { registerConnectionChange } from './src/helpers/check-connection';
 
 YellowBox.ignoreWarnings(['Warning: componentWillMount', 'Warning: componentWillReceiveProps']);
 
@@ -77,7 +77,7 @@ const RootNavigator = StackNavigator(
   }
 );
 
-checkConnection();
+registerConnectionChange();
 
 const App = () => (
   <Provider store={store}>
