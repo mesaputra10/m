@@ -14,6 +14,7 @@ import { PageProductDetail } from './src/screens/page-product-detail';
 import { PageOffline } from './src/screens/page-offline';
 import { ActionTypes } from './src/store/action-types';
 import { registerConnectionChange } from './src/helpers/check-connection';
+import { PageServerError } from './src/screens/page-server-error';
 
 YellowBox.ignoreWarnings(['Warning: componentWillMount', 'Warning: componentWillReceiveProps']);
 
@@ -70,7 +71,8 @@ const RootNavigator = StackNavigator(
     Home: { screen: Home },
     PageCategory: { screen: PageCategory },
     PageProductDetail: { screen: PageProductDetail },
-    PageOffline: { screen: PageOffline }
+    PageOffline: { screen: PageOffline },
+    PageServerError: { screen: PageServerError }
   },
   {
     initialRouteName: 'AuthLoading'
