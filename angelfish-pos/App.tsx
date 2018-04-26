@@ -7,11 +7,14 @@ import { Home } from './src/screens/home';
 import Welcome from './src/screens/Welcome';
 import { LocaleProvider } from 'antd-mobile';
 import en_US from 'antd-mobile/lib/locale-provider/en_US';
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 import { YellowBox } from 'react-native';
 import { PageCategory } from './src/screens/page-category';
 import { PageProductDetail } from './src/screens/page-product-detail';
-
+import { PageOffline } from './src/screens/page-offline';
+import { ActionTypes } from './src/store/action-types';
+import { registerConnectionChange } from './src/helpers/check-connection';
+import { PageServerError } from './src/screens/page-server-error';
 
 YellowBox.ignoreWarnings(['Warning: componentWillMount', 'Warning: componentWillReceiveProps']);
 
@@ -26,8 +29,8 @@ const styles = StyleSheet.create({
 
 class AuthLoadingScreen extends React.Component<any> {
   static navigationOptions = {
-    header: null,
-  }
+    header: null
+  };
 
   constructor(props: any) {
     super(props);
@@ -60,24 +63,29 @@ class AuthLoadingScreen extends React.Component<any> {
   }
 }
 
-const RootNavigator = StackNavigator({
-  AuthLoading: { screen: AuthLoadingScreen },
-  Auth: { screen: Signin },
-  Welcome: { screen: Welcome },
-  Home: { screen: Home },
-  PageCategory: { screen: PageCategory },
-  PageProductDetail: { screen: PageProductDetail },
-}, {
-  initialRouteName: 'AuthLoading',
-});
+const RootNavigator = StackNavigator(
+  {
+    AuthLoading: { screen: AuthLoadingScreen },
+    Welcome: { screen: Welcome },
+    Auth: { screen: Signin },
+    Home: { screen: Home },
+    PageCategory: { screen: PageCategory },
+    PageProductDetail: { screen: PageProductDetail },
+    PageOffline: { screen: PageOffline },
+    PageServerError: { screen: PageServerError }
+  },
+  {
+    initialRouteName: 'AuthLoading'
+  }
+);
 
-const App = () => {
-  return (
-    <Provider store={store}>
-      <LocaleProvider locale={en_US}>
-        <RootNavigator />
-      </LocaleProvider>
-    </Provider>
-  );
-};
+registerConnectionChange();
+
+const App = () => (
+  <Provider store={store}>
+    <LocaleProvider locale={en_US}>
+      <RootNavigator />
+    </LocaleProvider>
+  </Provider>
+);
 export default App;

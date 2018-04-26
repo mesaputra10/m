@@ -1,6 +1,7 @@
 export enum ActionTypes {
   ACTION_LOGIN = 'ACTION_LOGIN',
   PRODUCTS_DATA_LIST = 'PRODUCTS_DATA_LIST',
-};
+  GLOBAL_CONNECTION = 'GLOBAL_CONNECTION'
+}
 
 export default ActionTypes;

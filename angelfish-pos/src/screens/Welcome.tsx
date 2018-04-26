@@ -9,16 +9,20 @@ import {
   Dimensions,
   ImageBackground
 } from 'react-native';
+import { connect } from 'react-redux';
 import { Button, Card, Icon, Input } from 'react-native-elements';
 import { Ionicons } from '@expo/vector-icons';
+import store from '../store/store';
+import { isOffline } from '../helpers/check-connection';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const BG_IMAGE = require('../../assets/images/ilLoginGetAccess.png');
-export default class Welcome extends React.Component<any, any> {
+
+export class WelcomeComponent extends React.Component<any, any> {
   static navigationOptions = {
-    header: null,
-  }
+    header: null
+  };
   constructor(props: any) {
     super(props);
     this.state = {
@@ -26,7 +30,17 @@ export default class Welcome extends React.Component<any, any> {
       password: ''
     };
   }
-
+  componentWillMount() {
+    isOffline(this.props);
+  }
+  shouldComponentUpdate(nextProps) {
+    if (nextProps.isConnected !== this.props.isConnected) {
+      return true;
+    }
+  }
+  componentDidUpdate() {
+    isOffline(this.props);
+  }
   render() {
     return (
       <View style={styles.container}>
@@ -83,3 +97,11 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   }
 });
+
+const mapStateToProps = (state: any) => {
+  return {
+    isConnected: state.globalReducer.isConnected
+  };
+};
+export const Welcome = connect(mapStateToProps, null)(WelcomeComponent);
+export default Welcome;

@@ -198,6 +198,14 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             <View style={styles.titleRight}>
               <Text style={styles.titleRightText}>Keranjang</Text>
             </View>
+            <View>
+              <Text>Navigation For Testing:</Text>
+              <View style={{ paddingVertical: 5 }} />
+              <Button
+                title="Page Server Error"
+                onPress={() => this.props.navigation.navigate('PageServerError')}
+              />
+            </View>
             <View style={styles.contentContainer}>
               <Button title="Logout" onPress={this._signOutAsync} />
             </View>
