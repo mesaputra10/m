@@ -77,7 +77,6 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
   render() {
     const { products } = this.props;
     if (products.length > 0) {
-      console.log('tidak masuk sini');
       return (
         <ScrollView>
           <Grid
@@ -97,7 +96,6 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
         </ScrollView>
       );
     } else {
-      console.log('nah ke sini');
       return (
         <View style={{ flex: 1 }}>
           <ProductsNotFound keyword={this.props.keyword} />
