@@ -60,6 +60,10 @@ export const styles = StyleSheet.create({
     color: '#000',
     fontWeight: '500',
     fontSize: 16
+  },
+  loadStructure: {
+    width: '100%',
+    height: '80%'
   }
 });
 export default styles;

@@ -23,6 +23,12 @@ interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
 export class ListProductsComponent extends Component<ListProductsComponentProps, any> {
   constructor(props) {
     super(props);
+    this.state = {
+      loading: true
+    };
+  }
+  componentDidMount() {
+    setTimeout(() => this.setState({ loading: false }), 2000);
   }
   _renderProductItem = (product, index) => {
     const productImage =
@@ -76,6 +82,15 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
 
   render() {
     const { products } = this.props;
+    if (this.state.loading) {
+      return (
+        <Image
+          source={require('./assets/load-structure.png')}
+          resizeMode="contain"
+          style={styles.loadStructure}
+        />
+      );
+    }
     if (products.length > 0) {
       return (
         <ScrollView>
