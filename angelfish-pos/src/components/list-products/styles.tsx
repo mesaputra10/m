@@ -1,40 +1,5 @@
-import Expo from 'expo';
 import { StyleSheet } from 'react-native';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'row',
-    paddingTop: Expo.Constants.statusBarHeight,
-    backgroundColor: '#fff'
-  },
-  containerColumn: {
-    flex: 1,
-    flexDirection: 'row'
-  },
-  leftPart: {
-    flex: 4
-  },
-  rightPart: {
-    flex: 2,
-    flexDirection: 'column',
-    justifyContent: 'space-between'
-  },
-  titleRight: {
-    paddingTop: 16,
-    paddingBottom: 31,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomWidth: 0.5,
-    borderColor: '#ddd'
-  },
-  titleRightText: {
-    fontSize: 17,
-    color: 'rgb(0, 0, 0)'
-  },
-  contentContainer: {
-    paddingTop: 10
-  },
+export const styles = StyleSheet.create({
   searchResultText: {
     fontSize: 16
   },
@@ -97,5 +62,4 @@ const styles = StyleSheet.create({
     fontSize: 16
   }
 });
-
 export default styles;

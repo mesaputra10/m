@@ -15,34 +15,23 @@ import {
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Button, Divider } from 'react-native-elements';
-import { SearchBar, Grid, List } from 'antd-mobile';
-import { DataItem } from 'antd-mobile/lib/grid/PropsType';
+import { SearchBar } from 'antd-mobile';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
 import { Product } from '../home/reducer';
 import { SearchResultList } from '../../components/search-result-list';
-
-const categories: Array<DataItem> = [
-  { name: 'Aksesoris Komputer' },
-  { name: 'Desktop & Notebooks' },
-  { name: 'Alat Tulis & Peralatan Kantor' },
-  { name: 'Server, Network & Power System' },
-  { name: 'Tablets & Gadgets' },
-  { name: 'Foto & Videografi' },
-  { name: 'Alat Musik & Pro Audio' },
-  { name: 'Sport & Fitness' }
-];
+import { ListProducts } from '../../components/list-products';
+import { ListCategories } from '../../components/list-categories';
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   search: any;
   products: Product[];
 }
 
-const Item = List.Item;
-
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
   static navigationOptions = {
-    header: null
+    header: null,
+    keyword: ''
   };
   constructor(props: HomeComponentProps) {
     super(props);
@@ -55,68 +44,10 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     await AsyncStorage.clear();
     this.props.navigation.navigate('Welcome');
   };
-  _renderItem = (el, index) => {
-    return (
-      <View style={styles.itemContainer}>
-        <View style={styles.itemBox}>
-          <Text style={{ textAlign: 'center' }}>{el.name}</Text>
-        </View>
-      </View>
-    );
-  };
-  _renderProductItem = (product, index) => {
-    const productImage =
-      product.variantImageThumbnail !== ''
-        ? { uri: product.variantImageThumbnail }
-        : require('./assets/icGreyNoImage.png');
-    return (
-      <View style={styles.productItemContainer}>
-        <View style={styles.productItemBox}>
-          <Image source={productImage} style={styles.productItemImage} />
-          <View style={styles.productItemPriceContainer}>
-            <Text numberOfLines={2} style={styles.productItemName}>
-              {product.productName}
-            </Text>
-            {product.variantPrice > 0 && (
-              <View style={[styles.searchResultPriceContainer, { paddingTop: 4 }]}>
-                {product.variantPrice !== product.offerNormalPrice && (
-                  <Text style={styles.searchResultPriceDiscountText}>
-                    Rp {numberFormat(product.offerNormalPrice)}
-                  </Text>
-                )}
-              </View>
-            )}
-            {product.variantPrice > 0 &&
-              product.variantPrice !== product.offerNormalPrice && (
-                <Text style={styles.searchResultText}>
-                  Rp {numberFormat(product.offerSpecialPrice)}
-                </Text>
-              )}
-            {product.variantPrice === product.offerNormalPrice && (
-              <Text style={styles.searchResultText}>Rp {numberFormat(product.variantPrice)}</Text>
-            )}
-            {product.variantPrice === 0 && (
-              <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
-            )}
-          </View>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              const passProps = { title: product.productName, sku: product.variantSkuNo };
-              this.props.navigation.navigate('PageProductDetail', passProps);
-            }}
-          >
-            <View style={styles.buttonBeliContainer}>
-              <Text style={styles.buttonBeliText}>BELI</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-      </View>
-    );
-  };
   onChangeTextSearch = text => {
     if (text.length >= 3) {
       this.props.search(text).then(() => {
-        this.setState({ searchAutoComplete: true, searchResults: false });
+        this.setState({ keyword: text, searchAutoComplete: true, searchResults: false });
       });
     } else {
       this.setState({ searchAutoComplete: false });
@@ -129,70 +60,44 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   render() {
     const products = this.props.products;
+    console.log('products props: ', products);
     return (
       <View style={styles.container}>
         <View style={styles.containerColumn}>
           <View style={styles.leftPart}>
-            <View style={{ padding: 10 }}>
-              <SearchBar
-                cancelText="Batal"
-                placeholder="Cari"
-                maxLength={50}
-                onChange={this.onChangeTextSearch}
-                onSubmit={keyword => {
-                  Keyboard.dismiss();
-                  this.onSubmitSearch(keyword);
-                }}
-                onCancel={() => {
-                  Keyboard.dismiss();
-                  this.setState({ searchAutoComplete: false, searchResults: false });
-                }}
-              />
-            </View>
-            <ScrollView>
-              {this.state.searchAutoComplete &&
-                products.length > 0 && (
-                  <SearchResultList
-                    products={products}
-                    maxItem={3}
-                    navigation={this.props.navigation}
-                  />
-                )}
-
-              {!this.state.searchAutoComplete &&
-                !this.state.searchResults && (
-                  <Grid
-                    data={categories}
-                    itemStyle={{
-                      width: 145,
-                      height: 145
-                    }}
-                    onClick={(el, i) => {
-                      console.log(`el: ${JSON.stringify(el)} | i: ${i}`);
-                      const passProps = { title: el.name };
-                      this.props.navigation.navigate('PageCategory', passProps);
-                    }}
-                    renderItem={(el, i) => this._renderItem(el, i)}
-                    hasLine={false}
-                  />
-                )}
-              {this.state.searchResults && (
-                <Grid
-                  data={products}
-                  itemStyle={{
-                    width: 168,
-                    height: 350
-                  }}
-                  onClick={(product, i) => {
-                    const passProps = { title: product.productName, sku: product.variantSkuNo };
-                    this.props.navigation.navigate('PageProductDetail', passProps);
-                  }}
-                  renderItem={(el, i) => this._renderProductItem(el, i)}
-                  hasLine={false}
-                  columnNum={3}
+            <SearchBar
+              cancelText="Batal"
+              placeholder="Cari"
+              maxLength={50}
+              onChange={this.onChangeTextSearch}
+              onSubmit={keyword => {
+                Keyboard.dismiss();
+                this.onSubmitSearch(keyword);
+              }}
+              onCancel={() => {
+                Keyboard.dismiss();
+                this.setState({ searchAutoComplete: false, searchResults: false });
+              }}
+            />
+            {this.state.searchAutoComplete &&
+              products.length > 0 && (
+                <SearchResultList
+                  products={products}
+                  maxItem={3}
+                  navigation={this.props.navigation}
                 />
               )}
-            </ScrollView>
+
+            {!this.state.searchAutoComplete &&
+              !this.state.searchResults && <ListCategories navigation={this.props.navigation} />}
+
+            {this.state.searchResults && (
+              <ListProducts
+                navigation={this.props.navigation}
+                products={products}
+                keyword={this.state.keyword}
+              />
+            )}
           </View>
           <View style={styles.rightPart}>
             <View style={styles.titleRight}>
