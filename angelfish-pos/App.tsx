@@ -5,6 +5,7 @@ import { StackNavigator } from 'react-navigation';
 import { Signin } from './src/screens/signin';
 import { Home } from './src/screens/home';
 import Welcome from './src/screens/Welcome';
+import { PageLanding } from './src/screens/page-landing';
 import { LocaleProvider } from 'antd-mobile';
 import en_US from 'antd-mobile/lib/locale-provider/en_US';
 import { Provider } from 'react-redux';
@@ -27,45 +28,9 @@ const styles = StyleSheet.create({
   }
 });
 
-class AuthLoadingScreen extends React.Component<any> {
-  static navigationOptions = {
-    header: null
-  };
-
-  constructor(props: any) {
-    super(props);
-    this._bootstrapAsync();
-  }
-
-  // Fetch the token from storage then navigate to our appropriate place
-  _bootstrapAsync = async () => {
-    const keyAccessToken = '@KeyAccessToken';
-    const keyRefreshToken = '@KeyRefreshToken';
-
-    const userToken = await AsyncStorage.getItem(keyAccessToken);
-    const refreshToken = await AsyncStorage.getItem(keyRefreshToken);
-    console.log('userToken: ', userToken);
-    console.log('refreshToken: ', refreshToken);
-
-    // This will switch to the App screen or Auth screen and this loading
-    // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'Home' : 'Welcome');
-  };
-
-  // Render any loading content that you like here
-  render() {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator />
-        <StatusBar barStyle="default" />
-      </View>
-    );
-  }
-}
-
 const RootNavigator = StackNavigator(
   {
-    AuthLoading: { screen: AuthLoadingScreen },
+    PageLanding: { screen: PageLanding },
     Welcome: { screen: Welcome },
     Auth: { screen: Signin },
     Home: { screen: Home },
@@ -75,7 +40,7 @@ const RootNavigator = StackNavigator(
     PageServerError: { screen: PageServerError }
   },
   {
-    initialRouteName: 'AuthLoading'
+    initialRouteName: 'PageLanding'
   }
 );
 
