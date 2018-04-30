@@ -1,117 +1,182 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import Expo from 'expo';
+import { stringify } from 'query-string';
 
 const keyAccessToken = '@KeyAccessToken';
 const keyRefreshToken = '@KeyRefreshToken';
-const keyAuthorization = 'Basic NDlmZTc3NTQtZjgyZS00OTA3LTkyMjgtN2MyNmE1Y2Q2MjQ0OkRySkxGMDhDYTR3SUVwUFlHOGl0aUxha3gyU0pZTmdu';
+const keyAuthorization =
+  'Basic NDlmZTc3NTQtZjgyZS00OTA3LTkyMjgtN2MyNmE1Y2Q2MjQ0OkRySkxGMDhDYTR3SUVwUFlHOGl0aUxha3gyU0pZTmdu';
 const headerContentType = 'application/x-www-form-urlencoded';
 const baseURL: string = 'https://b2c-api-staging.bhinneka.com';
 const deviceId = Expo.Constants.deviceId;
 
+export interface Tokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
+export enum GrantType {
+  ANONYMOUS = 'anonymous',
+  PASSWORD = 'password',
+  AZURE = 'azure',
+  FACEBOOK = 'facebook',
+  GOOGLE = 'google'
+}
+
 export const fetchDataLogin = async (username: string, password: string) => {
   try {
-    const requestApi = await axios({
-      baseURL,
-      method: 'POST',
-      url: '/api/auth',
-      params: {
-        grantType: 'password',
-        username,
-        password,
-        deviceId,
-      },
-      headers: {
-        'Authorization': keyAuthorization,
-        'Content-Type': headerContentType,
-      },
-    });
-    await setUserToken(requestApi.data);
-    console.log('Response: ', requestApi);
-    console.log('Device ID: ', deviceId);
-    if (requestApi.status === 200) return requestApi.data;
-  } catch(e) {
-    console.log('there was an error');
-    console.log(e);
+    let token = await login(username, password, deviceId);
+    await setUserToken(token);
+    console.log(token);
+    return token;
+  } catch (err) {
+    // handle on server error
+    console.log(err);
   }
 };
 
-export const fetchData = async (url: string, method: string, inputParams: object={}) => {
-  const accessToken = await AsyncStorage.getItem(keyAccessToken);
-  try {
-    const requestApi = await axios({
+export function login(
+  username: string,
+  password: string,
+  deviceId: string,
+  grantType = GrantType.PASSWORD
+) {
+  return new Promise<Tokens>((resolve, reject) => {
+    console.log('login');
+    axios({
+      baseURL,
+      method: 'POST',
+      url: '/api/auth',
+      data: stringify({
+        grantType,
+        username,
+        password,
+        deviceId
+      }),
+      headers: {
+        Authorization: keyAuthorization,
+        'Content-Type': headerContentType
+      }
+    })
+      .then(requestApi => {
+        if (requestApi.status === 200) resolve(requestApi.data);
+      })
+      .catch(err => {
+        console.log(err.response);
+        reject(err);
+      });
+  });
+}
+
+const setUserToken = async (data: Tokens) => {
+  console.log('set user token:' + data);
+  await AsyncStorage.multiSet([
+    [keyAccessToken, data.accessToken],
+    [keyRefreshToken, data.refreshToken]
+  ]);
+};
+
+export async function getUserToken() {
+  let keys = [keyAccessToken, keyRefreshToken];
+  let token: Tokens = { accessToken: '', refreshToken: '' };
+  await AsyncStorage.multiGet(keys, (err, stores) => {
+    stores.map((result, i, store) => {
+      // get at each store's key/value so you can work with it
+      let key = store[i][0];
+      let value = store[i][1];
+      if (key === keyAccessToken) {
+        token.accessToken = value;
+      } else if (key === keyRefreshToken) {
+        token.refreshToken = value;
+      }
+    });
+  });
+  return token;
+}
+
+export function refreshToken(oldAccessToken: string, refreshToken: string) {
+  return new Promise<Tokens>((resolve, reject) => {
+    console.log('refreshing token');
+    axios({
+      baseURL,
+      method: 'POST',
+      url: '/api/auth',
+      data: stringify({
+        grantType: 'refresh_token',
+        oldAccessToken,
+        refreshToken
+      }),
+      headers: {
+        Authorization: keyAuthorization,
+        'Content-Type': headerContentType
+      }
+    })
+      .then(requestApi => {
+        console.log(requestApi.data);
+        if (requestApi.status === 200) resolve(requestApi.data);
+      })
+      .catch(err => reject(err));
+  });
+}
+
+const removeUserToken = async () => {
+  await AsyncStorage.multiRemove([keyAccessToken, keyRefreshToken]);
+};
+
+export function fetchData(
+  url: string,
+  method: string,
+  inputParams = {},
+  token: Tokens,
+  retry = 0
+): Promise<any> {
+  return new Promise((resolve, reject) => {
+    console.log(`Rfetch data ${url}`);
+    axios({
       baseURL,
       method,
       url,
       headers: {
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accessToken}`,
+        Accept: 'application/json',
+        Authorization: `Bearer ${token.accessToken}`
       },
-      params: inputParams,
-    });
-    console.log('Response data: ', requestApi.data);
-    console.log('Response status: ', requestApi.status);
-    if (requestApi.status === 200) return requestApi.data;
-  } catch(e) {
-    console.log('there was an error fetchData()');
-    console.log('Error: ', e);
-    if (e.response.status === 401) {
-      refreshToken(fetchData(url, method, inputParams));
-    }
-  }
-};
+      params: inputParams
+    })
+      .then(requestApi => {
+        if (requestApi.status === 200) {
+          resolve(requestApi.data);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.response.status == 401) {
+          if (retry > 1) reject(Error('Maximum retry reached'));
 
-const setUserToken = async (data) => {
-  await AsyncStorage.multiSet([
-    [keyAccessToken, data.accessToken],
-    [keyRefreshToken, data.refreshToken],
-  ]);
-};
+          refreshToken(token.accessToken, token.refreshToken)
+            .then(newToken => {
+              setUserToken(newToken)
+                .then(val => console.log('success setusertoken'))
+                .catch(err => console.log('failed setusertoken'));
+              resolve(fetchData(url, method, inputParams, newToken, retry + 1));
+            })
+            .catch(err => reject(err));
+        } else reject(err);
+      });
+  });
+}
 
-const refreshToken = async (cb) => {
-  const oldAccessToken = await AsyncStorage.getItem(keyAccessToken);
-  const refreshToken = await AsyncStorage.getItem(keyRefreshToken);
-  try {
-    const requestRefreshToken = await axios({
-      baseURL,
-      method: 'POST',
-      url: '/api/auth',
-      headers: {
-        'Authorization': keyAuthorization,
-        'Content-Type': headerContentType,
-      },
-      params: {
-        grantType: 'refresh_token',
-        refreshToken,
-        oldAccessToken,
-      },
-    });
-    if (requestRefreshToken.status === 200) {
-      await removeUserToken();
-      await setUserToken(requestRefreshToken.data);
-      cb();
-      console.log('Response: ', requestRefreshToken);
-      return requestRefreshToken.data;
-    } else {
-      //force logout
-      console.log('force logout');
-      await removeUserToken();
-    }
-  } catch (e) {
-    console.log('Error refresh token');
-    console.log(e);
-    await removeUserToken();
-  } 
-};
-
-const removeUserToken = async () => {
-  await AsyncStorage.multiRemove([
-    keyAccessToken,
-    keyRefreshToken,
-  ]);
-};
-
-export default {
-  fetchDataLogin,
-  fetchData,
-};
+export async function searchProduct(
+  keyword: string,
+  //tokens: Tokens,
+  pageNumber = 1,
+  pageSize = 21
+) {
+  let tokens = await getUserToken();
+  return fetchData(
+    '/api/products/search',
+    'GET',
+    { 'filter[query]': keyword, 'page[size]': pageSize, 'page[number]': pageNumber },
+    tokens
+  );
+}
