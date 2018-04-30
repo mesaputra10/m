@@ -1,6 +1,6 @@
 import Expo from 'expo';
-import { StyleSheet } from 'react-native';
-
+import { StyleSheet, Dimensions } from 'react-native';
+const heightScreen = Dimensions.get('window').height - 64;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -8,29 +8,41 @@ const styles = StyleSheet.create({
     paddingTop: Expo.Constants.statusBarHeight,
     backgroundColor: '#fff'
   },
-  containerColumn: {
-    flex: 1,
-    flexDirection: 'row'
+  headerStyle: {
+    backgroundColor: '#fff'
   },
-  leftPart: {
-    flex: 4
+  headerColLeft: {
+    marginRight: 13
   },
-  rightPart: {
-    flex: 2,
-    flexDirection: 'column',
-    justifyContent: 'space-between'
+  searchContainer: {
+    borderRadius: 5,
+    backgroundColor: 'rgba(127, 130, 141, 0.1)'
   },
-  titleRight: {
-    paddingTop: 16,
-    paddingBottom: 31,
+  buttonClearSearch: {
     justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomWidth: 0.5,
-    borderColor: '#ddd'
+    marginTop: -6
   },
-  titleRightText: {
-    fontSize: 17,
-    color: 'rgb(0, 0, 0)'
+  headerColRight: {
+    borderLeftWidth: 1,
+    borderLeftColor: 'grey'
+  },
+  headerRightContainer: {
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  headerRightText: {
+    fontWeight: 'bold',
+    paddingTop: 16
+  },
+  contentColLeft: {
+    backgroundColor: '#fff',
+    height: heightScreen
+  },
+  contentColRight: {
+    backgroundColor: '#fff',
+    height: heightScreen,
+    borderLeftWidth: 1,
+    borderLeftColor: 'grey'
   },
   contentContainer: {
     paddingTop: 10

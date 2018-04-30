@@ -34,9 +34,19 @@
         "useBabelrc": true
       }
     },
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
     "preset": "jest-expo",
-    "testMatch": ["**/__tests__/**/*.[tj]s?(x)", "**/?(*.)(spec|test).[tj]s?(x)"],
+    "testMatch": [
+      "**/__tests__/**/*.[tj]s?(x)",
+      "**/?(*.)(spec|test).[tj]s?(x)"
+    ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     }
@@ -45,8 +55,10 @@
     "antd-mobile": "https://github.com/yudapc/ant-design-mobile.git#bhinneka",
     "axios": "^0.18.0",
     "expo": "^26.0.0",
+    "native-base": "^2.4.3",
     "react": "^16.3.1",
     "react-native": "^0.54.2",
+    "react-native-easy-grid": "^0.1.17",
     "react-native-elements": "1.0.0-beta4",
     "react-native-vector-icons": "^4.2.0",
     "react-navigation": "^1.5.11",
