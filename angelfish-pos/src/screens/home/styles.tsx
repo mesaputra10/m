@@ -9,7 +9,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff'
   },
   headerStyle: {
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
+    borderWidth: 0
   },
   headerColLeft: {
     marginRight: 13

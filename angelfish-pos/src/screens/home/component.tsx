@@ -14,6 +14,8 @@ import { ListCategories } from '../../components/list-categories';
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   search: any;
   products: Product[];
+  totalProducts: number;
+  totalPage: number;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
@@ -136,6 +138,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                   navigation={this.props.navigation}
                   products={products}
                   keyword={this.state.keyword}
+                  totalProducts={this.props.totalProducts}
                 />
               )}
             </Col>

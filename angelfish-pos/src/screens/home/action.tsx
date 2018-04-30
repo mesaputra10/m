@@ -11,7 +11,9 @@ export const fetchSearch = (keyword: string) => dispatch => {
 
 export const productsData = data => ({
   type: ActionTypes.PRODUCTS_DATA_LIST,
-  products: data
+  products: data.hits,
+  totalPage: data.total.totalPages,
+  totalProducts: data.total.totalCount
 });
 
 export default {
