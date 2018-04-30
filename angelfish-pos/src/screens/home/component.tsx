@@ -60,7 +60,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   render() {
     const products = this.props.products;
-    console.log('products props: ', products);
+    console.log('products props: ', products[0]);
     return (
       <View style={styles.container}>
         <View style={styles.containerColumn}>

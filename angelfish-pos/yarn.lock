@@ -559,6 +559,10 @@
   version "9.6.1"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.1.tgz#e2d374ef15b315b48e7efc308fa1a7cd51faa06c"
 
+"@types/query-string@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@types/query-string/-/query-string-5.1.0.tgz#7f40cdea49ddafa0ea4f3db35fb6c24d3bfd4dcc"
+
 "@types/react-native@*":
   version "0.52.22"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.52.22.tgz#98abf412c826a781d448346dffe5c89fce17ef28"
@@ -726,9 +730,9 @@ ansi@^0.3.0, ansi@~0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/ansi/-/ansi-0.3.1.tgz#0c42d4fb17160d5a9af1e484bace1c66922c1b21"
 
-antd-mobile@^2.1.8:
+"antd-mobile@https://github.com/yudapc/ant-design-mobile.git#bhinneka":
   version "2.1.8"
-  resolved "https://registry.yarnpkg.com/antd-mobile/-/antd-mobile-2.1.8.tgz#054efda2105d9bf603a0730b8602a8fb21c81c02"
+  resolved "https://github.com/yudapc/ant-design-mobile.git#d25b34220ef0e59c5c6a4cb5d2250362d59b0882"
   dependencies:
     array-tree-filter "~2.1.0"
     babel-runtime "6.x"
@@ -5759,6 +5763,13 @@ qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
 
+query-string@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/query-string/-/query-string-6.0.0.tgz#8b8f39447b73e8290d6f5e3581779218e9171142"
+  dependencies:
+    decode-uri-component "^0.2.0"
+    strict-uri-encode "^2.0.0"
+
 querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
@@ -6164,7 +6175,7 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
-react-redux@^5.0.2:
+react-redux@^5.0.2, react-redux@^5.0.7:
   version "5.0.7"
   resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-5.0.7.tgz#0dc1076d9afb4670f993ffaef44b8f8c1155a4c8"
   dependencies:
@@ -7147,6 +7158,10 @@ stream-parser@~0.3.1:
   resolved "https://registry.yarnpkg.com/stream-parser/-/stream-parser-0.3.1.tgz#1618548694420021a1182ff0af1911c129761773"
   dependencies:
     debug "2"
+
+strict-uri-encode@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/strict-uri-encode/-/strict-uri-encode-2.0.0.tgz#b9c7330c7042862f6b142dc274bbcc5866ce3546"
 
 string-length@^2.0.0:
   version "2.0.0"

@@ -4,6 +4,7 @@
   "private": true,
   "devDependencies": {
     "@types/jest": "^22.2.2",
+    "@types/query-string": "^5.1.0",
     "@types/react": "^16.3.9",
     "@types/react-native": "^0.55.1",
     "@types/react-navigation": "^1.5.5",
@@ -34,9 +35,19 @@
         "useBabelrc": true
       }
     },
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
     "preset": "jest-expo",
-    "testMatch": ["**/__tests__/**/*.[tj]s?(x)", "**/?(*.)(spec|test).[tj]s?(x)"],
+    "testMatch": [
+      "**/__tests__/**/*.[tj]s?(x)",
+      "**/?(*.)(spec|test).[tj]s?(x)"
+    ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     }
@@ -45,6 +56,7 @@
     "antd-mobile": "https://github.com/yudapc/ant-design-mobile.git#bhinneka",
     "axios": "^0.18.0",
     "expo": "^26.0.0",
+    "query-string": "^6.0.0",
     "react": "^16.3.1",
     "react-native": "^0.54.2",
     "react-native-elements": "1.0.0-beta4",
