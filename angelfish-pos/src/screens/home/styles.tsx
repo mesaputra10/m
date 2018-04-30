@@ -31,7 +31,8 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   headerRightText: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    paddingTop: 16
   },
   contentColLeft: {
     backgroundColor: '#fff',

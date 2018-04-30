@@ -57,7 +57,6 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   render() {
     const products = this.props.products;
-
     return (
       <Container>
         <Header style={styles.headerStyle} searchBar>
@@ -116,7 +115,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             </View>
           </Col>
         </Header>
-        <Content>
+        <Container>
           <Grid>
             <Col style={styles.contentColLeft} size={70}>
               {this.state.searchAutoComplete &&
@@ -149,7 +148,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
               </View>
             </Col>
           </Grid>
-        </Content>
+        </Container>
       </Container>
     );
   }
