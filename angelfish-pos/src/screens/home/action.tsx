@@ -4,8 +4,7 @@ import ActionTypes from '../../store/action-types';
 
 export const fetchSearch = (keyword: string) => dispatch => {
   return searchProduct(keyword).then(data => {
-    const hits = Object.keys(data).includes('hits') ? data.hits : [];
-    dispatch(productsData(hits));
+    dispatch(productsData(data));
   });
 };
 
