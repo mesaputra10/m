@@ -170,3 +170,4 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
     }
   }
 }
+export default ListProductsComponent;
