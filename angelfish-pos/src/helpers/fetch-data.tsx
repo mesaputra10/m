@@ -180,3 +180,8 @@ export async function searchProduct(
     tokens
   );
 }
+
+export async function categories(parentId: string = undefined) {
+  let tokens = await getUserToken();
+  return fetchData('/api/categories', 'GET', parentId, tokens);
+}
