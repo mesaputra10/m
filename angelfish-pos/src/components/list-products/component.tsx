@@ -19,6 +19,7 @@ interface Product extends DataItem {
 interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   products: Product[];
   keyword: string;
+  totalProducts: number;
 }
 export class ListProductsComponent extends Component<ListProductsComponentProps, any> {
   constructor(props) {
@@ -94,6 +95,11 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
     if (products.length > 0) {
       return (
         <ScrollView>
+          <View style={{ paddingHorizontal: 16, paddingVertical: 10 }}>
+            <Text style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.38)' }}>
+              {numberFormat(this.props.totalProducts)} Produk
+            </Text>
+          </View>
           <Grid
             data={this.props.products}
             itemStyle={{

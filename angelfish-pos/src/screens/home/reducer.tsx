@@ -12,7 +12,9 @@ import { DataItem } from 'antd-mobile/lib/grid/PropsType';
 //   offerSpecialPrice: number;
 // };
 const initialState = {
-  products: []
+  products: [],
+  totalPage: 0,
+  totalProducts: 0
 };
 
 export interface Product extends DataItem {
@@ -24,16 +26,21 @@ export interface Product extends DataItem {
   variantSkuNo: string;
   variantImageThumbnail: string;
 }
+
 interface SearchAction extends Action {
   type: ActionTypes.PRODUCTS_DATA_LIST;
   products: Product[];
+  totalPage: number;
+  totalProducts: number;
 }
 
 const reducer = (state = initialState, action: SearchAction) => {
   switch (action.type) {
     case ActionTypes.PRODUCTS_DATA_LIST: {
       return Object.assign({}, state, {
-        products: action.products
+        products: action.products,
+        totalPage: action.totalPage,
+        totalProducts: action.totalProducts
       });
     }
     default: {

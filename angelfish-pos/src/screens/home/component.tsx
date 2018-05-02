@@ -1,6 +1,13 @@
 import React from 'react';
 import Expo from 'expo';
-import { AsyncStorage, View, TouchableWithoutFeedback, Keyboard, TextInput } from 'react-native';
+import {
+  AsyncStorage,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+  TextInput,
+  Dimensions
+} from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Container, Header, Content, Item, Input, Icon, Button, Text } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
@@ -14,6 +21,8 @@ import { ListCategories } from '../../components/list-categories';
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   search: any;
   products: Product[];
+  totalProducts: number;
+  totalPage: number;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
@@ -136,16 +145,38 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                   navigation={this.props.navigation}
                   products={products}
                   keyword={this.state.keyword}
+                  totalProducts={this.props.totalProducts}
                 />
               )}
             </Col>
             <Col style={styles.contentColRight} size={30}>
-              <View style={{ padding: 16 }}>
-                <Text>Navigation For Testing:</Text>
-                <View style={{ paddingVertical: 5 }} />
-                <Button primary onPress={() => this.props.navigation.navigate('PageServerError')}>
-                  <Text> Page Server Error </Text>
-                </Button>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  alignItems: 'center'
+                }}
+              >
+                <View style={{ padding: 16, alignItems: 'flex-start' }}>
+                  <Text>Navigation For Testing:</Text>
+                  <View style={{ paddingVertical: 5 }} />
+                  <Button primary onPress={() => this.props.navigation.navigate('PageServerError')}>
+                    <Text> Page Server Error </Text>
+                  </Button>
+                </View>
+                <View style={{ justifyContent: 'center', padding: 16, alignItems: 'flex-end' }}>
+                  <Button
+                    onPress={this._signOutAsync}
+                    style={{
+                      width: 300,
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}
+                  >
+                    <Text>Logout</Text>
+                  </Button>
+                </View>
               </View>
             </Col>
           </Grid>
