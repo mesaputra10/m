@@ -13,6 +13,8 @@ import { DataItem } from 'antd-mobile/lib/grid/PropsType';
 // };
 const initialState = {
   products: [],
+  isFetching: false,
+  keyword: '',
   totalPage: 0,
   totalProducts: 0
 };
@@ -27,26 +29,39 @@ export interface Product extends DataItem {
   variantImageThumbnail: string;
 }
 
-interface SearchAction extends Action {
-  type: ActionTypes.PRODUCTS_DATA_LIST;
+interface SearchAction extends Action<ActionTypes.PRODUCTS_SEARCH> {
+  keyword: string;
+}
+
+interface SearchResultAction extends Action<ActionTypes.PRODUCTS_DATA_LIST> {
+  keyword: string;
   products: Product[];
   totalPage: number;
   totalProducts: number;
 }
 
-const reducer = (state = initialState, action: SearchAction) => {
-  switch (action.type) {
-    case ActionTypes.PRODUCTS_DATA_LIST: {
+type SearchActions = SearchAction | SearchResultAction;
+
+const reducer = (state = initialState, action: SearchActions) => {
+  if (action.type === ActionTypes.PRODUCTS_SEARCH) {
+    return Object.assign({}, state, {
+      isFetching: true,
+      keyword: action.keyword
+    });
+  } else if (action.type === ActionTypes.PRODUCTS_DATA_LIST) {
+    if (state.isFetching && action.keyword === state.keyword) {
       return Object.assign({}, state, {
+        isFetching: false,
         products: action.products,
         totalPage: action.totalPage,
         totalProducts: action.totalProducts
       });
     }
-    default: {
-      return initialState;
-    }
+    return Object.assign({}, state, {
+      isFetching: false
+    });
   }
+  return state;
 };
 
 export default reducer;

@@ -28,7 +28,6 @@ export const fetchDataLogin = async (username: string, password: string) => {
   try {
     let token = await login(username, password, deviceId);
     await setUserToken(token);
-    console.log(token);
     return token;
   } catch (err) {
     // handle on server error
@@ -43,7 +42,6 @@ export function login(
   grantType = GrantType.PASSWORD
 ) {
   return new Promise<Tokens>((resolve, reject) => {
-    console.log('login');
     axios({
       baseURL,
       method: 'POST',
@@ -63,14 +61,12 @@ export function login(
         if (requestApi.status === 200) resolve(requestApi.data);
       })
       .catch(err => {
-        console.log(err.response);
         reject(err);
       });
   });
 }
 
 const setUserToken = async (data: Tokens) => {
-  console.log('set user token:' + data);
   await AsyncStorage.multiSet([
     [keyAccessToken, data.accessToken],
     [keyRefreshToken, data.refreshToken]
@@ -97,7 +93,6 @@ export async function getUserToken() {
 
 export function refreshToken(oldAccessToken: string, refreshToken: string) {
   return new Promise<Tokens>((resolve, reject) => {
-    console.log('refreshing token');
     axios({
       baseURL,
       method: 'POST',
@@ -113,7 +108,6 @@ export function refreshToken(oldAccessToken: string, refreshToken: string) {
       }
     })
       .then(requestApi => {
-        console.log(requestApi.data);
         if (requestApi.status === 200) resolve(requestApi.data);
       })
       .catch(err => reject(err));
@@ -132,8 +126,6 @@ export function fetchData(
   retry = 0
 ): Promise<any> {
   return new Promise((resolve, reject) => {
-    console.log(`Rfetch data ${url}`);
-    console.log(inputParams, 'inputParams');
     axios({
       baseURL,
       method,
@@ -150,7 +142,6 @@ export function fetchData(
         }
       })
       .catch(err => {
-        console.log(err);
         if (err.response.status == 401) {
           if (retry > 1) reject(Error('Maximum retry reached'));
 

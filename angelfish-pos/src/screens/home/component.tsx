@@ -20,6 +20,8 @@ import { ListCategories } from '../../components/list-categories';
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   search: any;
+  emptySearch: any;
+  keyword: string;
   products: Product[];
   totalProducts: number;
   totalPage: number;
@@ -44,14 +46,21 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   onChangeTextSearch = text => {
     if (text.length >= 3) {
-      this.props.search(text).then(() => {
-        this.setState({
-          keyword: text,
-          searchAutoComplete: true,
-          searchResults: false,
-          showCancelButton: true
-        });
+      // this.props.search(text).then(() => {
+      //   this.setState({
+      //     keyword: text,
+      //     searchAutoComplete: true,
+      //     searchResults: false,
+      //     showCancelButton: true
+      //   });
+      // });
+      this.setState({
+        //keyword: text,
+        searchAutoComplete: true,
+        searchResults: false,
+        showCancelButton: true
       });
+      this.props.search(text);
     } else {
       this.setState({ searchAutoComplete: false, showCancelButton: true });
     }
@@ -62,7 +71,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     }
   };
   isKeywordEmpty = () => {
-    return this.state.keyword === undefined || this.state.keyword.length === 0;
+    return this.props.keyword === undefined || this.props.keyword.length === 0;
   };
   render() {
     const products = this.props.products;
@@ -75,11 +84,11 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                 <Icon name="ios-search" />
                 <Input
                   placeholder="Cari"
-                  value={this.state.keyword}
+                  value={this.props.keyword}
                   onChangeText={this.onChangeTextSearch}
                   onSubmitEditing={() => {
                     Keyboard.dismiss();
-                    this.onSubmitSearch(this.state.keyword);
+                    this.onSubmitSearch(this.props.keyword);
                   }}
                 />
                 {!this.isKeywordEmpty() && (
@@ -87,13 +96,13 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                     transparent
                     dark
                     style={styles.buttonClearSearch}
-                    onPress={() =>
+                    onPress={() => {
+                      this.props.emptySearch();
                       this.setState({
                         searchAutoComplete: false,
-                        showCancelButton: false,
-                        keyword: ''
-                      })
-                    }
+                        showCancelButton: false
+                      });
+                    }}
                   >
                     <Icon name="ios-close-circle" color="grey" />
                   </Button>
@@ -108,7 +117,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                     this.setState({
                       searchAutoComplete: false,
                       searchResults: false,
-                      keyword: '',
+                      //keyword: '',
                       showCancelButton: false
                     });
                   }}
@@ -128,6 +137,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
           <Grid>
             <Col style={styles.contentColLeft} size={70}>
               {this.state.searchAutoComplete &&
+                products &&
                 products.length > 0 && (
                   <SearchResultList
                     products={products}
