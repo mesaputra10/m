@@ -66,7 +66,6 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   render() {
     const products = this.props.products;
-    console.log('products props: ', products[0]);
     return (
       <Container>
         <Header style={styles.headerStyle} searchBar>

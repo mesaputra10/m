@@ -6,6 +6,7 @@ import numberFormat from '../../helpers/number-format';
 import { NavigationScreenProps } from 'react-navigation';
 import { DataItem } from 'antd-mobile/lib/grid/PropsType';
 import { ProductsNotFound } from '../products-not-found';
+import { searchProduct } from '../../helpers/fetch-data';
 
 interface Product extends DataItem {
   productId: string;
@@ -25,11 +26,21 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
   constructor(props) {
     super(props);
     this.state = {
-      loading: true
+      loading: true,
+      fetching: false,
+      page: 1,
+      keyword: '',
+      products: props.products
     };
   }
   componentDidMount() {
-    setTimeout(() => this.setState({ loading: false }), 2000);
+    setTimeout(
+      () =>
+        this.setState({
+          loading: false
+        }),
+      2000
+    );
   }
   _renderProductItem = (product, index) => {
     const productImage =
@@ -80,9 +91,26 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
       </View>
     );
   };
-
+  fetchProducts = () => {
+    const keyword = this.state.keyword;
+    const page = this.state.page;
+    return searchProduct(keyword, page + 1).then(data => {
+      this.setState({
+        fetching: false,
+        products: this.state.products.concat(data.hits),
+        page: page + 1
+      });
+    });
+  };
+  loadMore = () => {
+    this.setState({ fetching: true }, () => {
+      setTimeout(() => {
+        this.fetchProducts();
+      }, 500);
+    });
+  };
   render() {
-    const { products } = this.props;
+    const products = this.state.products;
     if (this.state.loading) {
       return (
         <Image
@@ -94,14 +122,31 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
     }
     if (products.length > 0) {
       return (
-        <ScrollView>
+        <ScrollView
+          scrollEventThrottle={1000}
+          onScroll={event => {
+            if (this.state.loading) {
+              return;
+            }
+            console.log(this.state.fetching, 'fetching');
+            const offset = event.nativeEvent.contentOffset.y;
+            const height =
+              event.nativeEvent.contentSize.height - event.nativeEvent.layoutMeasurement.height;
+
+            if (offset >= height) {
+              if (this.state.fetching === false) {
+                this.loadMore();
+              }
+            }
+          }}
+        >
           <View style={{ paddingHorizontal: 16, paddingVertical: 10 }}>
             <Text style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.38)' }}>
               {numberFormat(this.props.totalProducts)} Produk
             </Text>
           </View>
           <Grid
-            data={this.props.products}
+            data={products}
             itemStyle={{
               width: 168,
               height: 350
