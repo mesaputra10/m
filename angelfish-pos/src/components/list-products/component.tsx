@@ -115,7 +115,7 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
       return (
         <Image
           source={require('./assets/load-structure.png')}
-          resizeMode="contain"
+          resizeMode="stretch"
           style={styles.loadStructure}
         />
       );
