@@ -14,9 +14,10 @@
     "@types/redux-thunk": "^2.1.0",
     "babel-plugin-import": "^1.6.7",
     "jest-expo": "^27.0.0",
+    "metro-bundler": "^0.22.1",
     "prettier": "^1.11.1",
     "react-native-scripts-ts": "1.13.0",
-    "react-native-typescript-transformer": "^1.2.3",
+    "react-native-typescript-transformer": "^1.2.5",
     "react-test-renderer": "16.3.0-alpha.1",
     "sentry-expo": "~1.7.0",
     "ts-jest": "^22.4.2",
@@ -38,9 +39,19 @@
         "useBabelrc": true
       }
     },
-    "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
     "preset": "jest-expo",
-    "testMatch": ["**/__tests__/**/*.[tj]s?(x)", "**/?(*.)(spec|test).[tj]s?(x)"],
+    "testMatch": [
+      "**/__tests__/**/*.[tj]s?(x)",
+      "**/?(*.)(spec|test).[tj]s?(x)"
+    ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
     }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from 'antd-mobile';
-import { View, Text, Image, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback, ScrollView, Modal } from 'react-native';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
 import { NavigationScreenProps } from 'react-navigation';
@@ -21,6 +21,8 @@ interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   products: Product[];
   keyword: string;
   totalProducts: number;
+  setFilter: any;
+  showFilter: boolean;
 }
 export class ListProductsComponent extends Component<ListProductsComponentProps, any> {
   constructor(props) {
@@ -39,7 +41,7 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
         this.setState({
           loading: false
         }),
-      2000
+      500
     );
   }
   _renderProductItem = (product, index) => {
@@ -128,7 +130,6 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
             if (this.state.loading) {
               return;
             }
-            console.log(this.state.fetching, 'fetching');
             const offset = event.nativeEvent.contentOffset.y;
             const height =
               event.nativeEvent.contentSize.height - event.nativeEvent.layoutMeasurement.height;
@@ -140,10 +141,29 @@ export class ListProductsComponent extends Component<ListProductsComponentProps,
             }
           }}
         >
-          <View style={{ paddingHorizontal: 16, paddingVertical: 10 }}>
-            <Text style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.38)' }}>
-              {numberFormat(this.props.totalProducts)} Produk
-            </Text>
+          <View
+            style={{
+              paddingHorizontal: 16,
+              paddingVertical: 10,
+              flexDirection: 'row',
+              justifyContent: 'space-between'
+            }}
+          >
+            <View>
+              <Text style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.38)' }}>
+                {numberFormat(this.props.totalProducts)} Produk
+              </Text>
+            </View>
+            <View>
+              <TouchableWithoutFeedback
+                onPress={() => this.props.setFilter(!this.props.showFilter)}
+              >
+                <View style={styles.filterContainer}>
+                  <Image source={require('./assets/filter.png')} />
+                  <Text style={styles.filterText}>Filter</Text>
+                </View>
+              </TouchableWithoutFeedback>
+            </View>
           </View>
           <Grid
             data={products}

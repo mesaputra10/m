@@ -9,9 +9,9 @@ export function startSearch(keyword) {
   };
 }
 
-export const fetchSearch = (keyword: string) => dispatch => {
+export const fetchSearch = (keyword: string, filterParams: any = {}) => dispatch => {
   dispatch(startSearch(keyword));
-  return searchProduct(keyword).then(data => {
+  return searchProduct(keyword, filterParams).then(data => {
     dispatch(productsData(keyword, data));
   });
 };
@@ -24,6 +24,13 @@ export const productsData = (keyword, data) => ({
   totalProducts: data.total.totalCount
 });
 
+export const setFilter = data => dispatch =>
+  dispatch({
+    type: ActionTypes.PRODUCTS_FILTER,
+    showFilter: data
+  });
+
 export default {
-  fetchSearch
+  fetchSearch,
+  setFilter
 };

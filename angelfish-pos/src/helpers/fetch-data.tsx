@@ -2,6 +2,7 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import Expo from 'expo';
 import { stringify } from 'query-string';
+import { filter } from 'minimatch';
 
 const keyAccessToken = '@KeyAccessToken';
 const keyRefreshToken = '@KeyRefreshToken';
@@ -158,12 +159,23 @@ export function fetchData(
   });
 }
 
-export async function searchProduct(keyword: string, pageNumber = 1, pageSize = 21) {
+export async function searchProduct(
+  keyword: string,
+  filterParams: any = {},
+  pageNumber = 1,
+  pageSize = 21
+) {
+  const categoryId = filterParams.categoryId === undefined ? '' : filterParams.categoryId;
   let tokens = await getUserToken();
   return fetchData(
     '/api/products/search',
     'GET',
-    { 'filter[query]': keyword, 'page[size]': pageSize, 'page[number]': pageNumber },
+    {
+      'filter[query]': keyword,
+      'page[size]': pageSize,
+      'page[number]': pageNumber,
+      'filter[categoryId]': categoryId
+    },
     tokens
   );
 }

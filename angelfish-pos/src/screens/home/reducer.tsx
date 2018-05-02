@@ -2,21 +2,13 @@ import ActionTypes from '../../store/action-types';
 import { Action } from 'redux';
 import { DataItem } from 'antd-mobile/lib/grid/PropsType';
 
-// type productType = {
-//   productId: number;
-//   productName: string;
-//   variantImageThumbnail: string;
-//   variantSkuNo: number;
-//   variantPrice: number;
-//   offerDiscountPercentage: number;
-//   offerSpecialPrice: number;
-// };
 const initialState = {
   products: [],
   isFetching: false,
   keyword: '',
   totalPage: 0,
-  totalProducts: 0
+  totalProducts: 0,
+  showFilter: false
 };
 
 export interface Product extends DataItem {
@@ -29,18 +21,25 @@ export interface Product extends DataItem {
   variantImageThumbnail: string;
 }
 
-interface SearchAction extends Action<ActionTypes.PRODUCTS_SEARCH> {
+interface SearchAction extends Action {
+  type: ActionTypes.PRODUCTS_SEARCH;
   keyword: string;
 }
 
-interface SearchResultAction extends Action<ActionTypes.PRODUCTS_DATA_LIST> {
+interface SearchResultAction extends Action {
+  type: ActionTypes.PRODUCTS_DATA_LIST;
   keyword: string;
   products: Product[];
   totalPage: number;
   totalProducts: number;
 }
 
-type SearchActions = SearchAction | SearchResultAction;
+interface FilterProducts extends Action {
+  type: ActionTypes.PRODUCTS_FILTER;
+  showFilter: boolean;
+}
+
+type SearchActions = SearchAction | SearchResultAction | FilterProducts;
 
 const reducer = (state = initialState, action: SearchActions) => {
   if (action.type === ActionTypes.PRODUCTS_SEARCH) {
@@ -48,7 +47,8 @@ const reducer = (state = initialState, action: SearchActions) => {
       isFetching: true,
       keyword: action.keyword
     });
-  } else if (action.type === ActionTypes.PRODUCTS_DATA_LIST) {
+  }
+  if (action.type === ActionTypes.PRODUCTS_DATA_LIST) {
     if (state.isFetching && action.keyword === state.keyword) {
       return Object.assign({}, state, {
         isFetching: false,
@@ -59,6 +59,11 @@ const reducer = (state = initialState, action: SearchActions) => {
     }
     return Object.assign({}, state, {
       isFetching: false
+    });
+  }
+  if (action.type === ActionTypes.PRODUCTS_FILTER) {
+    return Object.assign({}, state, {
+      showFilter: action.showFilter
     });
   }
   return state;
