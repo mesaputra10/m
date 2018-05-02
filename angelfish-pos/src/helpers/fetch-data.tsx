@@ -133,6 +133,7 @@ export function fetchData(
 ): Promise<any> {
   return new Promise((resolve, reject) => {
     console.log(`Rfetch data ${url}`);
+    console.log(inputParams, 'inputParams');
     axios({
       baseURL,
       method,
@@ -166,12 +167,7 @@ export function fetchData(
   });
 }
 
-export async function searchProduct(
-  keyword: string,
-  //tokens: Tokens,
-  pageNumber = 1,
-  pageSize = 21
-) {
+export async function searchProduct(keyword: string, pageNumber = 1, pageSize = 21) {
   let tokens = await getUserToken();
   return fetchData(
     '/api/products/search',
