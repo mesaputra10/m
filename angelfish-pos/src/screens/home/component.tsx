@@ -95,6 +95,8 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                     Keyboard.dismiss();
                     this.onSubmitSearch(this.props.keyword);
                   }}
+                  autoCorrect={false}
+                  returnKeyType="search"
                 />
                 {!this.isKeywordEmpty() && (
                   <Button

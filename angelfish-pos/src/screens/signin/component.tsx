@@ -82,6 +82,7 @@ export class SigninComponent extends Component<any, any> {
                       this.setState({ password, buttonLoginDisabled });
                     }}
                     value={this.state.password}
+                    returnKeyType="go"
                   />
                   <TouchableWithoutFeedback
                     onPress={() => this.toggleShowPassword(this.state.securePassword)}
