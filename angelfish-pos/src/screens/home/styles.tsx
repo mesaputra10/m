@@ -119,6 +119,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: -2,
     marginRight: 8
+  },
+  buttonBottomContainer: {
+    justifyContent: 'center',
+    padding: 16,
+    alignItems: 'flex-end',
+    backgroundColor: 'rgba(248, 248, 248, 0.82)'
+  },
+  buttonBottomStyle: {
+    width: 275,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 

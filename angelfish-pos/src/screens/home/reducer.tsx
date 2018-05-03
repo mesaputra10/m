@@ -8,7 +8,9 @@ const initialState = {
   keyword: '',
   totalPage: 0,
   totalProducts: 0,
-  showFilter: false
+  showFilter: false,
+  selectedCategoryId: '',
+  selectedCategoryName: ''
 };
 
 export interface Product extends DataItem {
@@ -39,34 +41,77 @@ interface FilterProducts extends Action {
   showFilter: boolean;
 }
 
-type SearchActions = SearchAction | SearchResultAction | FilterProducts;
+interface ActionInterface extends Action {
+  type: ActionTypes.SET_FILTER_CATEGORY;
+  selectedCategoryId: string;
+  selectedCategoryName: string;
+}
+
+type SearchActions = SearchAction | SearchResultAction | FilterProducts | ActionInterface;
 
 const reducer = (state = initialState, action: SearchActions) => {
-  if (action.type === ActionTypes.PRODUCTS_SEARCH) {
-    return Object.assign({}, state, {
-      isFetching: true,
-      keyword: action.keyword
-    });
-  }
-  if (action.type === ActionTypes.PRODUCTS_DATA_LIST) {
-    if (state.isFetching && action.keyword === state.keyword) {
+  switch (action.type) {
+    case ActionTypes.SET_FILTER_CATEGORY: {
       return Object.assign({}, state, {
-        isFetching: false,
-        products: action.products,
-        totalPage: action.totalPage,
-        totalProducts: action.totalProducts
+        selectedCategoryId: action.selectedCategoryId,
+        selectedCategoryName: action.selectedCategoryName
       });
     }
-    return Object.assign({}, state, {
-      isFetching: false
-    });
+    case ActionTypes.PRODUCTS_SEARCH: {
+      return Object.assign({}, state, {
+        isFetching: true,
+        keyword: action.keyword
+      });
+    }
+    case ActionTypes.PRODUCTS_DATA_LIST: {
+      if (state.isFetching && action.keyword === state.keyword) {
+        return Object.assign({}, state, {
+          isFetching: false,
+          products: action.products,
+          totalPage: action.totalPage,
+          totalProducts: action.totalProducts
+        });
+      }
+      return Object.assign({}, state, {
+        isFetching: false
+      });
+    }
+    case ActionTypes.PRODUCTS_FILTER: {
+      return Object.assign({}, state, {
+        showFilter: action.showFilter
+      });
+    }
+    default: {
+      return state;
+    }
   }
-  if (action.type === ActionTypes.PRODUCTS_FILTER) {
-    return Object.assign({}, state, {
-      showFilter: action.showFilter
-    });
-  }
-  return state;
+
+  ///
+  // if (action.type === ActionTypes.PRODUCTS_SEARCH) {
+  //   return Object.assign({}, state, {
+  //     isFetching: true,
+  //     keyword: action.keyword
+  //   });
+  // }
+  // if (action.type === ActionTypes.PRODUCTS_DATA_LIST) {
+  //   if (state.isFetching && action.keyword === state.keyword) {
+  //     return Object.assign({}, state, {
+  //       isFetching: false,
+  //       products: action.products,
+  //       totalPage: action.totalPage,
+  //       totalProducts: action.totalProducts
+  //     });
+  //   }
+  //   return Object.assign({}, state, {
+  //     isFetching: false
+  //   });
+  // }
+  // if (action.type === ActionTypes.PRODUCTS_FILTER) {
+  //   return Object.assign({}, state, {
+  //     showFilter: action.showFilter
+  //   });
+  // }
+  // return state;
 };
 
 export default reducer;

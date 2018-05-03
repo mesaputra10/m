@@ -40,11 +40,6 @@ export class FilterProductsComponent extends Component<FilterProductsComponentPr
       });
     }
   };
-  getProducts = () => {
-    const { selectedCategoryId } = this.props;
-    const filterParams = { categoryId: selectedCategoryId };
-    this.props.search(this.props.keyword, filterParams);
-  };
   render() {
     if (this.state.filterPage) {
       const { selectedCategoryId, selectedCategoryName } = this.props;
@@ -74,13 +69,6 @@ export class FilterProductsComponent extends Component<FilterProductsComponentPr
               <Text style={styles.titleListSelectedDefault}>Semua</Text>
             </View>
             <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
-          </View>
-          <View style={{ padding: 16, alignItems: 'flex-end' }}>
-            <TouchableWithoutFeedback onPress={this.getProducts}>
-              <View style={{ backgroundColor: 'blue', padding: 16 }}>
-                <Text style={{ color: '#fff' }}>TERAPKAN</Text>
-              </View>
-            </TouchableWithoutFeedback>
           </View>
         </View>
       );

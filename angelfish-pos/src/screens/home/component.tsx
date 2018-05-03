@@ -29,6 +29,7 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   totalProducts: number;
   totalPage: number;
   setFilter: any;
+  selectedCategoryId: string;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
@@ -69,6 +70,11 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   cancelFilter = () => {
     this.props.setFilter(false);
+  };
+  getProducts = () => {
+    const { selectedCategoryId } = this.props;
+    const filterParams = { categoryId: selectedCategoryId };
+    this.props.search(this.props.keyword, filterParams);
   };
   render() {
     const products = this.props.products;
@@ -187,9 +193,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                 }}
               >
                 <View style={{ padding: 16, alignItems: 'flex-start' }}>
-                  {showFilter && (
-                    <FilterProducts search={this.props.search} keyword={this.props.keyword} />
-                  )}
+                  {showFilter && <FilterProducts />}
                   {!showFilter && (
                     <View>
                       <Text>Navigation For Testing:</Text>
@@ -203,17 +207,15 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                     </View>
                   )}
                 </View>
-                <View style={{ justifyContent: 'center', padding: 16, alignItems: 'flex-end' }}>
+                <View style={styles.buttonBottomContainer}>
                   {!showFilter && (
-                    <Button
-                      onPress={this._signOutAsync}
-                      style={{
-                        width: 300,
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}
-                    >
+                    <Button onPress={this._signOutAsync} style={styles.buttonBottomStyle}>
                       <Text>Logout</Text>
+                    </Button>
+                  )}
+                  {showFilter && (
+                    <Button onPress={this.getProducts} style={styles.buttonBottomStyle}>
+                      <Text>Terapkan</Text>
                     </Button>
                   )}
                 </View>

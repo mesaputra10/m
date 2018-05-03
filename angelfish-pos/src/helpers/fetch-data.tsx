@@ -166,6 +166,7 @@ export async function searchProduct(
   pageSize = 21
 ) {
   const categoryId = filterParams.categoryId === undefined ? '' : filterParams.categoryId;
+  console.log(categoryId, 'filter params categoryId');
   let tokens = await getUserToken();
   return fetchData(
     '/api/products/search',
