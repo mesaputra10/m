@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import config from '../../config';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -27,13 +28,13 @@ const styles = StyleSheet.create({
     width: 400,
     height: 313,
     borderRadius: 12,
-    backgroundColor: 'rgb(255, 255, 255)'
+    backgroundColor: config.color.white
   },
   fieldContainer: {
     alignItems: 'center',
     width: '100%',
     borderWidth: 1,
-    borderColor: 'rgb(193, 195, 201)',
+    borderColor: config.color.border,
     borderRadius: 5
   },
   loginHeaderContainer: {
@@ -48,13 +49,13 @@ const styles = StyleSheet.create({
     padding: 16,
     width: '85%',
     fontSize: 14,
-    color: 'rgba(0, 0, 0, 0.87)'
+    color: config.color.text
   },
   inputEmailContainer: {
     height: 52,
     width: '100%',
     borderBottomWidth: 1,
-    borderColor: 'rgb(193, 195, 201)'
+    borderColor: config.color.border
   },
   inputPasswordContainer: {
     height: 52,
@@ -76,7 +77,7 @@ const styles = StyleSheet.create({
     width: 336,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgb(47, 120, 207)'
+    backgroundColor: config.color.blue
   },
   buttonLoginContainerDisabled: {
     borderRadius: 5,
@@ -86,7 +87,7 @@ const styles = StyleSheet.create({
     width: 336,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgb(189, 189, 189)'
+    backgroundColor: config.color.buttonGrey
   },
   buttonLoginText: {
     fontSize: 18,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   buttonLoginTextDisabled: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'rgb(151, 151, 152)'
+    color: config.color.textGrey
   }
 });
 

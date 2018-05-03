@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import config from '../../config';
 
 export const styles = StyleSheet.create({
   container: {
@@ -10,7 +11,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderColor: 'rgb(193, 195, 201)'
+    borderColor: config.color.border
   },
   searchResultListItemLeft: {
     flex: 2
@@ -31,7 +32,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     textDecorationLine: 'line-through',
     paddingRight: 5,
-    color: 'rgba(0, 0, 0, 0.38)'
+    color: config.color.grey
   },
   searchResultPriceContainer: {
     flexDirection: 'row',

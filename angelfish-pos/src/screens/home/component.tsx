@@ -7,7 +7,8 @@ import {
   Keyboard,
   TextInput,
   Dimensions,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Container, Header, Content, Item, Input, Icon, Button, Text } from 'native-base';
@@ -139,7 +140,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                     this.props.setFilter(false);
                   }}
                 >
-                  <Text>Batal</Text>
+                  <Text style={styles.searchCancelText}>Batal</Text>
                 </Button>
               )}
             </Grid>
@@ -200,25 +201,37 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                     <View>
                       <Text>Navigation For Testing:</Text>
                       <View style={{ paddingVertical: 5 }} />
-                      <Button
-                        primary
+                      <TouchableWithoutFeedback
                         onPress={() => this.props.navigation.navigate('PageServerError')}
                       >
-                        <Text> Page Server Error </Text>
-                      </Button>
+                        <View style={styles.buttonBottomStyle}>
+                          <Text style={styles.buttonBottomText}>Page Server Error</Text>
+                        </View>
+                      </TouchableWithoutFeedback>
                     </View>
                   )}
                 </View>
                 <View style={styles.buttonBottomContainer}>
                   {!showFilter && (
-                    <Button onPress={this._signOutAsync} style={styles.buttonBottomStyle}>
-                      <Text>Logout</Text>
-                    </Button>
+                    <TouchableWithoutFeedback
+                      onPress={() =>
+                        Alert.alert('Konfirmasi!', 'Apakah anda yakin akan keluar?', [
+                          { text: 'Ya', onPress: () => this._signOutAsync() },
+                          { text: 'Tidak' }
+                        ])
+                      }
+                    >
+                      <View style={styles.buttonBottomStyle}>
+                        <Text style={styles.buttonBottomText}>LOGOUT</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
                   )}
                   {showFilter && (
-                    <Button onPress={this.getProducts} style={styles.buttonBottomStyle}>
-                      <Text>TERAPKAN</Text>
-                    </Button>
+                    <TouchableWithoutFeedback onPress={this.getProducts}>
+                      <View style={styles.buttonBottomStyle}>
+                        <Text style={styles.buttonBottomText}>TERAPKAN</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
                   )}
                 </View>
               </View>
