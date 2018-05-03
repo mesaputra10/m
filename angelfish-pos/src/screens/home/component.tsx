@@ -6,7 +6,8 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TextInput,
-  Dimensions
+  Dimensions,
+  Image
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Container, Header, Content, Item, Input, Icon, Button, Text } from 'native-base';
@@ -17,6 +18,8 @@ import { Product } from '../home/reducer';
 import { SearchResultList } from '../../components/search-result-list';
 import { ListProducts } from '../../components/list-products';
 import { ListCategories } from '../../components/list-categories';
+import { FilterProducts } from '../../components/filter-products';
+import store from '../../store/store';
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   search: any;
@@ -25,12 +28,13 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   products: Product[];
   totalProducts: number;
   totalPage: number;
+  setFilter: any;
+  selectedCategoryId: string;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
   static navigationOptions = {
-    header: null,
-    keyword: ''
+    header: null
   };
   constructor(props: HomeComponentProps) {
     super(props);
@@ -46,16 +50,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   onChangeTextSearch = text => {
     if (text.length >= 3) {
-      // this.props.search(text).then(() => {
-      //   this.setState({
-      //     keyword: text,
-      //     searchAutoComplete: true,
-      //     searchResults: false,
-      //     showCancelButton: true
-      //   });
-      // });
       this.setState({
-        //keyword: text,
         searchAutoComplete: true,
         searchResults: false,
         showCancelButton: true
@@ -73,8 +68,18 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   isKeywordEmpty = () => {
     return this.props.keyword === undefined || this.props.keyword.length === 0;
   };
+  cancelFilter = () => {
+    this.props.setFilter(false);
+  };
+  getProducts = () => {
+    const { selectedCategoryId } = this.props;
+    const filterParams = { categoryId: selectedCategoryId };
+    this.props.search(this.props.keyword, filterParams);
+  };
   render() {
     const products = this.props.products;
+    const showFilter = store.getState().listProductsReducer.showFilter;
+
     return (
       <Container>
         <Header style={styles.headerStyle} searchBar>
@@ -90,6 +95,8 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                     Keyboard.dismiss();
                     this.onSubmitSearch(this.props.keyword);
                   }}
+                  autoCorrect={false}
+                  returnKeyType="search"
                 />
                 {!this.isKeywordEmpty() && (
                   <Button
@@ -104,7 +111,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                       });
                     }}
                   >
-                    <Icon name="ios-close-circle" color="grey" />
+                    <Image source={require('./assets/cancel.png')} style={styles.iconCancel} />
                   </Button>
                 )}
               </Item>
@@ -117,7 +124,6 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                     this.setState({
                       searchAutoComplete: false,
                       searchResults: false,
-                      //keyword: '',
                       showCancelButton: false
                     });
                   }}
@@ -128,9 +134,30 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             </Grid>
           </Col>
           <Col style={styles.headerColRight} size={30}>
-            <View style={styles.headerRightContainer}>
-              <Text style={styles.headerRightText}>Keranjang</Text>
-            </View>
+            {!showFilter && (
+              <View style={styles.headerRightContainer}>
+                <Text style={styles.headerRightText}>Keranjang</Text>
+              </View>
+            )}
+            {showFilter && (
+              <View style={styles.headerRightFilterContainer}>
+                <TouchableWithoutFeedback onPress={this.cancelFilter}>
+                  <View>
+                    <Text
+                      style={{
+                        justifyContent: 'center',
+                        paddingTop: 16,
+                        color: 'rgb(47, 120, 207)'
+                      }}
+                    >
+                      Batal
+                    </Text>
+                  </View>
+                </TouchableWithoutFeedback>
+                <Text style={styles.headerRightText}>Filter</Text>
+                <Text style={{ justifyContent: 'center', paddingTop: 16 }}>Hapus</Text>
+              </View>
+            )}
           </Col>
         </Header>
         <Container>
@@ -168,23 +195,31 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                 }}
               >
                 <View style={{ padding: 16, alignItems: 'flex-start' }}>
-                  <Text>Navigation For Testing:</Text>
-                  <View style={{ paddingVertical: 5 }} />
-                  <Button primary onPress={() => this.props.navigation.navigate('PageServerError')}>
-                    <Text> Page Server Error </Text>
-                  </Button>
+                  {showFilter && <FilterProducts />}
+                  {!showFilter && (
+                    <View>
+                      <Text>Navigation For Testing:</Text>
+                      <View style={{ paddingVertical: 5 }} />
+                      <Button
+                        primary
+                        onPress={() => this.props.navigation.navigate('PageServerError')}
+                      >
+                        <Text> Page Server Error </Text>
+                      </Button>
+                    </View>
+                  )}
                 </View>
-                <View style={{ justifyContent: 'center', padding: 16, alignItems: 'flex-end' }}>
-                  <Button
-                    onPress={this._signOutAsync}
-                    style={{
-                      width: 300,
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <Text>Logout</Text>
-                  </Button>
+                <View style={styles.buttonBottomContainer}>
+                  {!showFilter && (
+                    <Button onPress={this._signOutAsync} style={styles.buttonBottomStyle}>
+                      <Text>Logout</Text>
+                    </Button>
+                  )}
+                  {showFilter && (
+                    <Button onPress={this.getProducts} style={styles.buttonBottomStyle}>
+                      <Text>Terapkan</Text>
+                    </Button>
+                  )}
                 </View>
               </View>
             </Col>

@@ -64,6 +64,15 @@ export const styles = StyleSheet.create({
   loadStructure: {
     width: '100%',
     height: '80%'
+  },
+  filterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  filterText: {
+    fontSize: 14,
+    color: 'rgba(0, 0, 0, 0.87)'
   }
 });
 export default styles;

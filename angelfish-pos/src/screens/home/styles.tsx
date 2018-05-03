@@ -31,6 +31,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  headerRightFilterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16
+  },
   headerRightText: {
     fontWeight: 'bold',
     paddingTop: 16
@@ -108,6 +114,22 @@ const styles = StyleSheet.create({
     color: '#000',
     fontWeight: '500',
     fontSize: 16
+  },
+  iconCancel: {
+    alignItems: 'center',
+    marginTop: -2,
+    marginRight: 8
+  },
+  buttonBottomContainer: {
+    justifyContent: 'center',
+    padding: 16,
+    alignItems: 'flex-end',
+    backgroundColor: 'rgba(248, 248, 248, 0.82)'
+  },
+  buttonBottomStyle: {
+    width: 275,
+    alignItems: 'center',
+    justifyContent: 'center'
   }
 });
 

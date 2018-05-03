@@ -2,21 +2,13 @@ import ActionTypes from '../../store/action-types';
 import { Action } from 'redux';
 import { DataItem } from 'antd-mobile/lib/grid/PropsType';
 
-// type productType = {
-//   productId: number;
-//   productName: string;
-//   variantImageThumbnail: string;
-//   variantSkuNo: number;
-//   variantPrice: number;
-//   offerDiscountPercentage: number;
-//   offerSpecialPrice: number;
-// };
 const initialState = {
   products: [],
   isFetching: false,
   keyword: '',
   totalPage: 0,
-  totalProducts: 0
+  totalProducts: 0,
+  showFilter: false
 };
 
 export interface Product extends DataItem {
@@ -27,41 +19,85 @@ export interface Product extends DataItem {
   variantPrice: number;
   variantSkuNo: string;
   variantImageThumbnail: string;
+  categories: any[];
 }
 
-interface SearchAction extends Action<ActionTypes.PRODUCTS_SEARCH> {
+interface SearchAction extends Action {
+  type: ActionTypes.PRODUCTS_SEARCH;
   keyword: string;
 }
 
-interface SearchResultAction extends Action<ActionTypes.PRODUCTS_DATA_LIST> {
+interface SearchResultAction extends Action {
+  type: ActionTypes.PRODUCTS_DATA_LIST;
   keyword: string;
   products: Product[];
   totalPage: number;
   totalProducts: number;
 }
 
-type SearchActions = SearchAction | SearchResultAction;
+interface FilterProducts extends Action {
+  type: ActionTypes.PRODUCTS_FILTER;
+  showFilter: boolean;
+}
 
-const reducer = (state = initialState, action: SearchActions) => {
-  if (action.type === ActionTypes.PRODUCTS_SEARCH) {
-    return Object.assign({}, state, {
-      isFetching: true,
-      keyword: action.keyword
-    });
-  } else if (action.type === ActionTypes.PRODUCTS_DATA_LIST) {
-    if (state.isFetching && action.keyword === state.keyword) {
+interface ActionInterface extends Action {
+  type: ActionTypes.SET_FILTER_CATEGORY;
+  selectedCategoryId: string;
+  selectedCategoryName: string;
+}
+
+interface ActionCategoriesInterface extends Action {
+  type: ActionTypes.CATEGORIES_LIST;
+  categories: any[];
+}
+
+const reducer = (
+  state = initialState,
+  action:
+    | SearchAction
+    | SearchResultAction
+    | FilterProducts
+    | ActionInterface
+    | ActionCategoriesInterface
+) => {
+  switch (action.type) {
+    case ActionTypes.PRODUCTS_SEARCH: {
       return Object.assign({}, state, {
-        isFetching: false,
-        products: action.products,
-        totalPage: action.totalPage,
-        totalProducts: action.totalProducts
+        isFetching: true,
+        keyword: action.keyword
       });
     }
-    return Object.assign({}, state, {
-      isFetching: false
-    });
+    case ActionTypes.PRODUCTS_DATA_LIST: {
+      if (state.isFetching && action.keyword === state.keyword) {
+        return Object.assign({}, state, {
+          isFetching: false,
+          products: action.products,
+          totalPage: action.totalPage,
+          totalProducts: action.totalProducts
+        });
+      }
+      return Object.assign({}, state, {
+        isFetching: false
+      });
+    }
+    case ActionTypes.PRODUCTS_FILTER: {
+      return Object.assign({}, state, {
+        showFilter: action.showFilter
+      });
+    }
+    case ActionTypes.SET_FILTER_CATEGORY: {
+      return Object.assign({}, state, {
+        selectedCategoryId: action.selectedCategoryId,
+        selectedCategoryName: action.selectedCategoryName
+      });
+    }
+    case ActionTypes.CATEGORIES_LIST: {
+      return { ...state, categories: action.categories };
+    }
+    default: {
+      return state;
+    }
   }
-  return state;
 };
 
 export default reducer;

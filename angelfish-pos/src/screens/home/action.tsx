@@ -9,9 +9,9 @@ export function startSearch(keyword) {
   };
 }
 
-export const fetchSearch = (keyword: string) => dispatch => {
+export const fetchSearch = (keyword: string, filterParams: any = {}) => dispatch => {
   dispatch(startSearch(keyword));
-  return searchProduct(keyword).then(data => {
+  return searchProduct(keyword, filterParams).then(data => {
     dispatch(productsData(keyword, data));
   });
 };
@@ -24,6 +24,19 @@ export const productsData = (keyword, data) => ({
   totalProducts: data.total.totalCount
 });
 
-export default {
-  fetchSearch
+export const setFilter = data => dispatch => {
+  if (data === false) {
+    dispatch(setDefaultFilterCategory());
+  }
+  dispatch({
+    type: ActionTypes.PRODUCTS_FILTER,
+    showFilter: data
+  });
 };
+
+export const setDefaultFilterCategory = () => dispatch =>
+  dispatch({
+    type: ActionTypes.SET_FILTER_CATEGORY,
+    selectedCategoryId: '',
+    selectedCategoryName: ''
+  });
