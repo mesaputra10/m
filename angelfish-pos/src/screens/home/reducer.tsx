@@ -19,6 +19,7 @@ export interface Product extends DataItem {
   variantPrice: number;
   variantSkuNo: string;
   variantImageThumbnail: string;
+  categories: any[];
 }
 
 interface SearchAction extends Action {
@@ -45,40 +46,58 @@ interface ActionInterface extends Action {
   selectedCategoryName: string;
 }
 
-type SearchActions = SearchAction | SearchResultAction | FilterProducts | ActionInterface;
+interface ActionCategoriesInterface extends Action {
+  type: ActionTypes.CATEGORIES_LIST;
+  categories: any[];
+}
 
-const reducer = (state = initialState, action: SearchActions) => {
-  if (action.type === ActionTypes.PRODUCTS_SEARCH) {
-    return Object.assign({}, state, {
-      isFetching: true,
-      keyword: action.keyword
-    });
-  }
-  if (action.type === ActionTypes.PRODUCTS_DATA_LIST) {
-    if (state.isFetching && action.keyword === state.keyword) {
+const reducer = (
+  state = initialState,
+  action:
+    | SearchAction
+    | SearchResultAction
+    | FilterProducts
+    | ActionInterface
+    | ActionCategoriesInterface
+) => {
+  switch (action.type) {
+    case ActionTypes.PRODUCTS_SEARCH: {
       return Object.assign({}, state, {
-        isFetching: false,
-        products: action.products,
-        totalPage: action.totalPage,
-        totalProducts: action.totalProducts
+        isFetching: true,
+        keyword: action.keyword
       });
     }
-    return Object.assign({}, state, {
-      isFetching: false
-    });
+    case ActionTypes.PRODUCTS_DATA_LIST: {
+      if (state.isFetching && action.keyword === state.keyword) {
+        return Object.assign({}, state, {
+          isFetching: false,
+          products: action.products,
+          totalPage: action.totalPage,
+          totalProducts: action.totalProducts
+        });
+      }
+      return Object.assign({}, state, {
+        isFetching: false
+      });
+    }
+    case ActionTypes.PRODUCTS_FILTER: {
+      return Object.assign({}, state, {
+        showFilter: action.showFilter
+      });
+    }
+    case ActionTypes.SET_FILTER_CATEGORY: {
+      return Object.assign({}, state, {
+        selectedCategoryId: action.selectedCategoryId,
+        selectedCategoryName: action.selectedCategoryName
+      });
+    }
+    case ActionTypes.CATEGORIES_LIST: {
+      return { ...state, categories: action.categories };
+    }
+    default: {
+      return state;
+    }
   }
-  if (action.type === ActionTypes.PRODUCTS_FILTER) {
-    return Object.assign({}, state, {
-      showFilter: action.showFilter
-    });
-  }
-  if (action.type === ActionTypes.SET_FILTER_CATEGORY) {
-    return Object.assign({}, state, {
-      selectedCategoryId: action.selectedCategoryId,
-      selectedCategoryName: action.selectedCategoryName
-    });
-  }
-  return state;
 };
 
 export default reducer;

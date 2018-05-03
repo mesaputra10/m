@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { FilterProductsComponent } from './component';
 import { setFilterCategory, fetchCategories } from './action';
 
-const mapStateToProps = (state: any) => state.filterProductsReducer;
+const mapStateToProps = (state: any) => state.homeReducer;
 
 const mapDispatchToProps = dispatch => ({
   setFilterCategory: (selectedCategoryId, selectedCategoryName) =>

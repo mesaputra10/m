@@ -3,7 +3,7 @@ import { HomeComponent } from './component';
 import ActionTypes from '../../store/action-types';
 import { fetchSearch, setFilter } from './action';
 
-const mapStateToProps = (state: any) => state.searchReducer;
+const mapStateToProps = (state: any) => state.homeReducer;
 
 const mapDispatchToProps = dispatch => ({
   search: (keyword, filterParams) => dispatch(fetchSearch(keyword, filterParams)),

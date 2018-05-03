@@ -24,13 +24,19 @@ export const productsData = (keyword, data) => ({
   totalProducts: data.total.totalCount
 });
 
-export const setFilter = data => dispatch =>
+export const setFilter = data => dispatch => {
+  if (data === false) {
+    dispatch(setDefaultFilterCategory());
+  }
   dispatch({
     type: ActionTypes.PRODUCTS_FILTER,
     showFilter: data
   });
-
-export default {
-  fetchSearch,
-  setFilter
 };
+
+export const setDefaultFilterCategory = () => dispatch =>
+  dispatch({
+    type: ActionTypes.SET_FILTER_CATEGORY,
+    selectedCategoryId: '',
+    selectedCategoryName: ''
+  });
