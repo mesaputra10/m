@@ -8,7 +8,11 @@ const initialState = {
   keyword: '',
   totalPage: 0,
   totalProducts: 0,
-  showFilter: false
+  showFilter: false,
+  selectedCategoryId: '',
+  selectedCategoryName: '',
+  selectedBrandId: 0,
+  selectedBrandName: ''
 };
 
 export interface Product extends DataItem {
@@ -20,6 +24,7 @@ export interface Product extends DataItem {
   variantSkuNo: string;
   variantImageThumbnail: string;
   categories: any[];
+  brands: any[];
 }
 
 interface SearchAction extends Action {
@@ -33,6 +38,7 @@ interface SearchResultAction extends Action {
   products: Product[];
   totalPage: number;
   totalProducts: number;
+  brands: any[];
 }
 
 interface FilterProducts extends Action {
@@ -40,7 +46,7 @@ interface FilterProducts extends Action {
   showFilter: boolean;
 }
 
-interface ActionInterface extends Action {
+interface ActionFilterCategoryInterface extends Action {
   type: ActionTypes.SET_FILTER_CATEGORY;
   selectedCategoryId: string;
   selectedCategoryName: string;
@@ -51,14 +57,21 @@ interface ActionCategoriesInterface extends Action {
   categories: any[];
 }
 
+interface ActionFilterBrandInterface extends Action {
+  type: ActionTypes.SET_FILTER_BRAND;
+  selectedBrandId: number;
+  selectedBrandName: string;
+}
+
 const reducer = (
   state = initialState,
   action:
     | SearchAction
     | SearchResultAction
     | FilterProducts
-    | ActionInterface
+    | ActionFilterCategoryInterface
     | ActionCategoriesInterface
+    | ActionFilterBrandInterface
 ) => {
   switch (action.type) {
     case ActionTypes.PRODUCTS_SEARCH: {
@@ -73,7 +86,8 @@ const reducer = (
           isFetching: false,
           products: action.products,
           totalPage: action.totalPage,
-          totalProducts: action.totalProducts
+          totalProducts: action.totalProducts,
+          brands: action.brands
         });
       }
       return Object.assign({}, state, {
@@ -93,6 +107,12 @@ const reducer = (
     }
     case ActionTypes.CATEGORIES_LIST: {
       return { ...state, categories: action.categories };
+    }
+    case ActionTypes.SET_FILTER_BRAND: {
+      return Object.assign({}, state, {
+        selectedBrandId: action.selectedBrandId,
+        selectedBrandName: action.selectedBrandName
+      });
     }
     default: {
       return state;

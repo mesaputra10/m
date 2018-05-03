@@ -1,13 +1,15 @@
 import { connect } from 'react-redux';
 import { FilterProductsComponent } from './component';
-import { setFilterCategory, fetchCategories } from './action';
+import { setFilterCategory, fetchCategories, setFilterBrand } from './action';
 
 const mapStateToProps = (state: any) => state.homeReducer;
 
 const mapDispatchToProps = dispatch => ({
+  getCategories: () => dispatch(fetchCategories()),
   setFilterCategory: (selectedCategoryId, selectedCategoryName) =>
     dispatch(setFilterCategory(selectedCategoryId, selectedCategoryName)),
-  getCategories: (parentId: undefined) => dispatch(fetchCategories(parentId))
+  setFilterBrand: (selectedBrandId, selectedBrandName) =>
+    dispatch(setFilterBrand(selectedBrandId, selectedBrandName))
 });
 
 export const FilterProductsContainer = connect(mapStateToProps, mapDispatchToProps)(

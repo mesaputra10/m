@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
 import { HomeComponent } from './component';
 import ActionTypes from '../../store/action-types';
-import { fetchSearch, setFilter } from './action';
+import { fetchSearch, setFilter, setRemoveFilter } from './action';
 
 const mapStateToProps = (state: any) => state.homeReducer;
 
 const mapDispatchToProps = dispatch => ({
   search: (keyword, filterParams) => dispatch(fetchSearch(keyword, filterParams)),
   emptySearch: () => dispatch({ type: ActionTypes.PRODUCTS_SEARCH, keyword: '' }),
-  setFilter: value => dispatch(setFilter(value))
+  setFilter: value => dispatch(setFilter(value)),
+  setRemoveFilter: () => dispatch(setRemoveFilter())
 });
 
 export const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(HomeComponent);

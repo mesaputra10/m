@@ -51,6 +51,12 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderLeftColor: 'grey'
   },
+  contentColRightContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center'
+  },
   contentContainer: {
     paddingTop: 10
   },
@@ -130,6 +136,15 @@ const styles = StyleSheet.create({
     width: 275,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  filterCancelText: {
+    justifyContent: 'center',
+    paddingTop: 16,
+    color: 'rgb(47, 120, 207)'
+  },
+  filterDeleteText: {
+    justifyContent: 'center',
+    paddingTop: 16
   }
 });
 
