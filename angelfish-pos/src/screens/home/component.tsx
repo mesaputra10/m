@@ -7,7 +7,8 @@ import {
   Keyboard,
   TextInput,
   Dimensions,
-  Image
+  Image,
+  Alert
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import { Container, Header, Content, Item, Input, Icon, Button, Text } from 'native-base';
@@ -30,6 +31,13 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   totalPage: number;
   setFilter: any;
   selectedCategoryId: string;
+  selectedCategoryName: string;
+  showFilter: boolean;
+  brands: any[];
+  selectedBrandId: string;
+  selectedBrandName: string;
+  setRemoveFilter: any;
+  navigation: any;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
@@ -71,14 +79,17 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   cancelFilter = () => {
     this.props.setFilter(false);
   };
+  deleteFilter = () => {
+    this.props.setRemoveFilter();
+  };
   getProducts = () => {
-    const { selectedCategoryId } = this.props;
-    const filterParams = { categoryId: selectedCategoryId };
+    const { selectedCategoryId, selectedBrandId } = this.props;
+    const filterParams = { categoryId: selectedCategoryId, brandId: selectedBrandId };
     this.props.search(this.props.keyword, filterParams);
+    this.props.setFilter(false);
   };
   render() {
-    const products = this.props.products;
-    const showFilter = store.getState().listProductsReducer.showFilter;
+    const { products, brands, showFilter } = this.props;
 
     return (
       <Container>
@@ -126,9 +137,10 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                       searchResults: false,
                       showCancelButton: false
                     });
+                    this.props.setFilter(false);
                   }}
                 >
-                  <Text>Batal</Text>
+                  <Text style={styles.searchCancelText}>Batal</Text>
                 </Button>
               )}
             </Grid>
@@ -143,19 +155,15 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
               <View style={styles.headerRightFilterContainer}>
                 <TouchableWithoutFeedback onPress={this.cancelFilter}>
                   <View>
-                    <Text
-                      style={{
-                        justifyContent: 'center',
-                        paddingTop: 16,
-                        color: 'rgb(47, 120, 207)'
-                      }}
-                    >
-                      Batal
-                    </Text>
+                    <Text style={styles.filterCancelText}>Batal</Text>
                   </View>
                 </TouchableWithoutFeedback>
                 <Text style={styles.headerRightText}>Filter</Text>
-                <Text style={{ justifyContent: 'center', paddingTop: 16 }}>Hapus</Text>
+                <TouchableWithoutFeedback onPress={this.deleteFilter}>
+                  <View>
+                    <Text style={styles.filterDeleteText}>Hapus</Text>
+                  </View>
+                </TouchableWithoutFeedback>
               </View>
             )}
           </Col>
@@ -186,39 +194,44 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
               )}
             </Col>
             <Col style={styles.contentColRight} size={30}>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'column',
-                  justifyContent: 'space-between',
-                  alignItems: 'center'
-                }}
-              >
+              <View style={styles.contentColRightContainer}>
                 <View style={{ padding: 16, alignItems: 'flex-start' }}>
                   {showFilter && <FilterProducts />}
                   {!showFilter && (
                     <View>
                       <Text>Navigation For Testing:</Text>
                       <View style={{ paddingVertical: 5 }} />
-                      <Button
-                        primary
+                      <TouchableWithoutFeedback
                         onPress={() => this.props.navigation.navigate('PageServerError')}
                       >
-                        <Text> Page Server Error </Text>
-                      </Button>
+                        <View style={styles.buttonBottomStyle}>
+                          <Text style={styles.buttonBottomText}>Page Server Error</Text>
+                        </View>
+                      </TouchableWithoutFeedback>
                     </View>
                   )}
                 </View>
                 <View style={styles.buttonBottomContainer}>
                   {!showFilter && (
-                    <Button onPress={this._signOutAsync} style={styles.buttonBottomStyle}>
-                      <Text>Logout</Text>
-                    </Button>
+                    <TouchableWithoutFeedback
+                      onPress={() =>
+                        Alert.alert('Konfirmasi!', 'Apakah anda yakin akan keluar?', [
+                          { text: 'Ya', onPress: () => this._signOutAsync() },
+                          { text: 'Tidak' }
+                        ])
+                      }
+                    >
+                      <View style={styles.buttonBottomStyle}>
+                        <Text style={styles.buttonBottomText}>LOGOUT</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
                   )}
                   {showFilter && (
-                    <Button onPress={this.getProducts} style={styles.buttonBottomStyle}>
-                      <Text>Terapkan</Text>
-                    </Button>
+                    <TouchableWithoutFeedback onPress={this.getProducts}>
+                      <View style={styles.buttonBottomStyle}>
+                        <Text style={styles.buttonBottomText}>TERAPKAN</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
                   )}
                 </View>
               </View>

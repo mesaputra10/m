@@ -12,6 +12,9 @@ interface FilterProductsComponentProps {
   categories: any;
   search: any;
   keyword: string;
+  brands: any;
+  setFilterBrand: any;
+  selectedBrandName: string;
 }
 
 export class FilterProductsComponent extends Component<FilterProductsComponentProps, any> {
@@ -19,16 +22,22 @@ export class FilterProductsComponent extends Component<FilterProductsComponentPr
     super(props);
     this.state = {
       filterPage: true,
+      dataCategories: [],
       childCategory: false,
-      dataCategories: []
+      dataBrands: [],
+      childBrand: false
     };
   }
   componentDidMount() {
     this.props.getCategories();
   }
-  clickCategories = async () => {
-    const dataCategories = this.props.categories;
-    this.setState({ dataCategories, filterPage: false, childCategory: true });
+  clickCategories = () => {
+    this.setState({
+      dataCategories: this.props.categories,
+      filterPage: false,
+      childCategory: true,
+      childBrand: false
+    });
   };
   clickChildCategory = (category, children) => {
     if (children !== undefined && children.length > 0) {
@@ -36,13 +45,31 @@ export class FilterProductsComponent extends Component<FilterProductsComponentPr
     } else {
       this.props.setFilterCategory(category.id, category.name);
       this.setState({
-        filterPage: true
+        filterPage: true,
+        childCategory: false,
+        childBrand: false
       });
     }
   };
+  clickBrands = () => {
+    this.setState({
+      dataBrands: this.props.brands,
+      filterPage: false,
+      childBrand: true,
+      childCategory: false
+    });
+  };
+  clickChildBrand = (brandId, brandName) => {
+    this.props.setFilterBrand(brandId, brandName);
+    this.setState({
+      filterPage: true,
+      childBrand: false,
+      childCategory: false
+    });
+  };
   render() {
+    const { selectedCategoryId, selectedCategoryName, selectedBrandName, categories } = this.props;
     if (this.state.filterPage) {
-      const { selectedCategoryId, selectedCategoryName } = this.props;
       return (
         <View style={styles.container}>
           <TouchableWithoutFeedback onPress={this.clickCategories}>
@@ -52,17 +79,27 @@ export class FilterProductsComponent extends Component<FilterProductsComponentPr
                 {selectedCategoryName && (
                   <Text style={styles.titleListSelected}>{selectedCategoryName}</Text>
                 )}
+                {selectedCategoryName === '' && (
+                  <Text style={styles.titleListSelectedDefault}>Semua</Text>
+                )}
               </View>
               <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
             </View>
           </TouchableWithoutFeedback>
-          <View style={styles.listContainer}>
-            <View style={styles.listLeft}>
-              <Text style={styles.titleListText}>Brand</Text>
-              <Text style={styles.titleListSelectedDefault}>Semua</Text>
+          <TouchableWithoutFeedback onPress={this.clickBrands}>
+            <View style={styles.listContainer}>
+              <View style={styles.listLeft}>
+                <Text style={styles.titleListText}>Brand</Text>
+                {selectedBrandName && (
+                  <Text style={styles.titleListSelected}>{selectedBrandName}</Text>
+                )}
+                {selectedBrandName === '' && (
+                  <Text style={styles.titleListSelectedDefault}>Semua</Text>
+                )}
+              </View>
+              <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
             </View>
-            <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
-          </View>
+          </TouchableWithoutFeedback>
           <View style={styles.listContainer}>
             <View style={styles.listLeft}>
               <Text style={styles.titleListText}>Harga</Text>
@@ -85,6 +122,27 @@ export class FilterProductsComponent extends Component<FilterProductsComponentPr
                 <View style={styles.listContainer}>
                   <View style={styles.listLeft}>
                     <Text style={styles.titleListText}>{category.name}</Text>
+                  </View>
+                  <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
+                </View>
+              </TouchableWithoutFeedback>
+            );
+          })}
+        </ScrollView>
+      );
+    }
+    if (this.state.childBrand) {
+      return (
+        <ScrollView style={styles.container}>
+          {this.state.dataBrands.map((brand, brandIndex) => {
+            return (
+              <TouchableWithoutFeedback
+                onPress={() => this.clickChildBrand(brand.aggrBrands, brand.brand)}
+                key={generateUniqKey(brandIndex)}
+              >
+                <View style={styles.listContainer}>
+                  <View style={styles.listLeft}>
+                    <Text style={styles.titleListText}>{brand.brand}</Text>
                   </View>
                   <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
                 </View>

@@ -1,5 +1,7 @@
 import Expo from 'expo';
 import { StyleSheet, Dimensions } from 'react-native';
+import config from '../../config';
+
 const heightScreen = Dimensions.get('window').height - 64;
 const styles = StyleSheet.create({
   container: {
@@ -42,14 +44,20 @@ const styles = StyleSheet.create({
     paddingTop: 16
   },
   contentColLeft: {
-    backgroundColor: '#fff',
+    backgroundColor: config.color.white,
     height: heightScreen
   },
   contentColRight: {
     backgroundColor: '#fff',
     height: heightScreen,
     borderLeftWidth: 1,
-    borderLeftColor: 'grey'
+    borderLeftColor: config.color.border
+  },
+  contentColRightContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   contentContainer: {
     paddingTop: 10
@@ -61,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textDecorationLine: 'line-through',
     paddingRight: 5,
-    color: 'rgba(0, 0, 0, 0.38)'
+    color: config.color.grey
   },
   searchResultPriceContainer: {
     flexDirection: 'row',
@@ -77,12 +85,12 @@ const styles = StyleSheet.create({
     paddingTop: 16
   },
   productItemContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: config.color.white,
     flex: 1,
     padding: 8
   },
   productItemBox: {
-    backgroundColor: '#fff',
+    backgroundColor: config.color.white,
     flex: 1,
     padding: 12.5
   },
@@ -103,18 +111,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     color: 'rgba(0, 0, 0, 0.87)'
   },
-  buttonBeliContainer: {
-    height: 40,
-    borderRadius: 3,
-    backgroundColor: 'rgb(255, 202, 4)',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  buttonBeliText: {
-    color: '#000',
-    fontWeight: '500',
-    fontSize: 16
-  },
   iconCancel: {
     alignItems: 'center',
     marginTop: -2,
@@ -124,12 +120,33 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 16,
     alignItems: 'flex-end',
-    backgroundColor: 'rgba(248, 248, 248, 0.82)'
+    backgroundColor: config.color.backgroundGrey
   },
   buttonBottomStyle: {
     width: 275,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: config.color.blue,
+    borderRadius: 5
+  },
+  buttonBottomText: {
+    color: config.color.white,
+    fontWeight: 'bold',
+    fontSize: 18,
+    padding: 10
+  },
+  filterCancelText: {
+    justifyContent: 'center',
+    paddingTop: 16,
+    color: config.color.blue
+  },
+  filterDeleteText: {
+    justifyContent: 'center',
+    paddingTop: 16
+  },
+  searchCancelText: {
+    color: config.color.blue,
+    fontSize: 17
   }
 });
 

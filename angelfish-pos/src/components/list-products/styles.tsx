@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+import config from '../../config';
+
 export const styles = StyleSheet.create({
   searchResultText: {
     fontSize: 16
@@ -7,7 +9,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     textDecorationLine: 'line-through',
     paddingRight: 5,
-    color: 'rgba(0, 0, 0, 0.38)'
+    color: config.color.textGrey
   },
   searchResultPriceContainer: {
     flexDirection: 'row',
@@ -23,12 +25,12 @@ export const styles = StyleSheet.create({
     paddingTop: 16
   },
   productItemContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: config.color.white,
     flex: 1,
     padding: 8
   },
   productItemBox: {
-    backgroundColor: '#fff',
+    backgroundColor: config.color.white,
     flex: 1,
     padding: 12.5
   },
@@ -47,18 +49,18 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     textAlign: 'left',
-    color: 'rgba(0, 0, 0, 0.87)'
+    color: config.color.text
   },
   buttonBeliContainer: {
     height: 40,
     borderRadius: 3,
-    backgroundColor: 'rgb(255, 202, 4)',
+    backgroundColor: config.color.yellow,
     justifyContent: 'center',
     alignItems: 'center'
   },
   buttonBeliText: {
-    color: '#000',
-    fontWeight: '500',
+    color: config.color.text,
+    fontWeight: 'bold',
     fontSize: 16
   },
   loadStructure: {
@@ -72,7 +74,7 @@ export const styles = StyleSheet.create({
   },
   filterText: {
     fontSize: 14,
-    color: 'rgba(0, 0, 0, 0.87)'
+    color: config.color.text
   }
 });
 export default styles;

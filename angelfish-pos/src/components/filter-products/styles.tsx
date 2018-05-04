@@ -1,4 +1,6 @@
 import { StyleSheet } from 'react-native';
+import config from '../../config';
+
 export const styles = StyleSheet.create({
   container: {
     width: 300,
@@ -27,7 +29,7 @@ export const styles = StyleSheet.create({
     fontSize: 12
   },
   titleListSelected: {
-    color: 'rgb(47, 120, 207)'
+    color: config.color.blue
   }
 });
 export default styles;

@@ -166,16 +166,18 @@ export async function searchProduct(
   pageSize = 21
 ) {
   const categoryId = filterParams.categoryId === undefined ? '' : filterParams.categoryId;
-  console.log(categoryId, 'filter params categoryId');
+  const brandId = filterParams.brandId === undefined ? '' : filterParams.brandId;
   let tokens = await getUserToken();
   return fetchData(
     '/api/products/search',
     'GET',
     {
+      include: 'facets',
       'filter[query]': keyword,
       'page[size]': pageSize,
       'page[number]': pageNumber,
-      'filter[categoryId]': categoryId
+      'filter[categoryId]': categoryId,
+      'filter[brandId]': brandId
     },
     tokens
   );

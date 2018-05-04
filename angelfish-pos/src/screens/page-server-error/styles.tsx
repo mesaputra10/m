@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import config from '../../config';
 
 const styles = StyleSheet.create({
   container: {
@@ -6,7 +7,7 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#fff'
+    backgroundColor: config.color.white
   },
   imageContainer: {
     paddingBottom: 24
@@ -32,13 +33,13 @@ const styles = StyleSheet.create({
     width: 128,
     height: 40,
     borderRadius: 5,
-    backgroundColor: 'rgb(47, 120, 207)'
+    backgroundColor: config.color.blue
   },
   buttonText: {
     fontSize: 16,
     fontWeight: '500',
     textAlign: 'center',
-    color: 'rgb(255, 255, 255)'
+    color: config.color.white
   }
 });
 export default styles;

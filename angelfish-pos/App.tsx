@@ -40,7 +40,10 @@ const RootNavigator = StackNavigator(
     PageServerError: { screen: PageServerError }
   },
   {
-    initialRouteName: 'PageLanding'
+    initialRouteName: 'PageLanding',
+    navigationOptions: {
+      gesturesEnabled: false
+    }
   }
 );
 
