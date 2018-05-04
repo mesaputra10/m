@@ -65,10 +65,16 @@ export class SigninComponent extends Component<any, any> {
                       this.setState({ email, buttonLoginDisabled });
                     }}
                     value={this.state.email}
+                    onSubmitEditing={() => {
+                      this.passwordTextInput.focus();
+                    }}
                   />
                 </View>
                 <View style={styles.inputPasswordContainer}>
                   <TextInput
+                    ref={input => {
+                      this.passwordTextInput = input;
+                    }}
                     keyboardAppearance="light"
                     autoCapitalize="none"
                     autoCorrect={false}
@@ -82,6 +88,7 @@ export class SigninComponent extends Component<any, any> {
                       this.setState({ password, buttonLoginDisabled });
                     }}
                     value={this.state.password}
+                    onSubmitEditing={this._signinAsync}
                     returnKeyType="go"
                   />
                   <TouchableWithoutFeedback
