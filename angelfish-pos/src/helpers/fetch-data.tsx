@@ -161,8 +161,8 @@ export function fetchData(
 
 export async function searchProduct(
   keyword: string,
+  pageNumber: number = 1,
   filterParams: any = {},
-  pageNumber = 1,
   pageSize = 21
 ) {
   const categoryId = filterParams.categoryId === undefined ? '' : filterParams.categoryId;
