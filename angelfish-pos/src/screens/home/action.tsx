@@ -9,18 +9,23 @@ export function startSearch(keyword) {
   };
 }
 
-export const fetchSearch = (keyword: string, filterParams: any = {}) => dispatch => {
+export const fetchSearch = (
+  keyword: string,
+  page: number = 0,
+  filterParams: any = {}
+) => dispatch => {
   dispatch(startSearch(keyword));
-  return searchProduct(keyword, filterParams).then(data => {
+  return searchProduct(keyword, page, filterParams).then(data => {
     if (data.hits !== undefined || data.facets.aggregationBrand !== undefined) {
-      dispatch(productsData(keyword, data));
+      dispatch(productsData(keyword, page, data));
     }
   });
 };
 
-export const productsData = (keyword, data) => ({
+export const productsData = (keyword, page, data) => ({
   type: ActionTypes.PRODUCTS_DATA_LIST,
   keyword,
+  page,
   products: data.hits,
   totalPage: data.total.totalPages,
   totalProducts: data.total.totalCount,

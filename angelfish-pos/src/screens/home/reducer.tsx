@@ -12,7 +12,9 @@ const initialState = {
   selectedCategoryId: '',
   selectedCategoryName: '',
   selectedBrandId: 0,
-  selectedBrandName: ''
+  selectedBrandName: '',
+  page: 1,
+  brands: []
 };
 
 export interface Product extends DataItem {
@@ -23,8 +25,6 @@ export interface Product extends DataItem {
   variantPrice: number;
   variantSkuNo: string;
   variantImageThumbnail: string;
-  categories: any[];
-  brands: any[];
 }
 
 interface SearchAction extends Action {
@@ -39,6 +39,7 @@ interface SearchResultAction extends Action {
   totalPage: number;
   totalProducts: number;
   brands: any[];
+  page: number;
 }
 
 interface FilterProducts extends Action {
@@ -87,7 +88,9 @@ const reducer = (
           products: action.products,
           totalPage: action.totalPage,
           totalProducts: action.totalProducts,
-          brands: action.brands
+          brands: action.brands,
+          keyword: action.keyword,
+          page: action.page
         });
       }
       return Object.assign({}, state, {

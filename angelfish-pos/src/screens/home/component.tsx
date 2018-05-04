@@ -38,6 +38,7 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   selectedBrandName: string;
   setRemoveFilter: any;
   navigation: any;
+  page: number;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
@@ -63,7 +64,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
         searchResults: false,
         showCancelButton: true
       });
-      this.props.search(text);
+      this.props.search(text, 1);
     } else {
       this.setState({ searchAutoComplete: false, showCancelButton: true });
     }
@@ -85,7 +86,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   getProducts = () => {
     const { selectedCategoryId, selectedBrandId } = this.props;
     const filterParams = { categoryId: selectedCategoryId, brandId: selectedBrandId };
-    this.props.search(this.props.keyword, filterParams);
+    this.props.search(this.props.keyword, 1, filterParams);
     this.props.setFilter(false);
   };
   render() {
@@ -187,9 +188,9 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
               {this.state.searchResults && (
                 <ListProducts
                   navigation={this.props.navigation}
-                  products={products}
                   keyword={this.state.keyword}
                   totalProducts={this.props.totalProducts}
+                  searchProduct={this.props.search}
                 />
               )}
             </Col>
