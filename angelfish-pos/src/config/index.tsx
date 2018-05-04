@@ -1,7 +1,7 @@
 export const config = {
   color: {
     blue: 'rgb(47, 120, 207)',
-    border: 'rgb(193, 195, 201)',
+    border: '#C1C3C9',
     white: 'rgb(255, 255, 255)',
     grey: 'rgba(0, 0, 0, 0.38)',
     yellow: 'rgb(255, 202, 4)',
@@ -9,7 +9,8 @@ export const config = {
     text: 'rgba(0, 0, 0, 0.87)',
     textGrey: 'rgb(151, 151, 152)',
     buttonGrey: 'rgb(189, 189, 189)',
-    backgroundGrey: 'rgba(248, 248, 248, 0.82)'
+    backgroundGrey: 'rgba(248, 248, 248, 0.82)',
+    black: '#000'
   }
 };
 export default config;

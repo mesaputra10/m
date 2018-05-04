@@ -142,11 +142,15 @@ const styles = StyleSheet.create({
   },
   filterDeleteText: {
     justifyContent: 'center',
-    paddingTop: 16
+    paddingTop: 16,
+    color: config.color.blue
   },
   searchCancelText: {
     color: config.color.blue,
     fontSize: 17
+  },
+  removeButtonContainer: {
+    marginRight: -7
   }
 });
 
