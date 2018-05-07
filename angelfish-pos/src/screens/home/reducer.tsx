@@ -28,12 +28,12 @@ export interface Product extends DataItem {
   variantImageThumbnail: string;
 }
 
-interface SearchAction extends Action {
+export interface SearchAction extends Action {
   type: ActionTypes.PRODUCTS_SEARCH;
   keyword: string;
 }
 
-interface SearchResultAction extends Action {
+export interface SearchResultAction extends Action {
   type: ActionTypes.PRODUCTS_DATA_LIST;
   keyword: string;
   products: Product[];
@@ -41,25 +41,26 @@ interface SearchResultAction extends Action {
   totalProducts: number;
   brands: Brand[];
   page: number;
+  priceRange: { min: string; max: string };
 }
 
-interface FilterProducts extends Action {
+export interface FilterProducts extends Action {
   type: ActionTypes.PRODUCTS_FILTER;
   showFilter: boolean;
 }
 
-interface ActionFilterCategoryInterface extends Action {
+export interface ActionFilterCategoryInterface extends Action {
   type: ActionTypes.SET_FILTER_CATEGORY;
   selectedCategoryId: string;
   selectedCategoryName: string;
 }
 
-interface ActionCategoriesInterface extends Action {
+export interface ActionCategoriesInterface extends Action {
   type: ActionTypes.CATEGORIES_LIST;
   categories: any[];
 }
 
-interface ActionFilterBrandInterface extends Action {
+export interface ActionFilterBrandInterface extends Action {
   type: ActionTypes.SET_FILTER_BRAND;
   selectedBrandId: number;
   selectedBrandName: string;
@@ -91,7 +92,8 @@ const reducer = (
           totalProducts: action.totalProducts,
           brands: action.brands,
           keyword: action.keyword,
-          page: action.page
+          page: action.page,
+          priceRange: action.priceRange
         });
       }
       return Object.assign({}, state, {

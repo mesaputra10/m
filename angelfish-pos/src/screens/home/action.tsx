@@ -1,8 +1,10 @@
 import { AsyncStorage } from 'react-native';
 import { searchProduct } from '../../helpers/fetch-data';
 import ActionTypes from '../../store/action-types';
+import { SearchResultAction, SearchAction } from './reducer';
+import { FilterProducts } from '../../components/filter-products';
 
-export function startSearch(keyword) {
+export function startSearch(keyword): SearchAction {
   return {
     type: ActionTypes.PRODUCTS_SEARCH,
     keyword
@@ -22,14 +24,15 @@ export const fetchSearch = (
   });
 };
 
-export const productsData = (keyword, page, data) => ({
+export const productsData = (keyword, page, data): SearchResultAction => ({
   type: ActionTypes.PRODUCTS_DATA_LIST,
   keyword,
   page,
   products: data.hits,
   totalPage: data.total.totalPages,
   totalProducts: data.total.totalCount,
-  brands: data.facets.aggregationBrand
+  brands: data.facets.aggregationBrand,
+  priceRange: data.facets.aggregationPriceRange
 });
 
 export const setFilter = data => dispatch => {
@@ -62,11 +65,13 @@ export const setDefaultFilterBrand = () => dispatch =>
     selectedBrandName: ''
   });
 
-export const emptyProductsData = () => ({
+export const emptyProductsData = (): SearchResultAction => ({
   type: ActionTypes.PRODUCTS_DATA_LIST,
   keyword: '',
   products: [],
   totalPage: 0,
   totalProducts: 0,
-  brands: []
+  brands: [],
+  page: 0,
+  priceRange: null
 });
