@@ -3,13 +3,14 @@ import { AsyncStorage } from 'react-native';
 import Expo from 'expo';
 import { stringify } from 'query-string';
 import { filter } from 'minimatch';
+import { Category } from '../bmd';
 
 const keyAccessToken = '@KeyAccessToken';
 const keyRefreshToken = '@KeyRefreshToken';
 const keyAuthorization =
   'Basic NDlmZTc3NTQtZjgyZS00OTA3LTkyMjgtN2MyNmE1Y2Q2MjQ0OkRySkxGMDhDYTR3SUVwUFlHOGl0aUxha3gyU0pZTmdu';
 const headerContentType = 'application/x-www-form-urlencoded';
-const baseURL: string = 'https://b2c-api-staging.bhinneka.com';
+const baseURL: string = 'http://api-krab-dev.bhinneka.com:8080';
 const deviceId = Expo.Constants.deviceId;
 
 export interface Tokens {
@@ -26,45 +27,33 @@ export enum GrantType {
 }
 
 export const fetchDataLogin = async (username: string, password: string) => {
-  try {
-    let token = await login(username, password, deviceId);
-    await setUserToken(token);
-    return token;
-  } catch (err) {
-    // handle on server error
-    console.log(err);
-  }
+  let token = await login(username, password, deviceId);
+  await setUserToken(token);
+  return token;
 };
 
-export function login(
+export async function login(
   username: string,
   password: string,
   deviceId: string,
   grantType = GrantType.PASSWORD
 ) {
-  return new Promise<Tokens>((resolve, reject) => {
-    axios({
-      baseURL,
-      method: 'POST',
-      url: '/api/auth',
-      data: stringify({
-        grantType,
-        username,
-        password,
-        deviceId
-      }),
-      headers: {
-        Authorization: keyAuthorization,
-        'Content-Type': headerContentType
-      }
-    })
-      .then(requestApi => {
-        if (requestApi.status === 200) resolve(requestApi.data);
-      })
-      .catch(err => {
-        reject(err);
-      });
+  let requestApi = await axios({
+    baseURL,
+    method: 'POST',
+    url: '/api/auth',
+    data: stringify({
+      grantType,
+      username,
+      password,
+      deviceId
+    }),
+    headers: {
+      Authorization: keyAuthorization,
+      'Content-Type': headerContentType
+    }
   });
+  if (requestApi.status === 200) return requestApi.data;
 }
 
 const setUserToken = async (data: Tokens) => {
@@ -92,42 +81,39 @@ export async function getUserToken() {
   return token;
 }
 
-export function refreshToken(oldAccessToken: string, refreshToken: string) {
-  return new Promise<Tokens>((resolve, reject) => {
-    axios({
-      baseURL,
-      method: 'POST',
-      url: '/api/auth',
-      data: stringify({
-        grantType: 'refresh_token',
-        oldAccessToken,
-        refreshToken
-      }),
-      headers: {
-        Authorization: keyAuthorization,
-        'Content-Type': headerContentType
-      }
-    })
-      .then(requestApi => {
-        if (requestApi.status === 200) resolve(requestApi.data);
-      })
-      .catch(err => reject(err));
+export async function refreshToken(oldAccessToken: string, refreshToken: string) {
+  let requestApi = await axios({
+    baseURL,
+    method: 'POST',
+    url: '/api/auth',
+    data: stringify({
+      grantType: 'refresh_token',
+      oldAccessToken,
+      refreshToken
+    }),
+    headers: {
+      Authorization: keyAuthorization,
+      'Content-Type': headerContentType
+    }
   });
+  if (requestApi.status === 200) return requestApi.data;
 }
 
 const removeUserToken = async () => {
   await AsyncStorage.multiRemove([keyAccessToken, keyRefreshToken]);
 };
 
-export function fetchData(
+class ServerError extends Error {}
+
+export async function fetchData(
   url: string,
   method: string,
   inputParams = {},
   token: Tokens,
   retry = 0
-): Promise<any> {
-  return new Promise((resolve, reject) => {
-    axios({
+) {
+  try {
+    let requestApi = await axios({
       baseURL,
       method,
       url,
@@ -136,29 +122,28 @@ export function fetchData(
         Authorization: `Bearer ${token.accessToken}`
       },
       params: inputParams
-    })
-      .then(requestApi => {
-        if (requestApi.status === 200) {
-          resolve(requestApi.data);
-        }
-      })
-      .catch(err => {
-        if (err.response.status == 401) {
-          if (retry > 1) reject(Error('Maximum retry reached'));
+    });
+    if (requestApi.status === 200) {
+      return requestApi.data;
+    }
+  } catch (err) {
+    if (err.response.status == 401) {
+      if (retry > 1) throw Error('Maximum retry reached');
 
-          refreshToken(token.accessToken, token.refreshToken)
-            .then(newToken => {
-              setUserToken(newToken)
-                .then(val => console.log('success setusertoken'))
-                .catch(err => console.log('failed setusertoken'));
-              resolve(fetchData(url, method, inputParams, newToken, retry + 1));
-            })
-            .catch(err => reject(err));
-        } else reject(err);
-      });
-  });
+      let newToken = await refreshToken(token.accessToken, token.refreshToken);
+      await setUserToken(newToken);
+      return fetchData(url, method, inputParams, newToken, retry + 1);
+    }
+    if (err.response.status >= 500 && err.response.status < 600) throw new ServerError(err);
+  }
+  return undefined;
 }
 
+/*
+TODO:
+- include facet parameter boolean flag
+- filterParams handles when set to null
+*/
 export async function searchProduct(
   keyword: string,
   pageNumber: number = 1,
@@ -183,7 +168,25 @@ export async function searchProduct(
   );
 }
 
+const MAX_CATEGORY_LEVEL = 4;
+
+function remapCategories(data: any, level = 1) {
+  if (level > MAX_CATEGORY_LEVEL) return;
+  let childrenkey = 'categoryTree' + (level + 1);
+  if (data != null) {
+    data = Object.assign([], data); // copy
+    return data.map(category => {
+      if (childrenkey in category && category[childrenkey] != null) {
+        category['children'] = remapCategories(category[childrenkey], level + 1);
+        delete category[childrenkey];
+        return category;
+      } else return category;
+    });
+  }
+  return data;
+}
+
 export async function categories(parentId: string = undefined) {
-  let tokens = await getUserToken();
-  return fetchData('/api/categories', 'GET', parentId, tokens);
+  let res = await searchProduct('', 1, {}, 1);
+  return Category.fromJSON(remapCategories(res.facets.categoryTree1));
 }

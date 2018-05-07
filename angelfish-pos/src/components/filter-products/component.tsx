@@ -3,13 +3,14 @@ import { View, Text, Image, TouchableWithoutFeedback, ScrollView } from 'react-n
 import { Content, List, ListItem } from 'native-base';
 import styles from './styles';
 import generateUniqKey from '../../helpers/generate-uniq-key';
+import { Category } from '../../bmd';
 
 interface FilterProductsComponentProps {
   getCategories: any;
   setFilterCategory: any;
   selectedCategoryId: string;
   selectedCategoryName: string;
-  categories: any;
+  categories: Category[];
   search: any;
   keyword: string;
   brands: any;
@@ -17,7 +18,18 @@ interface FilterProductsComponentProps {
   selectedBrandName: string;
 }
 
-export class FilterProductsComponent extends Component<FilterProductsComponentProps, any> {
+interface FilterProductsComponentState {
+  filterPage: boolean;
+  dataCategories: Category[];
+  childCategory: boolean;
+  dataBrands: any;
+  childBrand: boolean;
+}
+
+export class FilterProductsComponent extends Component<
+  FilterProductsComponentProps,
+  FilterProductsComponentState
+> {
   constructor(props) {
     super(props);
     this.state = {
@@ -31,6 +43,8 @@ export class FilterProductsComponent extends Component<FilterProductsComponentPr
   componentDidMount() {
     this.props.getCategories();
   }
+
+  // TODO: may error if action CATEGORIES_LIST still fetching data
   clickCategories = () => {
     this.setState({
       dataCategories: this.props.categories,
@@ -121,7 +135,9 @@ export class FilterProductsComponent extends Component<FilterProductsComponentPr
               >
                 <View style={styles.listContainer}>
                   <View style={styles.listLeft}>
-                    <Text style={styles.titleListText}>{category.name}</Text>
+                    <Text style={styles.titleListText}>
+                      {category.name} ({category.docCount})
+                    </Text>
                   </View>
                   <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
                 </View>

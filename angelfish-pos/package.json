@@ -59,6 +59,7 @@
   "dependencies": {
     "antd-mobile": "https://github.com/yudapc/ant-design-mobile.git#bhinneka",
     "axios": "^0.18.0",
+    "class-transformer": "^0.1.9",
     "expo": "^27.0.0",
     "native-base": "^2.4.3",
     "query-string": "^6.0.0",
@@ -70,7 +71,8 @@
     "react-navigation": "1.5.11",
     "react-redux": "^5.0.7",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "reflect-metadata": "^0.1.12"
   },
   "prettier": {
     "printWidth": 100,
