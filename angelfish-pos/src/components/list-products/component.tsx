@@ -18,13 +18,25 @@ interface Product extends DataItem {
   variantImageThumbnail: string;
 }
 interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
-  products: Product[];
+  products?: Product[];
   keyword: string;
   totalProducts: number;
-  setFilter: any;
-  showFilter: boolean;
+  setFilter?: any;
+  showFilter?: boolean;
+  searchProduct(keyword, page, filterParams): any;
 }
-export class ListProductsComponent extends Component<ListProductsComponentProps, any> {
+
+interface ListProductsComponentState {
+  loading: boolean;
+  fetching: boolean;
+  page: number;
+  keyword: string;
+  products: Product[];
+}
+export class ListProductsComponent extends Component<
+  ListProductsComponentProps,
+  ListProductsComponentState
+> {
   constructor(props) {
     super(props);
     this.state = {

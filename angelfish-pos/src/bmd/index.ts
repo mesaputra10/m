@@ -16,3 +16,13 @@ export class Category {
     return plainToClass(Category, data);
   }
 }
+
+export class Brand {
+  aggrBrands: string;
+  brand: string;
+  docCount: string;
+
+  public static fromJSON(data: any) {
+    return plainToClass(Brand, data);
+  }
+}

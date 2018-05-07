@@ -1,6 +1,7 @@
 import ActionTypes from '../../store/action-types';
 import { Action } from 'redux';
 import { DataItem } from 'antd-mobile/lib/grid/PropsType';
+import { Brand } from '../../bmd';
 
 const initialState = {
   products: [],
@@ -38,7 +39,7 @@ interface SearchResultAction extends Action {
   products: Product[];
   totalPage: number;
   totalProducts: number;
-  brands: any[];
+  brands: Brand[];
   page: number;
 }
 

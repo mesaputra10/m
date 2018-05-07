@@ -3,26 +3,26 @@ import { View, Text, Image, TouchableWithoutFeedback, ScrollView } from 'react-n
 import { Content, List, ListItem } from 'native-base';
 import styles from './styles';
 import generateUniqKey from '../../helpers/generate-uniq-key';
-import { Category } from '../../bmd';
+import { Category, Brand } from '../../bmd';
 
 interface FilterProductsComponentProps {
-  getCategories: any;
-  setFilterCategory: any;
-  selectedCategoryId: string;
-  selectedCategoryName: string;
-  categories: Category[];
-  search: any;
-  keyword: string;
-  brands: any;
-  setFilterBrand: any;
-  selectedBrandName: string;
+  getCategories?: any;
+  setFilterCategory?: any;
+  selectedCategoryId?: string;
+  selectedCategoryName?: string;
+  categories?: Category[];
+  search?: any;
+  keyword?: string;
+  brands?: Brand[];
+  setFilterBrand?: any;
+  selectedBrandName?: string;
 }
 
 interface FilterProductsComponentState {
   filterPage: boolean;
   dataCategories: Category[];
   childCategory: boolean;
-  dataBrands: any;
+  dataBrands: Brand[];
   childBrand: boolean;
 }
 
