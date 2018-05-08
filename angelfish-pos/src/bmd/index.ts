@@ -37,7 +37,7 @@ export class Category {
   docCount: string;
   children?: Category[];
 
-  public static fromJSON(data: any) {
+  public static fromPlain(data: any) {
     return plainToClass(Category, data);
   }
 }
@@ -47,7 +47,7 @@ export class Brand {
   brand: string;
   docCount: string;
 
-  public static fromJSON(data: any) {
+  public static fromPlain(data: any) {
     return plainToClass(Brand, data);
   }
 }

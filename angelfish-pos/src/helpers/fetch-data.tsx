@@ -188,5 +188,5 @@ function remapCategories(data: any, level = 1) {
 
 export async function categories(parentId: string = undefined) {
   let res = await searchProduct('', 1, {}, 1);
-  return Category.fromJSON(remapCategories(res.facets.categoryTree1));
+  return Category.fromPlain(remapCategories(res.facets.categoryTree1));
 }
