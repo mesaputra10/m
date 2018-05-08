@@ -24,6 +24,7 @@ import { FilterProducts } from '../../components/filter-products';
 import store from '../../store/store';
 import config from '../../config';
 import { ActivityIndicator } from 'react-native';
+import { setShowFilterPrices } from './action';
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   isLoading: boolean;
@@ -40,9 +41,11 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   setShowFilter: any;
   setShowFilterCategory: any;
   setShowFilterBrands: any;
+  setShowFilterPrices: any;
   showFilter: boolean;
   showFilterCategory: boolean;
   showFilterBrands: boolean;
+  showFilterPrices: boolean;
   brands: any[];
   setRemoveFilter: any;
   navigation: any;
@@ -52,6 +55,8 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   setRemoveFilterBrands?: any;
   setChildCategory?: any;
   setChildBrand?: any;
+  priceRange: any;
+  setValueFilterPrices: any;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
@@ -94,16 +99,30 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     return this.props.keyword === undefined || this.props.keyword.length === 0;
   };
   cancelFilter = () => {
-    this.props.setShowFilter(false);
+    this.closeFilter();
   };
   cancelFilterCategory = () => {
-    this.props.setChildCategory(false);
-    this.props.setShowFilter(true);
+    this.backToFilter();
   };
   cancelFilterBrands = () => {
+    this.backToFilter();
+  };
+  cancelFilterPrices = () => {
+    this.backToFilter();
+  };
+  closeFilter = () => {
+    this.props.setShowFilter(false);
+    this.props.setShowFilterCategory(false);
+    this.props.setShowFilterBrands(false);
+    this.props.setShowFilterPrices(false);
+    this.props.setChildCategory(false);
+    this.props.setChildBrand(false);
+  };
+  backToFilter = () => {
     this.props.setShowFilter(true);
     this.props.setShowFilterCategory(false);
     this.props.setShowFilterBrands(false);
+    this.props.setShowFilterPrices(false);
     this.props.setChildCategory(false);
     this.props.setChildBrand(false);
   };
@@ -116,6 +135,10 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   deleteFilterBrands = () => {
     this.props.setRemoveFilterBrands();
   };
+  deleteFilterPrices = () => {
+    this.props.setValueFilterPrices(0, 0);
+    this.backToFilter();
+  };
   render() {
     const {
       isLoading,
@@ -123,7 +146,8 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       brands,
       showFilter,
       showFilterCategory,
-      showFilterBrands
+      showFilterBrands,
+      showFilterPrices
     } = this.props;
     const modalLoading = (
       <Modal animationType="none" transparent={false} visible={isLoading}>
@@ -143,7 +167,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     );
     return (
       <Container>
-        {modalLoading}
+        {isLoading && modalLoading}
         <Header style={styles.headerStyle} searchBar>
           <Col style={styles.headerColLeft} size={70}>
             <Grid>
@@ -199,7 +223,8 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
           <Col style={styles.headerColRight} size={30}>
             {!showFilter &&
               !showFilterCategory &&
-              !showFilterBrands && (
+              !showFilterBrands &&
+              !showFilterPrices && (
                 <View style={styles.headerRightContainer}>
                   <Text style={styles.headerRightText}>Keranjang</Text>
                 </View>
@@ -249,6 +274,21 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                 </TouchableWithoutFeedback>
               </View>
             )}
+            {showFilterPrices && (
+              <View style={styles.headerRightFilterContainer}>
+                <TouchableWithoutFeedback onPress={this.cancelFilterPrices}>
+                  <View>
+                    <Text style={styles.filterCancelText}>Batal</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+                <Text style={styles.headerRightText}>Harga</Text>
+                <TouchableWithoutFeedback onPress={this.deleteFilterPrices}>
+                  <View style={styles.removeButtonContainer}>
+                    <Text style={styles.filterDeleteText}>Hapus</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            )}
           </Col>
         </Header>
         <Container>
@@ -279,10 +319,13 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             <Col style={styles.contentColRight} size={30}>
               <View style={styles.contentColRightContainer}>
                 <View style={{ padding: 16, alignItems: 'flex-start' }}>
-                  {(showFilter || showFilterCategory || showFilterBrands) && <FilterProducts />}
+                  {(showFilter || showFilterCategory || showFilterBrands || showFilterPrices) && (
+                    <FilterProducts />
+                  )}
                   {!showFilter &&
                     !showFilterCategory &&
-                    !showFilterBrands && (
+                    !showFilterBrands &&
+                    !showFilterPrices && (
                       <View>
                         <Text>Navigation For Testing:</Text>
                         <View style={{ paddingVertical: 5 }} />

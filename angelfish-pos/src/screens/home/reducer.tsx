@@ -11,6 +11,7 @@ const initialState = {
   showFilter: false,
   showFilterCategory: false,
   showFilterBrands: false,
+  showFilterPrices: false,
   selectedCategoryId: '',
   selectedCategoryName: '',
   selectedBrandId: 0,
@@ -20,7 +21,9 @@ const initialState = {
   selectedBrands: [],
   childBrand: false,
   childCategory: false,
-  isLoading: true
+  isLoading: true,
+  minPriceRange: 0,
+  maxPriceRange: 0
 };
 
 export interface SearchAction extends Action {
@@ -54,6 +57,11 @@ interface FilterBrandsProducts extends Action {
   showFilterBrands: boolean;
 }
 
+interface FilterPricesInterface extends Action {
+  type: ActionTypes.PRODUCTS_FILTER_PRICES;
+  showFilterPrices: boolean;
+}
+
 interface ActionFilterCategoryInterface extends Action {
   type: ActionTypes.SET_FILTER_CATEGORY;
   selectedCategoryId: string;
@@ -85,6 +93,12 @@ interface ActionIsLoadingInterface extends Action {
   isLoading: boolean;
 }
 
+interface PriceRangeInterface extends Action {
+  type: ActionTypes.PRODUCTS_FILTER_PRICES_VALUE;
+  minPriceRange: number;
+  maxPriceRange: number;
+}
+
 const reducer = (
   state = initialState,
   action:
@@ -93,12 +107,14 @@ const reducer = (
     | FilterProducts
     | FilterCategoryProducts
     | FilterBrandsProducts
+    | FilterPricesInterface
     | ActionFilterCategoryInterface
     | ActionCategoriesInterface
     | ActionFilterBrandInterface
     | ActionChildCategoryInterface
     | ActionChildBrandInterface
     | ActionIsLoadingInterface
+    | PriceRangeInterface
 ) => {
   switch (action.type) {
     case ActionTypes.PRODUCTS_SEARCH: {
@@ -139,6 +155,11 @@ const reducer = (
         showFilterBrands: action.showFilterBrands
       });
     }
+    case ActionTypes.PRODUCTS_FILTER_PRICES: {
+      return Object.assign({}, state, {
+        showFilterPrices: action.showFilterPrices
+      });
+    }
     case ActionTypes.SET_FILTER_CATEGORY: {
       return Object.assign({}, state, {
         selectedCategoryId: action.selectedCategoryId,
@@ -166,6 +187,12 @@ const reducer = (
     case ActionTypes.IS_LOADING: {
       return Object.assign({}, state, {
         isLoading: action.isLoading
+      });
+    }
+    case ActionTypes.PRODUCTS_FILTER_PRICES_VALUE: {
+      return Object.assign({}, state, {
+        minPriceRange: action.minPriceRange,
+        maxPriceRange: action.maxPriceRange
       });
     }
     default: {

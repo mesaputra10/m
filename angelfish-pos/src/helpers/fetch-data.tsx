@@ -151,7 +151,9 @@ export async function searchProduct(
   pageSize = 21
 ) {
   const categoryId = filterParams.categoryId === undefined ? '' : filterParams.categoryId;
-  const brandId = filterParams.brandId === undefined ? '' : filterParams.brandId;
+  const brands = filterParams.brands === undefined ? '' : filterParams.brands;
+  const min = filterParams.minPriceRange === undefined ? '' : filterParams.minPriceRange;
+  const max = filterParams.maxPriceRange === undefined ? '' : filterParams.maxPriceRange;
   let tokens = await getUserToken();
   return fetchData(
     '/api/products/search',
@@ -162,7 +164,8 @@ export async function searchProduct(
       'page[size]': pageSize,
       'page[number]': pageNumber,
       'filter[categoryId]': categoryId,
-      'filter[brandId]': brandId
+      'filter[brandId]': brands,
+      'filter[price]': { min, max }
     },
     tokens
   );

@@ -49,6 +49,7 @@ export const productsData = (keyword, page, data): SearchResultAction => ({
 export const setRemoveFilter = () => dispatch => {
   dispatch(setDefaultFilterCategory());
   dispatch(setDefaultFilterBrand());
+  dispatch(setValueFilterPrices(0, 0));
   dispatch({
     type: ActionTypes.PRODUCTS_FILTER,
     showFilter: false
@@ -105,6 +106,12 @@ export const setShowFilterBrands = data => dispatch =>
     showFilterBrands: data
   });
 
+export const setShowFilterPrices = data => dispatch =>
+  dispatch({
+    type: ActionTypes.PRODUCTS_FILTER_PRICES,
+    showFilterPrices: data
+  });
+
 export const setFilterBrands = selectedBrands => dispatch =>
   dispatch({
     type: ActionTypes.SET_FILTER_BRAND,
@@ -121,4 +128,11 @@ export const setChildBrand = data => dispatch =>
   dispatch({
     type: ActionTypes.PRODUCT_FILTER_CHILD_BRAND,
     childBrand: data
+  });
+
+export const setValueFilterPrices = (min, max) => dispatch =>
+  dispatch({
+    type: ActionTypes.PRODUCTS_FILTER_PRICES_VALUE,
+    minPriceRange: min,
+    maxPriceRange: max
   });
