@@ -50,7 +50,7 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
 
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView style={styles.contentContainer}>
           {brands.map((brand, brandIndex) => {
             const circleColor = selectedBrands.includes(brand)
               ? config.color.blue

@@ -3,8 +3,10 @@ import config from '../../config';
 
 export const styles = StyleSheet.create({
   container: {
-    width: 300,
     marginTop: -16,
+    flex: 1
+  },
+  contentContainer: {
     flex: 1
   },
   listContainer: {
