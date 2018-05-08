@@ -3,6 +3,7 @@ import { searchProduct } from '../../helpers/fetch-data';
 import ActionTypes from '../../store/action-types';
 import { SearchResultAction, SearchAction } from './reducer';
 import { FilterProducts } from '../../components/filter-products';
+import { Product } from '../../bmd';
 
 export function startSearch(keyword): SearchAction {
   return {
@@ -28,7 +29,7 @@ export const productsData = (keyword, page, data): SearchResultAction => ({
   type: ActionTypes.PRODUCTS_DATA_LIST,
   keyword,
   page,
-  products: data.hits,
+  products: Product.fromPlain(data.hits),
   totalPage: data.total.totalPages,
   totalProducts: data.total.totalCount,
   brands: data.facets.aggregationBrand,

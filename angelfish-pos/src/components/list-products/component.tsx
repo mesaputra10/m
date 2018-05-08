@@ -4,19 +4,10 @@ import { View, Text, Image, TouchableWithoutFeedback, ScrollView, Modal } from '
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
 import { NavigationScreenProps } from 'react-navigation';
-import { DataItem } from 'antd-mobile/lib/grid/PropsType';
 import { ProductsNotFound } from '../products-not-found';
 import { searchProduct } from '../../helpers/fetch-data';
+import { Product } from '../../bmd';
 
-interface Product extends DataItem {
-  productId: string;
-  productName: string;
-  offerNormalPrice: number;
-  offerSpecialPrice: number;
-  variantPrice: number;
-  variantSkuNo: string;
-  variantImageThumbnail: string;
-}
 interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   products?: Product[];
   keyword: string;
@@ -69,25 +60,30 @@ export class ListProductsComponent extends Component<
             <Text numberOfLines={2} style={styles.productItemName}>
               {product.productName}
             </Text>
-            {product.variantPrice > 0 && (
+            {product.isDiscount > 0 && (
               <View style={[styles.searchResultPriceContainer, { paddingTop: 4 }]}>
                 {product.variantPrice !== product.offerNormalPrice && (
                   <Text style={styles.searchResultPriceDiscountText}>
                     Rp {numberFormat(product.offerNormalPrice)}
                   </Text>
                 )}
+                {product.offerDiscountPercentage > 0 && (
+                  <Text style={styles.searchResultDiscountText}>
+                    {' '}
+                    -{product.offerDiscountPercentage}%
+                  </Text>
+                )}
               </View>
             )}
-            {product.variantPrice > 0 &&
-              product.variantPrice !== product.offerNormalPrice && (
-                <Text style={styles.searchResultText}>
-                  Rp {numberFormat(product.offerSpecialPrice)}
-                </Text>
-              )}
-            {product.variantPrice === product.offerNormalPrice && (
+            {product.isDiscount && (
+              <Text style={styles.searchResultText}>
+                Rp {numberFormat(product.offerSpecialPrice)}
+              </Text>
+            )}
+            {!product.isDiscount && (
               <Text style={styles.searchResultText}>Rp {numberFormat(product.variantPrice)}</Text>
             )}
-            {product.variantPrice === 0 && (
+            {product.isOutofStock && (
               <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
             )}
           </View>

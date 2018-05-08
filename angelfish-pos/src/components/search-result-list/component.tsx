@@ -5,16 +5,7 @@ import generateUniqKey from '../../helpers/generate-uniq-key';
 import numberFormat from '../../helpers/number-format';
 import { DataItem } from 'antd-mobile/lib/grid/PropsType';
 import { styles } from './styles';
-
-export interface Product extends DataItem {
-  productId: string;
-  productName: string;
-  offerNormalPrice: number;
-  offerSpecialPrice: number;
-  variantPrice: number;
-  variantSkuNo: string;
-  variantImageThumbnail: string;
-}
+import { Product } from '../../bmd';
 
 interface SearchResultListComponentProps extends NavigationScreenProps<any, any> {
   products: Product[];
@@ -54,9 +45,9 @@ export class SearchResultListComponent extends Component<SearchResultListCompone
                     </View>
                     <View style={styles.searchResultListItemRight}>
                       <Text style={styles.searchResultText}>{product.productName}</Text>
-                      {product.variantPrice > 0 && (
+                      {product.isDiscount && (
                         <View style={styles.searchResultPriceContainer}>
-                          {product.variantPrice !== product.offerNormalPrice && (
+                          {product.isDiscount && (
                             <Text style={styles.searchResultPriceDiscountText}>
                               Rp {numberFormat(product.offerNormalPrice)}
                             </Text>
@@ -69,18 +60,17 @@ export class SearchResultListComponent extends Component<SearchResultListCompone
                           )}
                         </View>
                       )}
-                      {product.variantPrice > 0 &&
-                        product.variantPrice !== product.offerNormalPrice && (
-                          <Text style={styles.searchResultText}>
-                            Rp {numberFormat(product.offerSpecialPrice)}
-                          </Text>
-                        )}
-                      {product.variantPrice === product.offerNormalPrice && (
+                      {product.isDiscount && (
+                        <Text style={styles.searchResultText}>
+                          Rp {numberFormat(product.offerSpecialPrice)}
+                        </Text>
+                      )}
+                      {!product.isDiscount && (
                         <Text style={styles.searchResultText}>
                           Rp {numberFormat(product.variantPrice)}
                         </Text>
                       )}
-                      {product.variantPrice === 0 && (
+                      {product.isOutofStock && (
                         <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
                       )}
                     </View>

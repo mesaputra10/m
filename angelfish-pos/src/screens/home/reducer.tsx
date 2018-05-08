@@ -1,7 +1,6 @@
 import ActionTypes from '../../store/action-types';
 import { Action } from 'redux';
-import { DataItem } from 'antd-mobile/lib/grid/PropsType';
-import { Brand } from '../../bmd';
+import { Brand, Product } from '../../bmd';
 
 const initialState = {
   products: [],
@@ -17,16 +16,6 @@ const initialState = {
   page: 1,
   brands: []
 };
-
-export interface Product extends DataItem {
-  productId: string;
-  productName: string;
-  offerNormalPrice: number;
-  offerSpecialPrice: number;
-  variantPrice: number;
-  variantSkuNo: string;
-  variantImageThumbnail: string;
-}
 
 export interface SearchAction extends Action {
   type: ActionTypes.PRODUCTS_SEARCH;
