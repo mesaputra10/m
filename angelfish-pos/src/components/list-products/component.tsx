@@ -121,6 +121,7 @@ export class ListProductsComponent extends Component<
   };
   render() {
     const products = this.state.products;
+    const { navigation, setFilter, showFilter, keyword, totalProducts } = this.props;
     if (this.state.loading) {
       return (
         <Image
@@ -159,12 +160,13 @@ export class ListProductsComponent extends Component<
           >
             <View>
               <Text style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.38)' }}>
-                {numberFormat(this.props.totalProducts)} Produk
+                {numberFormat(totalProducts)} Produk
               </Text>
             </View>
             <View>
               <TouchableWithoutFeedback
-                onPress={() => this.props.setFilter(!this.props.showFilter)}
+                onPress={() => setFilter(!showFilter)}
+                disabled={showFilter}
               >
                 <View style={styles.filterContainer}>
                   <Image source={require('./assets/filter.png')} />
@@ -181,7 +183,7 @@ export class ListProductsComponent extends Component<
             }}
             onClick={(product, i) => {
               const passProps = { title: product.productName, sku: product.variantSkuNo };
-              this.props.navigation.navigate('PageProductDetail', passProps);
+              navigation.navigate('PageProductDetail', passProps);
             }}
             renderItem={(el, i) => this._renderProductItem(el, i)}
             hasLine={false}
@@ -192,7 +194,7 @@ export class ListProductsComponent extends Component<
     } else {
       return (
         <View style={{ flex: 1 }}>
-          <ProductsNotFound keyword={this.props.keyword} />
+          <ProductsNotFound keyword={keyword} />
         </View>
       );
     }

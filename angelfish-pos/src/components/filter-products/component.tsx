@@ -145,7 +145,7 @@ export class FilterProductsComponent extends Component<
     if (this.props.showFilter) {
       return (
         <View style={styles.container}>
-          <ScrollView>
+          <View style={styles.contentContainer}>
             <TouchableWithoutFeedback onPress={this.clickCategories}>
               <View style={styles.listContainer}>
                 <View style={styles.listLeft}>
@@ -194,7 +194,7 @@ export class FilterProductsComponent extends Component<
                 <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
               </View>
             </TouchableWithoutFeedback>
-          </ScrollView>
+          </View>
           <View style={styles.buttonBottomContainer}>
             <TouchableWithoutFeedback onPress={this.onPressTerapkan} disabled={disableTerapkan}>
               <View style={[styles.buttonBottomStyle, disableTerapkanStyle]}>
