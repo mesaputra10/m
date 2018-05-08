@@ -6,6 +6,8 @@ import generateUniqKey from '../../helpers/generate-uniq-key';
 import { Category, Brand } from '../../bmd';
 import config from '../../config';
 import { FilterBrands } from '../filter-brands';
+import { FilterPrices } from '../filter-prices';
+import { numberFormat } from '../../helpers/number-format';
 
 interface FilterProductsComponentProps {
   getCategories?: any;
@@ -20,13 +22,16 @@ interface FilterProductsComponentProps {
   setShowFilter?: any;
   setShowFilterCategory?: any;
   setShowFilterBrands?: any;
+  setShowFilterPrices?: any;
   setChildCategory?: any;
   setChildBrand?: any;
   childCategory?: boolean;
   childBrand?: boolean;
   showFilter?: boolean;
+  showFilterPrices?: boolean;
+  minPriceRange?: number;
+  maxPriceRange?: number;
 }
-
 interface FilterProductsComponentState {
   filterPage: boolean;
   dataCategories: Category[];
@@ -34,7 +39,6 @@ interface FilterProductsComponentState {
   dataBrands: Brand[];
   childBrand: boolean;
 }
-
 export class FilterProductsComponent extends Component<
   FilterProductsComponentProps,
   FilterProductsComponentState
@@ -54,48 +58,89 @@ export class FilterProductsComponent extends Component<
   }
   // TODO: may error if action CATEGORIES_LIST still fetching data
   clickCategories = () => {
-    this.props.setShowFilterCategory(true);
-    this.props.setShowFilterBrands(false);
-    this.props.setShowFilter(false);
     this.setState({
       dataCategories: this.props.categories
     });
-    this.props.setChildCategory(true);
+    this.showFilterCategory();
   };
   clickChildCategory = (category, children) => {
     if (children !== undefined && children.length > 0) {
       this.setState({ dataCategories: children, filterPage: false, childCategory: true });
     } else {
-      this.props.setShowFilter(true);
-      this.props.setShowFilterCategory(false);
-      this.props.setShowFilterBrands(false);
+      this.showFilter();
       this.props.setFilterCategory(category.id, category.name);
       this.setState({});
     }
   };
   clickBrands = () => {
-    this.props.setShowFilterBrands(true);
-    this.props.setShowFilterCategory(false);
-    this.props.setShowFilter(false);
     this.setState({
       dataBrands: this.props.brands
     });
-    this.props.setChildBrand(true);
-    this.props.setChildCategory(false);
+    this.showFilterBrands();
   };
-  clickChildBrand = (): void => {
-    this.props.setShowFilter(false);
+  clickPrices = () => {
+    this.showFilterPrices();
   };
   onPressTerapkan = () => {
-    this.props.setShowFilterCategory(false);
-    const { selectedCategoryId, brands } = this.props;
-    const filterParams = { categoryId: selectedCategoryId, brands };
+    const { selectedCategoryId, brands, minPriceRange, maxPriceRange } = this.props;
+    const filterParams = { categoryId: selectedCategoryId, brands, minPriceRange, maxPriceRange };
     this.props.search(this.props.keyword, 1, filterParams);
+    this.hideFilter();
+  };
+  hideFilter = () => {
     this.props.setShowFilter(false);
+    this.props.setShowFilterCategory(false);
+    this.props.setShowFilterBrands(false);
+    this.props.setShowFilterPrices(false);
+    this.props.setChildBrand(false);
+    this.props.setChildCategory(false);
+  };
+  showFilter = () => {
+    this.props.setShowFilter(true);
+    this.props.setShowFilterCategory(false);
+    this.props.setShowFilterBrands(false);
+    this.props.setShowFilterPrices(false);
+    this.props.setChildBrand(false);
+    this.props.setChildCategory(false);
+  };
+  showFilterCategory = () => {
+    this.props.setShowFilter(false);
+    this.props.setShowFilterCategory(true);
+    this.props.setShowFilterBrands(false);
+    this.props.setShowFilterPrices(false);
+    this.props.setChildCategory(true);
+    this.props.setChildBrand(false);
+  };
+  showFilterBrands = () => {
+    this.props.setShowFilter(false);
+    this.props.setShowFilterCategory(false);
+    this.props.setShowFilterBrands(true);
+    this.props.setShowFilterPrices(false);
+    this.props.setChildCategory(false);
+    this.props.setChildBrand(true);
+  };
+  showFilterPrices = () => {
+    this.props.setShowFilter(false);
+    this.props.setShowFilterCategory(false);
+    this.props.setShowFilterBrands(false);
+    this.props.setShowFilterPrices(true);
+    this.props.setChildCategory(false);
+    this.props.setChildBrand(false);
   };
   render() {
-    const { selectedCategoryId, selectedCategoryName, selectedBrands, categories } = this.props;
-    const disableTerapkan = selectedCategoryId === '' && selectedBrands.length === 0;
+    const {
+      selectedCategoryId,
+      selectedCategoryName,
+      selectedBrands,
+      categories,
+      minPriceRange,
+      maxPriceRange
+    } = this.props;
+    const disableTerapkan =
+      selectedCategoryId === '' &&
+      selectedBrands.length === 0 &&
+      minPriceRange <= 0 &&
+      maxPriceRange <= 0;
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
     if (this.props.showFilter) {
       return (
@@ -131,13 +176,24 @@ export class FilterProductsComponent extends Component<
                 <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
               </View>
             </TouchableWithoutFeedback>
-            <View style={styles.listContainer}>
-              <View style={styles.listLeft}>
-                <Text style={styles.titleListText}>Harga</Text>
-                <Text style={styles.titleListSelectedDefault}>Semua</Text>
+            <TouchableWithoutFeedback onPress={this.clickPrices}>
+              <View style={styles.listContainer}>
+                <View style={styles.listLeft}>
+                  <Text style={styles.titleListText}>Harga</Text>
+                  {minPriceRange > 0 &&
+                    maxPriceRange > minPriceRange && (
+                      <Text style={styles.titleListSelected}>
+                        Rp {numberFormat(minPriceRange)} - Rp {numberFormat(maxPriceRange)}
+                      </Text>
+                    )}
+                  {minPriceRange <= 0 &&
+                    maxPriceRange <= 0 && (
+                      <Text style={styles.titleListSelectedDefault}>Semua</Text>
+                    )}
+                </View>
+                <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
               </View>
-              <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
-            </View>
+            </TouchableWithoutFeedback>
           </ScrollView>
           <View style={styles.buttonBottomContainer}>
             <TouchableWithoutFeedback onPress={this.onPressTerapkan} disabled={disableTerapkan}>
@@ -181,7 +237,10 @@ export class FilterProductsComponent extends Component<
       );
     }
     if (this.props.childBrand) {
-      return <FilterBrands brands={this.state.dataBrands} clickChildBrand={this.clickChildBrand} />;
+      return <FilterBrands brands={this.state.dataBrands} showFilterPage={this.showFilter} />;
+    }
+    if (this.props.showFilterPrices) {
+      return <FilterPrices />;
     }
   }
 }

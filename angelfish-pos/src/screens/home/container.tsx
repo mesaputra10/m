@@ -9,10 +9,12 @@ import {
   setShowFilter,
   setShowFilterCategory,
   setShowFilterBrands,
+  setShowFilterPrices,
   setChildCategory,
   setChildBrand,
   startLoading,
-  endLoading
+  endLoading,
+  setValueFilterPrices
 } from './action';
 import { start } from 'repl';
 
@@ -26,11 +28,13 @@ const mapDispatchToProps = dispatch => ({
   setShowFilter: value => dispatch(setShowFilter(value)),
   setShowFilterCategory: value => dispatch(setShowFilterCategory(value)),
   setShowFilterBrands: value => dispatch(setShowFilterBrands(value)),
+  setShowFilterPrices: value => dispatch(setShowFilterPrices(value)),
   setRemoveFilter: () => dispatch(setRemoveFilter()),
   setRemoveFilterCategory: () => dispatch(setRemoveFilterCategory()),
   setRemoveFilterBrands: () => dispatch(setRemoveFilterBrands()),
   setChildCategory: data => dispatch(setChildCategory(data)),
-  setChildBrand: data => dispatch(setChildBrand(data))
+  setChildBrand: data => dispatch(setChildBrand(data)),
+  setValueFilterPrices: (min, max) => dispatch(setValueFilterPrices(min, max))
 });
 
 export const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(HomeComponent);

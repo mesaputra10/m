@@ -41,7 +41,6 @@ export class ListCategoriesComponent extends Component<ListCategoriesComponentPr
           height: 145
         }}
         onClick={(el, i) => {
-          console.log(`el: ${JSON.stringify(el)} | i: ${i}`);
           const passProps = { title: el.name };
           this.props.navigation.navigate('PageCategory', passProps);
         }}

@@ -3,7 +3,8 @@ import { FilterProductsComponent } from './component';
 import {
   setShowFilter,
   setShowFilterCategory,
-  setShowFilterBrands
+  setShowFilterBrands,
+  setShowFilterPrices
 } from '../../screens/home/action';
 import { setFilterCategory, fetchCategories } from './action';
 import { setChildCategory, setChildBrand, fetchSearch } from '../../screens/home/action';
@@ -17,6 +18,7 @@ const mapDispatchToProps = dispatch => ({
   setShowFilter: data => dispatch(setShowFilter(data)),
   setShowFilterCategory: data => dispatch(setShowFilterCategory(data)),
   setShowFilterBrands: data => dispatch(setShowFilterBrands(data)),
+  setShowFilterPrices: data => dispatch(setShowFilterPrices(data)),
   setChildCategory: data => dispatch(setChildCategory(data)),
   setChildBrand: data => dispatch(setChildBrand(data)),
   search: (keyword, filterParams) => dispatch(fetchSearch(keyword, filterParams))

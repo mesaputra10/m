@@ -10,7 +10,7 @@ interface FilterBrandsComponentProps {
   brands: any[];
   setFilterBrands?: any;
   selectedBrands?: any[];
-  clickChildBrand: any;
+  showFilterPage: any;
   setShowFilterBrands?: any;
   setShowFilter?: any;
   showFilterBrands?: boolean;
@@ -41,9 +41,7 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
     this.props.setFilterBrands([]);
     const selectedBrands = this.props.selectedBrands;
     this.props.setFilterBrands(selectedBrands);
-    this.props.clickChildBrand();
-    this.props.setShowFilterBrands(false);
-    this.props.setShowFilter(true);
+    this.props.showFilterPage();
   };
   render() {
     const { brands, showFilterBrands, selectedBrands } = this.props;
