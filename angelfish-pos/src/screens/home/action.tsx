@@ -5,6 +5,16 @@ import { SearchResultAction, SearchAction } from './reducer';
 import { FilterProducts } from '../../components/filter-products';
 import { Product } from '../../bmd';
 
+export const startLoading = () => ({
+  type: ActionTypes.IS_LOADING,
+  isLoading: true
+});
+
+export const endLoading = () => ({
+  type: ActionTypes.IS_LOADING,
+  isLoading: false
+});
+
 export function startSearch(keyword): SearchAction {
   return {
     type: ActionTypes.PRODUCTS_SEARCH,
@@ -36,13 +46,6 @@ export const productsData = (keyword, page, data): SearchResultAction => ({
   priceRange: data.facets.aggregationPriceRange
 });
 
-export const setFilter = data => dispatch => {
-  dispatch({
-    type: ActionTypes.PRODUCTS_FILTER,
-    showFilter: data
-  });
-};
-
 export const setRemoveFilter = () => dispatch => {
   dispatch(setDefaultFilterCategory());
   dispatch(setDefaultFilterBrand());
@@ -50,6 +53,14 @@ export const setRemoveFilter = () => dispatch => {
     type: ActionTypes.PRODUCTS_FILTER,
     showFilter: false
   });
+};
+
+export const setRemoveFilterCategory = () => dispatch => {
+  dispatch(setDefaultFilterCategory());
+};
+
+export const setRemoveFilterBrands = () => dispatch => {
+  dispatch(setDefaultFilterBrand());
 };
 
 export const setDefaultFilterCategory = () => dispatch =>
@@ -62,8 +73,7 @@ export const setDefaultFilterCategory = () => dispatch =>
 export const setDefaultFilterBrand = () => dispatch =>
   dispatch({
     type: ActionTypes.SET_FILTER_BRAND,
-    selectedBrandId: '',
-    selectedBrandName: ''
+    selectedBrands: []
   });
 
 export const emptyProductsData = (): SearchResultAction => ({
@@ -76,3 +86,39 @@ export const emptyProductsData = (): SearchResultAction => ({
   page: 0,
   priceRange: null
 });
+
+export const setShowFilter = data => dispatch =>
+  dispatch({
+    type: ActionTypes.PRODUCTS_FILTER,
+    showFilter: data
+  });
+
+export const setShowFilterCategory = data => dispatch =>
+  dispatch({
+    type: ActionTypes.PRODUCTS_FILTER_CATEGORY,
+    showFilterCategory: data
+  });
+
+export const setShowFilterBrands = data => dispatch =>
+  dispatch({
+    type: ActionTypes.PRODUCTS_FILTER_BRANDS,
+    showFilterBrands: data
+  });
+
+export const setFilterBrands = selectedBrands => dispatch =>
+  dispatch({
+    type: ActionTypes.SET_FILTER_BRAND,
+    selectedBrands
+  });
+
+export const setChildCategory = data => dispatch =>
+  dispatch({
+    type: ActionTypes.PRODUCT_FILTER_CHILD_CATEGORY,
+    childCategory: data
+  });
+
+export const setChildBrand = data => dispatch =>
+  dispatch({
+    type: ActionTypes.PRODUCT_FILTER_CHILD_BRAND,
+    childBrand: data
+  });

@@ -1,1 +1,1 @@
-export { ProductsNotFoundComponent as ProductsNotFound } from './component';
+export { ProductsNotFoundContainer as ProductsNotFound } from './container';

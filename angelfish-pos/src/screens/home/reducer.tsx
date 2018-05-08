@@ -9,12 +9,18 @@ const initialState = {
   totalPage: 0,
   totalProducts: 0,
   showFilter: false,
+  showFilterCategory: false,
+  showFilterBrands: false,
   selectedCategoryId: '',
   selectedCategoryName: '',
   selectedBrandId: 0,
   selectedBrandName: '',
   page: 1,
-  brands: []
+  brands: [],
+  selectedBrands: [],
+  childBrand: false,
+  childCategory: false,
+  isLoading: true
 };
 
 export interface SearchAction extends Action {
@@ -38,7 +44,17 @@ export interface FilterProducts extends Action {
   showFilter: boolean;
 }
 
-export interface ActionFilterCategoryInterface extends Action {
+interface FilterCategoryProducts extends Action {
+  type: ActionTypes.PRODUCTS_FILTER_CATEGORY;
+  showFilterCategory: boolean;
+}
+
+interface FilterBrandsProducts extends Action {
+  type: ActionTypes.PRODUCTS_FILTER_BRANDS;
+  showFilterBrands: boolean;
+}
+
+interface ActionFilterCategoryInterface extends Action {
   type: ActionTypes.SET_FILTER_CATEGORY;
   selectedCategoryId: string;
   selectedCategoryName: string;
@@ -51,8 +67,22 @@ export interface ActionCategoriesInterface extends Action {
 
 export interface ActionFilterBrandInterface extends Action {
   type: ActionTypes.SET_FILTER_BRAND;
-  selectedBrandId: number;
-  selectedBrandName: string;
+  selectedBrands: any[];
+}
+
+interface ActionChildCategoryInterface extends Action {
+  type: ActionTypes.PRODUCT_FILTER_CHILD_CATEGORY;
+  childCategory: boolean;
+}
+
+interface ActionChildBrandInterface extends Action {
+  type: ActionTypes.PRODUCT_FILTER_CHILD_BRAND;
+  childBrand: boolean;
+}
+
+interface ActionIsLoadingInterface extends Action {
+  type: ActionTypes.IS_LOADING;
+  isLoading: boolean;
 }
 
 const reducer = (
@@ -61,9 +91,14 @@ const reducer = (
     | SearchAction
     | SearchResultAction
     | FilterProducts
+    | FilterCategoryProducts
+    | FilterBrandsProducts
     | ActionFilterCategoryInterface
     | ActionCategoriesInterface
     | ActionFilterBrandInterface
+    | ActionChildCategoryInterface
+    | ActionChildBrandInterface
+    | ActionIsLoadingInterface
 ) => {
   switch (action.type) {
     case ActionTypes.PRODUCTS_SEARCH: {
@@ -94,6 +129,16 @@ const reducer = (
         showFilter: action.showFilter
       });
     }
+    case ActionTypes.PRODUCTS_FILTER_CATEGORY: {
+      return Object.assign({}, state, {
+        showFilterCategory: action.showFilterCategory
+      });
+    }
+    case ActionTypes.PRODUCTS_FILTER_BRANDS: {
+      return Object.assign({}, state, {
+        showFilterBrands: action.showFilterBrands
+      });
+    }
     case ActionTypes.SET_FILTER_CATEGORY: {
       return Object.assign({}, state, {
         selectedCategoryId: action.selectedCategoryId,
@@ -105,8 +150,22 @@ const reducer = (
     }
     case ActionTypes.SET_FILTER_BRAND: {
       return Object.assign({}, state, {
-        selectedBrandId: action.selectedBrandId,
-        selectedBrandName: action.selectedBrandName
+        selectedBrands: action.selectedBrands
+      });
+    }
+    case ActionTypes.PRODUCT_FILTER_CHILD_CATEGORY: {
+      return Object.assign({}, state, {
+        childCategory: action.childCategory
+      });
+    }
+    case ActionTypes.PRODUCT_FILTER_CHILD_BRAND: {
+      return Object.assign({}, state, {
+        childBrand: action.childBrand
+      });
+    }
+    case ActionTypes.IS_LOADING: {
+      return Object.assign({}, state, {
+        isLoading: action.isLoading
       });
     }
     default: {

@@ -10,16 +10,10 @@ export const fetchCategories = () => dispatch => {
   );
 };
 
-export const setFilterCategory = (selectedCategoryId, selectedCategoryName) => dispatch =>
+export const setFilterCategory = (selectedCategoryId, selectedCategoryName) => dispatch => {
   dispatch({
     type: ActionTypes.SET_FILTER_CATEGORY,
     selectedCategoryId,
     selectedCategoryName
   });
-
-export const setFilterBrand = (selectedBrandId, selectedBrandName) => dispatch =>
-  dispatch({
-    type: ActionTypes.SET_FILTER_BRAND,
-    selectedBrandId,
-    selectedBrandName
-  });
+};

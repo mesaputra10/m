@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { View, Text, Image, TouchableWithoutFeedback, ScrollView, Alert } from 'react-native';
 import { Content, List, ListItem } from 'native-base';
 import styles from './styles';
 import generateUniqKey from '../../helpers/generate-uniq-key';
 import { Category, Brand } from '../../bmd';
+import config from '../../config';
+import { FilterBrands } from '../filter-brands';
 
 interface FilterProductsComponentProps {
   getCategories?: any;
@@ -13,9 +15,16 @@ interface FilterProductsComponentProps {
   categories?: Category[];
   search?: any;
   keyword?: string;
-  brands?: Brand[];
-  setFilterBrand?: any;
-  selectedBrandName?: string;
+  brands?: any;
+  selectedBrands?: any[];
+  setShowFilter?: any;
+  setShowFilterCategory?: any;
+  setShowFilterBrands?: any;
+  setChildCategory?: any;
+  setChildBrand?: any;
+  childCategory?: boolean;
+  childBrand?: boolean;
+  showFilter?: boolean;
 }
 
 interface FilterProductsComponentState {
@@ -43,130 +52,136 @@ export class FilterProductsComponent extends Component<
   componentDidMount() {
     this.props.getCategories();
   }
-
   // TODO: may error if action CATEGORIES_LIST still fetching data
   clickCategories = () => {
+    this.props.setShowFilterCategory(true);
+    this.props.setShowFilterBrands(false);
+    this.props.setShowFilter(false);
     this.setState({
-      dataCategories: this.props.categories,
-      filterPage: false,
-      childCategory: true,
-      childBrand: false
+      dataCategories: this.props.categories
     });
+    this.props.setChildCategory(true);
   };
   clickChildCategory = (category, children) => {
     if (children !== undefined && children.length > 0) {
       this.setState({ dataCategories: children, filterPage: false, childCategory: true });
     } else {
+      this.props.setShowFilter(true);
+      this.props.setShowFilterCategory(false);
+      this.props.setShowFilterBrands(false);
       this.props.setFilterCategory(category.id, category.name);
-      this.setState({
-        filterPage: true,
-        childCategory: false,
-        childBrand: false
-      });
+      this.setState({});
     }
   };
   clickBrands = () => {
+    this.props.setShowFilterBrands(true);
+    this.props.setShowFilterCategory(false);
+    this.props.setShowFilter(false);
     this.setState({
-      dataBrands: this.props.brands,
-      filterPage: false,
-      childBrand: true,
-      childCategory: false
+      dataBrands: this.props.brands
     });
+    this.props.setChildBrand(true);
+    this.props.setChildCategory(false);
   };
-  clickChildBrand = (brandId, brandName) => {
-    this.props.setFilterBrand(brandId, brandName);
-    this.setState({
-      filterPage: true,
-      childBrand: false,
-      childCategory: false
-    });
+  clickChildBrand = (): void => {
+    this.props.setShowFilter(false);
+  };
+  onPressTerapkan = () => {
+    this.props.setShowFilterCategory(false);
+    const { selectedCategoryId, brands } = this.props;
+    const filterParams = { categoryId: selectedCategoryId, brands };
+    this.props.search(this.props.keyword, 1, filterParams);
+    this.props.setShowFilter(false);
   };
   render() {
-    const { selectedCategoryId, selectedCategoryName, selectedBrandName, categories } = this.props;
-    if (this.state.filterPage) {
+    const { selectedCategoryId, selectedCategoryName, selectedBrands, categories } = this.props;
+    const disableTerapkan = selectedCategoryId === '' && selectedBrands.length === 0;
+    const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
+    if (this.props.showFilter) {
       return (
         <View style={styles.container}>
-          <TouchableWithoutFeedback onPress={this.clickCategories}>
+          <ScrollView>
+            <TouchableWithoutFeedback onPress={this.clickCategories}>
+              <View style={styles.listContainer}>
+                <View style={styles.listLeft}>
+                  <Text style={styles.titleListText}>Kategori</Text>
+                  {selectedCategoryName && (
+                    <Text style={styles.titleListSelected}>{selectedCategoryName}</Text>
+                  )}
+                  {selectedCategoryName === '' && (
+                    <Text style={styles.titleListSelectedDefault}>Semua</Text>
+                  )}
+                </View>
+                <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={this.clickBrands}>
+              <View style={styles.listContainer}>
+                <View style={styles.listLeft}>
+                  <Text style={styles.titleListText}>Brand</Text>
+                  {selectedBrands.length > 0 && (
+                    <Text style={styles.titleListSelected} numberOfLines={2}>
+                      {selectedBrands.map(b => b.brand).join(', ')}
+                    </Text>
+                  )}
+                  {selectedBrands.length === 0 && (
+                    <Text style={styles.titleListSelectedDefault}>Semua</Text>
+                  )}
+                </View>
+                <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
+              </View>
+            </TouchableWithoutFeedback>
             <View style={styles.listContainer}>
               <View style={styles.listLeft}>
-                <Text style={styles.titleListText}>Kategori</Text>
-                {selectedCategoryName && (
-                  <Text style={styles.titleListSelected}>{selectedCategoryName}</Text>
-                )}
-                {selectedCategoryName === '' && (
-                  <Text style={styles.titleListSelectedDefault}>Semua</Text>
-                )}
+                <Text style={styles.titleListText}>Harga</Text>
+                <Text style={styles.titleListSelectedDefault}>Semua</Text>
               </View>
               <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
             </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={this.clickBrands}>
-            <View style={styles.listContainer}>
-              <View style={styles.listLeft}>
-                <Text style={styles.titleListText}>Brand</Text>
-                {selectedBrandName && (
-                  <Text style={styles.titleListSelected}>{selectedBrandName}</Text>
-                )}
-                {selectedBrandName === '' && (
-                  <Text style={styles.titleListSelectedDefault}>Semua</Text>
-                )}
+          </ScrollView>
+          <View style={styles.buttonBottomContainer}>
+            <TouchableWithoutFeedback onPress={this.onPressTerapkan} disabled={disableTerapkan}>
+              <View style={[styles.buttonBottomStyle, disableTerapkanStyle]}>
+                <Text style={styles.buttonBottomText}>TERAPKAN</Text>
               </View>
-              <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
-            </View>
-          </TouchableWithoutFeedback>
-          <View style={styles.listContainer}>
-            <View style={styles.listLeft}>
-              <Text style={styles.titleListText}>Harga</Text>
-              <Text style={styles.titleListSelectedDefault}>Semua</Text>
-            </View>
-            <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
+            </TouchableWithoutFeedback>
           </View>
         </View>
       );
     }
-    if (this.state.childCategory) {
+    if (this.props.childCategory) {
       return (
-        <ScrollView style={styles.container}>
-          {this.state.dataCategories.map((category, categoryIndex) => {
-            return (
-              <TouchableWithoutFeedback
-                onPress={() => this.clickChildCategory(category, category.children)}
-                key={generateUniqKey(categoryIndex)}
-              >
-                <View style={styles.listContainer}>
-                  <View style={styles.listLeft}>
-                    <Text style={styles.titleListText}>
-                      {category.name} ({category.docCount})
-                    </Text>
+        <View style={styles.container}>
+          <ScrollView>
+            {this.state.dataCategories.map((category, categoryIndex) => {
+              return (
+                <TouchableWithoutFeedback
+                  onPress={() => this.clickChildCategory(category, category.children)}
+                  key={generateUniqKey(categoryIndex)}
+                >
+                  <View style={styles.listContainer}>
+                    <View style={styles.listLeft}>
+                      <Text style={styles.titleListText}>
+                        {category.name} ({category.docCount})
+                      </Text>
+                    </View>
                   </View>
-                  <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
-                </View>
-              </TouchableWithoutFeedback>
-            );
-          })}
-        </ScrollView>
+                </TouchableWithoutFeedback>
+              );
+            })}
+          </ScrollView>
+          {/* <View style={styles.buttonBottomContainer}>
+            <TouchableWithoutFeedback onPress={this.onPressTerapkan}>
+              <View style={styles.buttonBottomStyle}>
+                <Text style={styles.buttonBottomText}>TERAPKAN</Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View> */}
+        </View>
       );
     }
-    if (this.state.childBrand) {
-      return (
-        <ScrollView style={styles.container}>
-          {this.state.dataBrands.map((brand, brandIndex) => {
-            return (
-              <TouchableWithoutFeedback
-                onPress={() => this.clickChildBrand(brand.aggrBrands, brand.brand)}
-                key={generateUniqKey(brandIndex)}
-              >
-                <View style={styles.listContainer}>
-                  <View style={styles.listLeft}>
-                    <Text style={styles.titleListText}>{brand.brand}</Text>
-                  </View>
-                  <Image source={require('./assets/chevronRight.png')} style={styles.listRight} />
-                </View>
-              </TouchableWithoutFeedback>
-            );
-          })}
-        </ScrollView>
-      );
+    if (this.props.childBrand) {
+      return <FilterBrands brands={this.state.dataBrands} clickChildBrand={this.clickChildBrand} />;
     }
   }
 }

@@ -15,23 +15,23 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  listLeft: {
-    flexDirection: 'column'
-  },
-  listRight: {
-    alignItems: 'center',
-    justifyContent: 'center'
+  brandContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   titleListText: {
     fontSize: 16,
-    paddingBottom: 4
+    paddingBottom: 4,
+    paddingLeft: 16,
+    alignItems: 'center',
+    marginTop: 5
   },
-  titleListSelectedDefault: {
-    fontSize: 12
-  },
-  titleListSelected: {
-    color: config.color.blue,
-    width: 230
+  circleStyle: {
+    width: 24,
+    height: 24,
+    borderRadius: 25,
+    borderWidth: 1
   },
   buttonBottomContainer: {
     justifyContent: 'center',

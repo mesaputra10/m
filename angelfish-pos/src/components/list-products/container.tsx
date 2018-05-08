@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import { ListProductsComponent } from './component';
-import { setFilter } from './action';
+import { setShowFilter } from '../../screens/home/action';
 
 const mapStateToProps = (state: any) => state.homeReducer;
 
 const mapDispatchToProps = dispatch => ({
-  setFilter: filter => dispatch(setFilter(filter))
+  setFilter: filter => dispatch(setShowFilter(filter))
 });
 
 export const ListProductsContainer = connect(mapStateToProps, mapDispatchToProps)(

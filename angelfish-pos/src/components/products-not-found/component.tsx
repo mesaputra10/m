@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { View, Text, Image } from 'react-native';
 import styles from './styles';
 
-export class ProductsNotFoundComponent extends Component<any, any> {
+interface ProductsNotFoundComponentProps {
+  keyword?: string;
+}
+
+export class ProductsNotFoundComponent extends Component<ProductsNotFoundComponentProps, any> {
   constructor(props) {
     super(props);
   }

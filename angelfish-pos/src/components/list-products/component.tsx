@@ -10,8 +10,8 @@ import { Product } from '../../bmd';
 
 interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   products?: Product[];
-  keyword: string;
-  totalProducts: number;
+  keyword?: string;
+  totalProducts?: number;
   setFilter?: any;
   showFilter?: boolean;
   searchProduct(keyword, page, filterParams): any;
