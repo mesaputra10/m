@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { searchProduct, FilterParams } from '../../helpers/fetch-data';
+import { searchProduct, FilterParams, categories } from '../../helpers/fetch-data';
 import ActionTypes from '../../store/action-types';
 import { SearchResultAction, SearchAction } from './reducer';
 import { FilterProducts } from '../../components/filter-products';
@@ -48,6 +48,12 @@ export const productsData = (keyword, page, filterParams, data): SearchResultAct
   brands: data.facets.aggregationBrand,
   priceRange: data.facets.aggregationPriceRange
 });
+
+export const fetchCategories = () => async dispatch => {
+  dispatch({ type: ActionTypes.CATEGORIES_LOADING });
+  let data = await categories();
+  return dispatch({ type: ActionTypes.CATEGORIES_LIST, categories: data });
+};
 
 export const setRemoveFilter = () => dispatch => {
   dispatch(setDefaultFilterCategory());

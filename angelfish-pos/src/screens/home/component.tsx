@@ -24,13 +24,14 @@ import store from '../../store/store';
 import config from '../../config';
 import { ActivityIndicator } from 'react-native';
 import { setShowFilterPrices } from './action';
-import { Product } from '../../bmd';
+import { Product, Category } from '../../bmd';
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   isLoading: boolean;
   startLoading?: any;
   endLoading?: any;
   search: any;
+  loadCategories: any;
   emptySearch: any;
   keyword: string;
   products: Product[];
@@ -57,6 +58,8 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   setChildBrand?: any;
   priceRange: any;
   setValueFilterPrices: any;
+  isCategoriesLoading: boolean;
+  categories: Category[];
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
@@ -65,6 +68,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   constructor(props: HomeComponentProps) {
     super(props);
+    this.props.loadCategories();
     this.state = {
       searchAutoComplete: false,
       searchResults: false,
@@ -305,7 +309,13 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                 )}
 
               {!this.state.searchAutoComplete &&
-                !this.state.searchResults && <ListCategories navigation={this.props.navigation} />}
+                !this.state.searchResults &&
+                !this.props.isCategoriesLoading && (
+                  <ListCategories
+                    categories={this.props.categories}
+                    navigation={this.props.navigation}
+                  />
+                )}
 
               {this.state.searchResults && (
                 <ListProducts

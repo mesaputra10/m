@@ -17,6 +17,7 @@ import {
   setValueFilterPrices
 } from './action';
 import { start } from 'repl';
+import { fetchCategories } from './action';
 
 const mapStateToProps = (state: any) => state.homeReducer;
 
@@ -25,6 +26,7 @@ const mapDispatchToProps = dispatch => ({
   endLoading: () => dispatch(endLoading()),
   search: (keyword, page, filterParams) => dispatch(fetchSearch(keyword, page, filterParams)),
   emptySearch: () => dispatch({ type: ActionTypes.PRODUCTS_SEARCH, keyword: '' }),
+  loadCategories: () => dispatch(fetchCategories()),
   setShowFilter: value => dispatch(setShowFilter(value)),
   setShowFilterCategory: value => dispatch(setShowFilterCategory(value)),
   setShowFilterBrands: value => dispatch(setShowFilterBrands(value)),

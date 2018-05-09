@@ -238,7 +238,10 @@ function remapCategories(data: any, level = 1) {
   return data;
 }
 
-export async function categories(parentId: string = undefined) {
+/**
+ * Load all category tree
+ */
+export async function categories(): Promise<Category[]> {
   let res = await searchProduct('', 1, {}, 1);
   return Category.fromPlain(remapCategories(res.facets.categoryTree1));
 }

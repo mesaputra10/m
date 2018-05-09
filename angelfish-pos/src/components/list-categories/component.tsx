@@ -5,19 +5,11 @@ import styles from './styles';
 import numberFormat from '../../helpers/number-format';
 import { NavigationScreenProps } from 'react-navigation';
 import { DataItem } from 'antd-mobile/lib/grid/PropsType';
+import { Category } from '../../bmd';
 
-interface ListCategoriesComponentProps extends NavigationScreenProps {}
-
-const categories: Array<DataItem> = [
-  { name: 'Aksesoris Komputer' },
-  { name: 'Desktop & Notebooks' },
-  { name: 'Alat Tulis & Peralatan Kantor' },
-  { name: 'Server, Network & Power System' },
-  { name: 'Tablets & Gadgets' },
-  { name: 'Foto & Videografi' },
-  { name: 'Alat Musik & Pro Audio' },
-  { name: 'Sport & Fitness' }
-];
+interface ListCategoriesComponentProps extends NavigationScreenProps {
+  categories: Category[];
+}
 
 export class ListCategoriesComponent extends Component<ListCategoriesComponentProps, any> {
   constructor(props) {
@@ -35,7 +27,7 @@ export class ListCategoriesComponent extends Component<ListCategoriesComponentPr
   render() {
     return (
       <Grid
-        data={categories}
+        data={this.props.categories}
         itemStyle={{
           width: 145,
           height: 145

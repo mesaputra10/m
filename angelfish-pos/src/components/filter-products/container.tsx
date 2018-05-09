@@ -6,13 +6,12 @@ import {
   setShowFilterBrands,
   setShowFilterPrices
 } from '../../screens/home/action';
-import { setFilterCategory, fetchCategories } from './action';
+import { setFilterCategory } from './action';
 import { setChildCategory, setChildBrand, fetchSearch } from '../../screens/home/action';
 
 const mapStateToProps = (state: any) => state.homeReducer;
 
 const mapDispatchToProps = dispatch => ({
-  getCategories: () => dispatch(fetchCategories()),
   setFilterCategory: (selectedCategoryId, selectedCategoryName) =>
     dispatch(setFilterCategory(selectedCategoryId, selectedCategoryName)),
   setShowFilter: data => dispatch(setShowFilter(data)),

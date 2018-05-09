@@ -23,7 +23,9 @@ const initialState = {
   childCategory: false,
   isLoading: true,
   minPriceRange: 0,
-  maxPriceRange: 0
+  maxPriceRange: 0,
+  isCategoriesLoading: false,
+  categories: []
 };
 
 export interface SearchAction extends Action {
@@ -68,6 +70,10 @@ interface ActionFilterCategoryInterface extends Action {
   selectedCategoryName: string;
 }
 
+export interface ActionCategoriesLoadingInterface extends Action {
+  type: ActionTypes.CATEGORIES_LOADING;
+}
+
 export interface ActionCategoriesInterface extends Action {
   type: ActionTypes.CATEGORIES_LIST;
   categories: any[];
@@ -109,6 +115,7 @@ const reducer = (
     | FilterBrandsProducts
     | FilterPricesInterface
     | ActionFilterCategoryInterface
+    | ActionCategoriesLoadingInterface
     | ActionCategoriesInterface
     | ActionFilterBrandInterface
     | ActionChildCategoryInterface
@@ -166,8 +173,11 @@ const reducer = (
         selectedCategoryName: action.selectedCategoryName
       });
     }
+    case ActionTypes.CATEGORIES_LOADING: {
+      return { ...state, isCategoriesLoading: true };
+    }
     case ActionTypes.CATEGORIES_LIST: {
-      return { ...state, categories: action.categories };
+      return { ...state, isCategoriesLoading: false, categories: action.categories };
     }
     case ActionTypes.SET_FILTER_BRAND: {
       return Object.assign({}, state, {

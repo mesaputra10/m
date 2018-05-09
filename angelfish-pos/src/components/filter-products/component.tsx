@@ -54,10 +54,6 @@ export class FilterProductsComponent extends Component<
       childBrand: false
     };
   }
-  componentDidMount() {
-    this.props.getCategories();
-  }
-  // TODO: may error if action CATEGORIES_LIST still fetching data
   clickCategories = () => {
     this.setState({
       dataCategories: this.props.categories
