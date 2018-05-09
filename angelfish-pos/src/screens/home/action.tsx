@@ -1,9 +1,11 @@
 import { AsyncStorage } from 'react-native';
-import { searchProduct } from '../../helpers/fetch-data';
+import { searchProduct, FilterParams } from '../../helpers/fetch-data';
 import ActionTypes from '../../store/action-types';
 import { SearchResultAction, SearchAction } from './reducer';
 import { FilterProducts } from '../../components/filter-products';
 import { Product } from '../../bmd';
+import { Action, ActionCreator, Dispatch } from 'redux';
+import { ThunkAction } from 'redux-thunk';
 
 export const startLoading = () => ({
   type: ActionTypes.IS_LOADING,
@@ -24,18 +26,19 @@ export function startSearch(keyword): SearchAction {
 
 export const fetchSearch = (
   keyword: string,
-  page: number = 0,
-  filterParams: any = {}
+  page: number = 1,
+  filterParams: FilterParams = {}
 ) => dispatch => {
   dispatch(startSearch(keyword));
   return searchProduct(keyword, page, filterParams).then(data => {
+    let cond = data.hits !== undefined || data.facets.aggregationBrand !== undefined;
     if (data.hits !== undefined || data.facets.aggregationBrand !== undefined) {
-      dispatch(productsData(keyword, page, data));
+      dispatch(productsData(keyword, page, filterParams, data));
     }
   });
 };
 
-export const productsData = (keyword, page, data): SearchResultAction => ({
+export const productsData = (keyword, page, filterParams, data): SearchResultAction => ({
   type: ActionTypes.PRODUCTS_DATA_LIST,
   keyword,
   page,

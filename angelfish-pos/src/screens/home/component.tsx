@@ -16,7 +16,6 @@ import { Container, Header, Content, Item, Input, Icon, Button, Text } from 'nat
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
-import { Product } from '../home/reducer';
 import { SearchResultList } from '../../components/search-result-list';
 import { ListProducts } from '../../components/list-products';
 import { ListCategories } from '../../components/list-categories';
@@ -25,6 +24,7 @@ import store from '../../store/store';
 import config from '../../config';
 import { ActivityIndicator } from 'react-native';
 import { setShowFilterPrices } from './action';
+import { Product } from '../../bmd';
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   isLoading: boolean;

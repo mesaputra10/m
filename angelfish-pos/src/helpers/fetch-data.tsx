@@ -13,6 +13,52 @@ const headerContentType = 'application/x-www-form-urlencoded';
 const baseURL: string = 'http://api-krab-dev.bhinneka.com:8080';
 const deviceId = Expo.Constants.deviceId;
 
+function getUrl(config) {
+  if (config.baseURL) {
+    return config.url.replace(config.baseURL, '');
+  }
+  return config.url;
+}
+
+// set to true to debug axios
+if (false) {
+  // Intercept all requests
+  axios.interceptors.request.use(
+    config => {
+      console.log(
+        '%c ' + ' - ' + getUrl(config) + ':',
+        'color: #0086b3; font-weight: bold',
+        config
+      );
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    }
+  );
+
+  // Intercept all responses
+  axios.interceptors.response.use(
+    response => {
+      console.log(
+        '%c ' + response.status + ' - ' + getUrl(response.config) + ':',
+        'color: #008000; font-weight: bold',
+        response
+      );
+      return response;
+    },
+
+    error => {
+      console.log(
+        '%c ' + error.response.status + ' - ' + getUrl(error.response.config) + ':',
+        'color: #a71d5d; font-weight: bold',
+        error.response
+      );
+      return Promise.reject(error);
+    }
+  );
+}
+
 export interface Tokens {
   accessToken: string;
   refreshToken: string;
@@ -139,36 +185,39 @@ export async function fetchData(
   return undefined;
 }
 
+export interface FilterParams {
+  categoryId?: string;
+  brandId?: string;
+  brands?: any[];
+  minPriceRange?: string;
+  maxPriceRange?: string;
+}
+
 /*
 TODO:
 - include facet parameter boolean flag
 - filterParams handles when set to null
+- search multiple brands
 */
 export async function searchProduct(
   keyword: string,
   pageNumber: number = 1,
-  filterParams: any = {},
+  filterParams: FilterParams = {},
   pageSize = 21
 ) {
-  const categoryId = filterParams.categoryId === undefined ? '' : filterParams.categoryId;
-  const brands = filterParams.brands === undefined ? '' : filterParams.brands;
-  const min = filterParams.minPriceRange === undefined ? '' : filterParams.minPriceRange;
-  const max = filterParams.maxPriceRange === undefined ? '' : filterParams.maxPriceRange;
+  let params = {
+    include: 'facets',
+    'filter[query]': keyword,
+    'page[size]': pageSize,
+    'page[number]': pageNumber
+  };
+  if (filterParams.categoryId) params['filter[categoryId]'] = filterParams.categoryId;
+  if (filterParams.brandId) params['filter[brandId]'] = filterParams.brandId;
+  if (filterParams.minPriceRange) params['filter[minPrice]'] = filterParams.minPriceRange;
+  if (filterParams.maxPriceRange) params['filter[maxPrice]'] = filterParams.maxPriceRange;
+
   let tokens = await getUserToken();
-  return fetchData(
-    '/api/products/search',
-    'GET',
-    {
-      include: 'facets',
-      'filter[query]': keyword,
-      'page[size]': pageSize,
-      'page[number]': pageNumber,
-      'filter[categoryId]': categoryId,
-      'filter[brandId]': brands,
-      'filter[price]': { min, max }
-    },
-    tokens
-  );
+  return fetchData('/api/products/search', 'GET', params, tokens);
 }
 
 const MAX_CATEGORY_LEVEL = 4;

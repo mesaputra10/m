@@ -8,6 +8,7 @@ import config from '../../config';
 import { FilterBrands } from '../filter-brands';
 import { FilterPrices } from '../filter-prices';
 import { numberFormat } from '../../helpers/number-format';
+import { Dispatch } from 'redux';
 
 interface FilterProductsComponentProps {
   getCategories?: any;
@@ -15,7 +16,7 @@ interface FilterProductsComponentProps {
   selectedCategoryId?: string;
   selectedCategoryName?: string;
   categories?: Category[];
-  search?: any;
+  search?(keyword, filterParams): Dispatch<any>;
   keyword?: string;
   brands?: any;
   selectedBrands?: any[];
@@ -84,7 +85,7 @@ export class FilterProductsComponent extends Component<
   onPressTerapkan = () => {
     const { selectedCategoryId, brands, minPriceRange, maxPriceRange } = this.props;
     const filterParams = { categoryId: selectedCategoryId, brands, minPriceRange, maxPriceRange };
-    this.props.search(this.props.keyword, 1, filterParams);
+    this.props.search(this.props.keyword, filterParams);
     this.hideFilter();
   };
   hideFilter = () => {

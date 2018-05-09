@@ -5,7 +5,7 @@ import styles from './styles';
 import numberFormat from '../../helpers/number-format';
 import { NavigationScreenProps } from 'react-navigation';
 import { ProductsNotFound } from '../products-not-found';
-import { searchProduct } from '../../helpers/fetch-data';
+import { searchProduct, FilterParams } from '../../helpers/fetch-data';
 import { Product } from '../../bmd';
 
 interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
@@ -38,6 +38,15 @@ export class ListProductsComponent extends Component<
       products: props.products
     };
   }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { products } = nextProps;
+    if (products) {
+      return { products };
+    }
+    return {};
+  }
+
   componentDidMount() {
     setTimeout(
       () =>

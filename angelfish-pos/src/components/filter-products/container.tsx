@@ -21,7 +21,7 @@ const mapDispatchToProps = dispatch => ({
   setShowFilterPrices: data => dispatch(setShowFilterPrices(data)),
   setChildCategory: data => dispatch(setChildCategory(data)),
   setChildBrand: data => dispatch(setChildBrand(data)),
-  search: (keyword, filterParams) => dispatch(fetchSearch(keyword, filterParams))
+  search: (keyword, filterParams) => dispatch(fetchSearch(keyword, 1, filterParams))
 });
 
 export const FilterProductsContainer = connect(mapStateToProps, mapDispatchToProps)(
