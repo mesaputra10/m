@@ -39,7 +39,31 @@ interface FilterProductsComponentState {
   childCategory: boolean;
   dataBrands: Brand[];
   childBrand: boolean;
+  openChild: any[];
 }
+const colors = {
+  1: {
+    style: {
+      backgroundColor: '#ffffff'
+    }
+  },
+  2: {
+    style: {
+      backgroundColor: '#f5f5f6'
+    }
+  },
+  3: {
+    style: {
+      backgroundColor: '#eff0f2'
+    }
+  },
+  4: {
+    style: {
+      backgroundColor: '#e1e3e6'
+    }
+  }
+};
+
 export class FilterProductsComponent extends Component<
   FilterProductsComponentProps,
   FilterProductsComponentState
@@ -51,7 +75,8 @@ export class FilterProductsComponent extends Component<
       dataCategories: [],
       childCategory: false,
       dataBrands: [],
-      childBrand: false
+      childBrand: false,
+      openChild: []
     };
   }
   clickCategories = () => {
@@ -68,6 +93,11 @@ export class FilterProductsComponent extends Component<
       this.props.setFilterCategory(category.id, category.name);
       this.setState({});
     }
+  };
+  terapkanCategory = () => {
+    const { selectedCategoryId, selectedCategoryName, setFilterCategory } = this.props;
+    this.showFilter();
+    setFilterCategory(selectedCategoryId, selectedCategoryName);
   };
   clickBrands = () => {
     this.setState({
@@ -124,6 +154,63 @@ export class FilterProductsComponent extends Component<
     this.props.setChildCategory(false);
     this.props.setChildBrand(false);
   };
+  _renderChildCategory = children => {
+    if (children !== undefined) {
+      return (
+        <View>
+          {children.map((category, categoryIndex) => {
+            const level = category.level !== undefined ? category.level : 4;
+            const customBg = colors[level]['style'];
+            const imageChevron = this.state.openChild.includes(category.id)
+              ? require('./assets/chevronUp.png')
+              : require('./assets/chevronDown.png');
+            const chevron = level !== 4 ? <Image source={imageChevron} /> : null;
+
+            const imageCheck =
+              this.props.selectedCategoryId === category.id ? (
+                <Image source={require('./assets/radioButtonOn.png')} width={20} />
+              ) : (
+                <Image source={require('./assets/radioButtonOff.png')} width={20} />
+              );
+            return (
+              <View key={generateUniqKey(categoryIndex)}>
+                <TouchableWithoutFeedback
+                  onPress={() => {
+                    if (category.children) {
+                      this.setState({
+                        openChild: this.state.openChild.concat(category.id)
+                      });
+                    } else {
+                      this.props.setFilterCategory(category.id, category.name);
+                    }
+                  }}
+                >
+                  <View style={[styles.listContainerCategory, customBg]}>
+                    {level === 4 && <View style={styles.circleStyle}>{imageCheck}</View>}
+                    <View style={styles.listLeftCategory}>
+                      <View style={{ flexDirection: 'row' }}>
+                        <Text style={styles.titleListTextCategory} ellipsizeMode="tail">
+                          {category.name}
+                        </Text>
+                        <Text style={styles.categoryCount}> ({category.docCount})</Text>
+                      </View>
+                    </View>
+                    {category.children && (
+                      <View style={styles.listRightCategory}>
+                        <Text style={styles.titleListTextCategory}>{chevron}</Text>
+                      </View>
+                    )}
+                  </View>
+                </TouchableWithoutFeedback>
+                {this.state.openChild.includes(category.id) &&
+                  this._renderChildCategory(category.children)}
+              </View>
+            );
+          })}
+        </View>
+      );
+    }
+  };
   render() {
     const {
       selectedCategoryId,
@@ -139,6 +226,11 @@ export class FilterProductsComponent extends Component<
       minPriceRange <= 0 &&
       maxPriceRange <= 0;
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
+    const disableTerapkanCategory = this.props.selectedCategoryId == '';
+    const disableTerapkanCategoryStyle = disableTerapkanCategory
+      ? { backgroundColor: config.color.grey }
+      : null;
+
     if (this.props.showFilter) {
       return (
         <View style={styles.container}>
@@ -205,31 +297,17 @@ export class FilterProductsComponent extends Component<
     if (this.props.childCategory) {
       return (
         <View style={styles.container}>
-          <ScrollView>
-            {this.state.dataCategories.map((category, categoryIndex) => {
-              return (
-                <TouchableWithoutFeedback
-                  onPress={() => this.clickChildCategory(category, category.children)}
-                  key={generateUniqKey(categoryIndex)}
-                >
-                  <View style={styles.listContainer}>
-                    <View style={styles.listLeft}>
-                      <Text style={styles.titleListText}>
-                        {category.name} ({category.docCount})
-                      </Text>
-                    </View>
-                  </View>
-                </TouchableWithoutFeedback>
-              );
-            })}
-          </ScrollView>
-          {/* <View style={styles.buttonBottomContainer}>
-            <TouchableWithoutFeedback onPress={this.onPressTerapkan}>
-              <View style={styles.buttonBottomStyle}>
+          <ScrollView>{this._renderChildCategory(this.state.dataCategories)}</ScrollView>
+          <View style={styles.buttonBottomContainer}>
+            <TouchableWithoutFeedback
+              onPress={this.terapkanCategory}
+              disabled={disableTerapkanCategory}
+            >
+              <View style={[styles.buttonBottomStyle, disableTerapkanCategoryStyle]}>
                 <Text style={styles.buttonBottomText}>TERAPKAN</Text>
               </View>
             </TouchableWithoutFeedback>
-          </View> */}
+          </View>
         </View>
       );
     }

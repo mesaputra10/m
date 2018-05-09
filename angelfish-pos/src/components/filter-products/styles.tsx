@@ -54,6 +54,34 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     padding: 10
+  },
+  listContainerCategory: {
+    borderBottomWidth: 0.5,
+    borderColor: config.color.border,
+    padding: 16,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 56
+  },
+  listLeftCategory: {
+    flexDirection: 'column',
+    flex: 8
+  },
+  listRightCategory: {
+    alignItems: 'flex-end',
+    flex: 1
+  },
+  titleListTextCategory: {
+    fontSize: 14,
+    width: '80%'
+  },
+  categoryCount: {
+    fontSize: 14,
+    justifyContent: 'center'
+  },
+  circleStyle: {
+    flex: 1
   }
 });
 export default styles;
