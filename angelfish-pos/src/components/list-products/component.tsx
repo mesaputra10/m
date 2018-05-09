@@ -110,15 +110,15 @@ export class ListProductsComponent extends Component<
       </View>
     );
   };
-  fetchProducts = () => {
+  fetchProducts = async () => {
     const keyword = this.state.keyword;
     const page = this.state.page;
-    return searchProduct(keyword, page + 1).then(data => {
-      this.setState({
-        fetching: false,
-        products: this.state.products.concat(data.hits),
-        page: page + 1
-      });
+    let data = await searchProduct(keyword, page + 1);
+    let nextproducts = Product.fromPlain(data.hits);
+    this.setState({
+      fetching: false,
+      products: this.state.products.concat(nextproducts),
+      page: page + 1
     });
   };
   loadMore = () => {
