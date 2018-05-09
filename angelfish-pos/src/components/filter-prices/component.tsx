@@ -32,22 +32,50 @@ export class FilterPricesComponent extends Component<FilterPricesComponentProps,
   }
   onPressTerapkan = () => {
     const { min, max } = this.state;
-    this.props.setValueFilterPrices(min, max);
+    const minValue = this.removeDot(min);
+    const maxValue = this.removeDot(max);
+    if (maxValue === 0) {
+      Alert.alert('Error', 'Harga maksimum tidak boleh 0!');
+      return null;
+    }
+    if (maxValue < minValue) {
+      Alert.alert('Error', 'Harga maksimum tidak boleh kurang dari harga minimum!');
+      return null;
+    }
+    this.props.setValueFilterPrices(minValue, maxValue);
     this.props.setShowFilterPrices(false);
     this.props.setShowFilter(true);
   };
   setValueMin = min => {
-    this.setState({ min });
+    if (min.length <= 3) return null;
+    const minString = this.handlePriceEmpty(min);
+    const replaceRp = this.replaceRp(minString);
+    const val = this.removeDot(replaceRp);
+    this.setState({ min: numberFormat(val) });
   };
   setValueMax = max => {
-    this.setState({ max });
+    if (max.length <= 3) return null;
+    const maxString = this.handlePriceEmpty(max);
+    const replaceRp = this.replaceRp(maxString);
+    const val = this.removeDot(replaceRp);
+    this.setState({ max: numberFormat(val) });
+  };
+  handlePriceEmpty = value => {
+    return value.length > 0 ? value : 0;
+  };
+  replaceRp = value => value.replace('Rp ', '');
+  removeDot = value => {
+    const withOutDot = value.replace(/[.]/g, '');
+    return parseFloat(withOutDot);
   };
   render() {
     const { min, max } = this.state;
-    const disableTerapkan = min === '' || max === '' || parseInt(max) < parseInt(min);
+    const minFloat = this.removeDot(min);
+    const maxFloat = this.removeDot(max);
+    const disableTerapkan = min === '' || max === '' || maxFloat < minFloat;
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
-    const minValue = min;
-    const maxValue = max;
+    const minValue = `Rp ${numberFormat(min)}`;
+    const maxValue = `Rp ${numberFormat(max)}`;
     return (
       <View style={styles.container}>
         <View style={styles.contentContainer}>
