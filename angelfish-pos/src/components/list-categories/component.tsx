@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from 'antd-mobile';
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import { ScrollView, View, Text, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
 import { NavigationScreenProps } from 'react-navigation';
@@ -26,19 +26,21 @@ export class ListCategoriesComponent extends Component<ListCategoriesComponentPr
   };
   render() {
     return (
-      <Grid
-        data={this.props.categories}
-        itemStyle={{
-          width: 145,
-          height: 145
-        }}
-        onClick={(el, i) => {
-          const passProps = { title: el.name };
-          this.props.navigation.navigate('PageCategory', passProps);
-        }}
-        renderItem={(el, i) => this._renderItem(el, i)}
-        hasLine={false}
-      />
+      <ScrollView>
+        <Grid
+          data={this.props.categories}
+          itemStyle={{
+            width: 145,
+            height: 145
+          }}
+          onClick={(el, i) => {
+            const passProps = { title: el.name };
+            this.props.navigation.navigate('PageCategory', passProps);
+          }}
+          renderItem={(el, i) => this._renderItem(el, i)}
+          hasLine={false}
+        />
+      </ScrollView>
     );
   }
 }

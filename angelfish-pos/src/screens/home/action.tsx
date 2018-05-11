@@ -103,24 +103,6 @@ export const setShowFilter = data => dispatch =>
     showFilter: data
   });
 
-export const setShowFilterCategory = data => dispatch =>
-  dispatch({
-    type: ActionTypes.PRODUCTS_FILTER_CATEGORY,
-    showFilterCategory: data
-  });
-
-export const setShowFilterBrands = data => dispatch =>
-  dispatch({
-    type: ActionTypes.PRODUCTS_FILTER_BRANDS,
-    showFilterBrands: data
-  });
-
-export const setShowFilterPrices = data => dispatch =>
-  dispatch({
-    type: ActionTypes.PRODUCTS_FILTER_PRICES,
-    showFilterPrices: data
-  });
-
 export const setFilterBrands = selectedBrands => dispatch =>
   dispatch({
     type: ActionTypes.SET_FILTER_BRAND,
@@ -144,10 +126,4 @@ export const setValueFilterPrices = (min, max) => dispatch =>
     type: ActionTypes.PRODUCTS_FILTER_PRICES_VALUE,
     minPriceRange: min,
     maxPriceRange: max
-  });
-
-export const setShowSearchBrands = data => dispatch =>
-  dispatch({
-    type: ActionTypes.SHOW_SEARCH_BRANDS,
-    showSearchBrands: data
   });

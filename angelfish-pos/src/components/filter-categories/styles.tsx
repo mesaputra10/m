@@ -19,23 +19,17 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center'
   },
-  listLeft: {
-    flexDirection: 'column'
-  },
-  listRight: {
-    alignItems: 'center',
-    justifyContent: 'center'
+  brandContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   titleListText: {
     fontSize: 16,
-    paddingBottom: 4
-  },
-  titleListSelectedDefault: {
-    fontSize: 12
-  },
-  titleListSelected: {
-    color: config.color.blue,
-    width: 230
+    paddingBottom: 4,
+    paddingLeft: 16,
+    alignItems: 'center',
+    marginTop: 5
   },
   buttonBottomContainer: {
     justifyContent: 'center',
@@ -55,34 +49,6 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     padding: 10
-  },
-  listContainerCategory: {
-    borderBottomWidth: 0.5,
-    borderColor: config.color.border,
-    padding: 16,
-    justifyContent: 'space-between',
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 56
-  },
-  listLeftCategory: {
-    flexDirection: 'column',
-    flex: 8
-  },
-  listRightCategory: {
-    alignItems: 'flex-end',
-    flex: 1
-  },
-  titleListTextCategory: {
-    fontSize: 14,
-    width: '80%'
-  },
-  categoryCount: {
-    fontSize: 14,
-    justifyContent: 'center'
-  },
-  circleStyle: {
-    flex: 1
   },
   rightColumnTop: {
     justifyContent: 'flex-start'
@@ -117,6 +83,34 @@ export const styles = StyleSheet.create({
     paddingTop: 15,
     fontSize: 17,
     color: config.color.blue
+  },
+  listContainerCategory: {
+    borderBottomWidth: 0.5,
+    borderColor: config.color.border,
+    padding: 16,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+    height: 56
+  },
+  listLeftCategory: {
+    flexDirection: 'column',
+    flex: 8
+  },
+  listRightCategory: {
+    alignItems: 'flex-end',
+    flex: 1
+  },
+  titleListTextCategory: {
+    fontSize: 14,
+    width: '80%'
+  },
+  categoryCount: {
+    fontSize: 14,
+    justifyContent: 'center'
+  },
+  circleStyle: {
+    flex: 1
   }
 });
 export default styles;

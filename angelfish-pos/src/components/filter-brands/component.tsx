@@ -2,20 +2,13 @@ import React, { Component } from 'react';
 import { View, Text, Image, TouchableWithoutFeedback, ScrollView, TextInput } from 'react-native';
 import { Content, List, ListItem, Header, Icon } from 'native-base';
 import styles from './styles';
-import generateUniqKey from '../../helpers/generate-uniq-key';
 import config from '../../config';
-import { setShowFilterBrands } from '../../screens/home/action';
 
 interface FilterBrandsComponentProps {
   brands: any[];
   setFilterBrands?: any;
   selectedBrands?: any[];
-  showFilterPage: any;
-  setShowFilterBrands?: any;
-  setShowFilter?: any;
-  showFilterBrands?: boolean;
-  showSearchBrands?: boolean;
-  setShowSearchBrands?: any;
+  cancelFilterBrands?: any;
 }
 
 export class FilterBrandsComponent extends Component<FilterBrandsComponentProps, any> {
@@ -23,12 +16,14 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
     super(props);
     this.state = {
       dataBrands: props.brands,
-      keyword: ''
+      keyword: '',
+      selectedBrands: props.selectedBrands,
+      showSearchBrands: false
     };
   }
   componentDidMount() {}
   clickChildBrand = brand => {
-    let selectedBrandsNew = [...this.props.selectedBrands];
+    let selectedBrandsNew = [...this.state.selectedBrands];
     if (selectedBrandsNew.includes(brand)) {
       selectedBrandsNew.map((b, bIndex) => {
         if (b.aggrBrands == brand.aggrBrands) {
@@ -38,13 +33,12 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
     } else {
       selectedBrandsNew = [...selectedBrandsNew, brand];
     }
-    this.props.setFilterBrands(selectedBrandsNew);
+    this.setState({ selectedBrands: selectedBrandsNew });
   };
   onPressTerapkan = () => {
-    this.props.setFilterBrands([]);
-    const selectedBrands = this.props.selectedBrands;
+    const { selectedBrands } = this.state;
     this.props.setFilterBrands(selectedBrands);
-    this.props.showFilterPage();
+    this.props.cancelFilterBrands();
   };
   searchBrands = text => {
     const { brands } = this.props;
@@ -59,17 +53,43 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
       }
     }
   };
+  deleteFilterBrands = () => {
+    this.setState({ selectedBrands: [] });
+  };
+  showHideSearchBrands = () => {
+    this.setState({ showSearchBrands: !this.state.showSearchBrands, keyword: '' });
+  };
   render() {
-    const { showFilterBrands, selectedBrands, showSearchBrands } = this.props;
+    const { selectedBrands, showSearchBrands } = this.state;
     let brands = this.props.brands;
     if (showSearchBrands) {
       brands = this.state.dataBrands;
     }
     const disableTerapkan = selectedBrands.length < 1;
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
-    console.log(showSearchBrands, 'showSearchBrands');
     return (
       <View style={styles.container}>
+        <View style={styles.headerRightFilterContainer}>
+          <TouchableWithoutFeedback onPress={this.props.cancelFilterBrands}>
+            <View>
+              <Text style={styles.filterCancelText}>Batal</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <Text style={styles.headerRightText}>Brand</Text>
+          <TouchableWithoutFeedback onPress={this.showHideSearchBrands}>
+            <View style={styles.removeButtonContainer}>
+              <Icon
+                name="ios-search"
+                style={{ fontSize: 24, paddingTop: 16, color: config.color.blue }}
+              />
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={this.deleteFilterBrands}>
+            <View style={styles.removeButtonContainer}>
+              <Text style={styles.filterDeleteText}>Hapus</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
         <ScrollView style={styles.contentContainer}>
           {showSearchBrands && (
             <View
@@ -118,7 +138,7 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
             return (
               <TouchableWithoutFeedback
                 onPress={() => this.clickChildBrand(brand)}
-                key={generateUniqKey(brandIndex)}
+                key={brand.aggrBrands}
               >
                 <View style={styles.listContainer}>
                   <View style={styles.brandContainer}>

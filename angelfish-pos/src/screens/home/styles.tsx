@@ -7,12 +7,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
-    paddingTop: Expo.Constants.statusBarHeight,
     backgroundColor: '#fff'
   },
   headerStyle: {
     backgroundColor: '#fff',
-    borderWidth: 0
+    borderBottomWidth: 0
   },
   headerColLeft: {
     marginRight: 13
@@ -28,6 +27,15 @@ const styles = StyleSheet.create({
   headerColRight: {
     borderLeftWidth: 1,
     borderLeftColor: 'grey'
+  },
+  rightColumnTop: {
+    justifyContent: 'flex-start'
+  },
+  rightColumnContainer: {
+    flex: 1,
+    paddingTop: 15,
+    height: 64,
+    justifyContent: 'space-between'
   },
   headerRightContainer: {
     justifyContent: 'center',
@@ -151,6 +159,18 @@ const styles = StyleSheet.create({
   },
   removeButtonContainer: {
     marginRight: -7
+  },
+
+  /// newstyle
+  leftColumn: {
+    justifyContent: 'flex-start',
+    flex: 7,
+    borderRightWidth: 1,
+    borderRightColor: config.color.border
+  },
+  rightColumn: {
+    justifyContent: 'flex-end',
+    flex: 3
   }
 });
 

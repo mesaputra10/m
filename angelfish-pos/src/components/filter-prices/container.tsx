@@ -10,7 +10,6 @@ const mapStateToProps = (state: any) => state.homeReducer;
 
 const mapDispatchToProps = dispatch => ({
   setValueFilterPrices: (min, max) => dispatch(setValueFilterPrices(min, max)),
-  setShowFilter: data => dispatch(setShowFilter(data)),
   setShowFilterPrices: data => dispatch(setShowFilterPrices(data))
 });
 

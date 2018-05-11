@@ -24,6 +24,7 @@ import store from '../../store/store';
 import config from '../../config';
 import { ActivityIndicator } from 'react-native';
 import { Product, Category } from '../../bmd';
+import { Keranjang } from '../../components/keranjang';
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   isLoading: boolean;
@@ -39,13 +40,7 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   selectedCategoryId: string;
   selectedCategoryName: string;
   setShowFilter: any;
-  setShowFilterCategory: any;
-  setShowFilterBrands: any;
-  setShowFilterPrices: any;
   showFilter: boolean;
-  showFilterCategory: boolean;
-  showFilterBrands: boolean;
-  showFilterPrices: boolean;
   brands: any[];
   setRemoveFilter: any;
   navigation: any;
@@ -59,8 +54,6 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   setValueFilterPrices: any;
   isCategoriesLoading: boolean;
   categories: Category[];
-  setShowSearchBrands: any;
-  showSearchBrands: boolean;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
@@ -104,61 +97,18 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     return this.props.keyword === undefined || this.props.keyword.length === 0;
   };
   cancelFilter = () => {
-    this.closeFilter();
-  };
-  cancelFilterCategory = () => {
-    this.props.setRemoveFilterCategory();
-    this.backToFilter();
-  };
-  cancelFilterBrands = () => {
-    this.backToFilter();
-  };
-  cancelFilterPrices = () => {
-    this.backToFilter();
-  };
-  closeFilter = () => {
     this.props.setShowFilter(false);
-    this.props.setShowFilterCategory(false);
-    this.props.setShowFilterBrands(false);
-    this.props.setShowFilterPrices(false);
-    this.props.setChildCategory(false);
-    this.props.setChildBrand(false);
   };
   backToFilter = () => {
     this.props.setShowFilter(true);
-    this.props.setShowFilterCategory(false);
-    this.props.setShowFilterBrands(false);
-    this.props.setShowFilterPrices(false);
-    this.props.setChildCategory(false);
-    this.props.setChildBrand(false);
   };
   deleteFilter = () => {
     this.props.setRemoveFilter();
+    this.props.setShowFilter(true);
   };
-  deleteFilterCategory = () => {
-    this.props.setRemoveFilterCategory();
-  };
-  deleteFilterBrands = () => {
-    this.props.setRemoveFilterBrands();
-  };
-  deleteFilterPrices = () => {
-    this.props.setValueFilterPrices(0, 0);
-    this.backToFilter();
-  };
-  showHideSearchBrands = () => {
-    const { showSearchBrands } = this.props;
-    this.props.setShowSearchBrands(!showSearchBrands);
-  };
+
   render() {
-    const {
-      isLoading,
-      products,
-      brands,
-      showFilter,
-      showFilterCategory,
-      showFilterBrands,
-      showFilterPrices
-    } = this.props;
+    const { isLoading, products, brands, showFilter } = this.props;
     const modalLoading = (
       <Modal animationType="none" transparent={false} visible={isLoading}>
         <View
@@ -176,214 +126,95 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       </Modal>
     );
     return (
-      <Container>
+      <View style={styles.container}>
         {isLoading && modalLoading}
-        <Header style={styles.headerStyle} searchBar>
-          <Col style={styles.headerColLeft} size={70}>
-            <Grid>
-              <Item style={styles.searchContainer}>
-                <Icon name="ios-search" />
-                <Input
-                  placeholder="Cari"
-                  value={this.props.keyword}
-                  onChangeText={this.onChangeTextSearch}
-                  onSubmitEditing={() => {
-                    Keyboard.dismiss();
-                    this.onSubmitSearch(this.props.keyword);
-                  }}
-                  autoCorrect={false}
-                  returnKeyType="search"
-                />
-                {!this.isKeywordEmpty() && (
-                  <Button
-                    transparent
-                    dark
-                    style={styles.buttonClearSearch}
-                    onPress={() => {
-                      this.props.emptySearch();
-                      this.setState({
-                        searchAutoComplete: false,
-                        showCancelButton: false
-                      });
-                    }}
-                  >
-                    <Image source={require('./assets/cancel.png')} style={styles.iconCancel} />
-                  </Button>
-                )}
-              </Item>
-
-              {this.state.showCancelButton && (
+        <View style={styles.leftColumn}>
+          <Header style={styles.headerStyle} searchBar>
+            <Item style={styles.searchContainer}>
+              <Icon name="ios-search" />
+              <Input
+                placeholder="Cari"
+                value={this.props.keyword}
+                onChangeText={this.onChangeTextSearch}
+                onSubmitEditing={() => {
+                  Keyboard.dismiss();
+                  this.onSubmitSearch(this.props.keyword);
+                }}
+                autoCorrect={false}
+                returnKeyType="search"
+              />
+              {!this.isKeywordEmpty() && (
                 <Button
                   transparent
+                  dark
+                  style={styles.buttonClearSearch}
                   onPress={() => {
-                    Keyboard.dismiss();
+                    this.props.emptySearch();
                     this.setState({
                       searchAutoComplete: false,
-                      searchResults: false,
                       showCancelButton: false
                     });
-                    this.props.setShowFilter(false);
                   }}
                 >
-                  <Text style={styles.searchCancelText}>Batal</Text>
+                  <Image source={require('./assets/cancel.png')} style={styles.iconCancel} />
                 </Button>
               )}
-            </Grid>
-          </Col>
-          <Col style={styles.headerColRight} size={30}>
-            {!showFilter &&
-              !showFilterCategory &&
-              !showFilterBrands &&
-              !showFilterPrices && (
-                <View style={styles.headerRightContainer}>
-                  <Text style={styles.headerRightText}>Keranjang</Text>
-                </View>
-              )}
-            {showFilter && (
-              <View style={styles.headerRightFilterContainer}>
-                <TouchableWithoutFeedback onPress={this.cancelFilter}>
-                  <View>
-                    <Text style={styles.filterCancelText}>Batal</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-                <Text style={styles.headerRightText}>Filter</Text>
-                <TouchableWithoutFeedback onPress={this.deleteFilter}>
-                  <View style={styles.removeButtonContainer}>
-                    <Text style={styles.filterDeleteText}>Hapus</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              </View>
-            )}
-            {showFilterCategory && (
-              <View style={styles.headerRightFilterContainer}>
-                <TouchableWithoutFeedback onPress={this.cancelFilterCategory}>
-                  <View>
-                    <Text style={styles.filterCancelText}>Batal</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-                <Text style={styles.headerRightText}>Kategori</Text>
-                <TouchableWithoutFeedback onPress={this.deleteFilterCategory}>
-                  <View style={styles.removeButtonContainer}>
-                    <Text style={styles.filterDeleteText}>Hapus</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              </View>
-            )}
-            {showFilterBrands && (
-              <View style={styles.headerRightFilterContainer}>
-                <TouchableWithoutFeedback onPress={this.cancelFilterBrands}>
-                  <View>
-                    <Text style={styles.filterCancelText}>Batal</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-                <Text style={styles.headerRightText}>Brand</Text>
-                <TouchableWithoutFeedback onPress={this.showHideSearchBrands}>
-                  <View style={styles.removeButtonContainer}>
-                    <Icon
-                      name="ios-search"
-                      style={{ fontSize: 24, paddingTop: 16, color: config.color.blue }}
-                    />
-                  </View>
-                </TouchableWithoutFeedback>
-                <TouchableWithoutFeedback onPress={this.deleteFilterBrands}>
-                  <View style={styles.removeButtonContainer}>
-                    <Text style={styles.filterDeleteText}>Hapus</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              </View>
-            )}
-            {showFilterPrices && (
-              <View style={styles.headerRightFilterContainer}>
-                <TouchableWithoutFeedback onPress={this.cancelFilterPrices}>
-                  <View>
-                    <Text style={styles.filterCancelText}>Batal</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-                <Text style={styles.headerRightText}>Harga</Text>
-                <TouchableWithoutFeedback onPress={this.deleteFilterPrices}>
-                  <View style={styles.removeButtonContainer}>
-                    <Text style={styles.filterDeleteText}>Hapus</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              </View>
-            )}
-          </Col>
-        </Header>
-        <Container>
-          <Grid>
-            <Col style={styles.contentColLeft} size={70}>
-              {this.state.searchAutoComplete &&
-                products &&
-                products.length > 0 && (
-                  <SearchResultList
-                    products={products}
-                    maxItem={3}
-                    navigation={this.props.navigation}
-                  />
-                )}
+            </Item>
 
-              {!this.state.searchAutoComplete &&
-                !this.state.searchResults &&
-                !this.props.isCategoriesLoading && (
-                  <ListCategories
-                    categories={this.props.categories}
-                    navigation={this.props.navigation}
-                  />
-                )}
-
-              {this.state.searchResults && (
-                <ListProducts
+            {this.state.showCancelButton && (
+              <Button
+                transparent
+                onPress={() => {
+                  Keyboard.dismiss();
+                  this.setState({
+                    searchAutoComplete: false,
+                    searchResults: false,
+                    showCancelButton: false
+                  });
+                  this.props.setShowFilter(false);
+                }}
+              >
+                <Text style={styles.searchCancelText}>Batal</Text>
+              </Button>
+            )}
+          </Header>
+          <View>
+            {this.state.searchAutoComplete &&
+              products &&
+              products.length > 0 && (
+                <SearchResultList
+                  products={products}
+                  maxItem={3}
                   navigation={this.props.navigation}
-                  keyword={this.state.keyword}
-                  totalProducts={this.props.totalProducts}
-                  searchProduct={this.props.search}
                 />
               )}
-            </Col>
-            <Col style={styles.contentColRight} size={30}>
-              <View style={styles.contentColRightContainer}>
-                <View style={{ padding: 16, alignItems: 'flex-start' }}>
-                  {(showFilter || showFilterCategory || showFilterBrands || showFilterPrices) && (
-                    <FilterProducts />
-                  )}
-                  {!showFilter &&
-                    !showFilterCategory &&
-                    !showFilterBrands &&
-                    !showFilterPrices && (
-                      <View>
-                        <Text>Navigation For Testing:</Text>
-                        <View style={{ paddingVertical: 5 }} />
-                        <TouchableWithoutFeedback
-                          onPress={() => this.props.navigation.navigate('PageServerError')}
-                        >
-                          <View style={styles.buttonBottomStyle}>
-                            <Text style={styles.buttonBottomText}>Page Server Error</Text>
-                          </View>
-                        </TouchableWithoutFeedback>
-                      </View>
-                    )}
-                </View>
-                <View style={styles.buttonBottomContainer}>
-                  {!showFilter && (
-                    <TouchableWithoutFeedback
-                      onPress={() =>
-                        Alert.alert('Konfirmasi!', 'Apakah anda yakin akan keluar?', [
-                          { text: 'Ya', onPress: () => this._signOutAsync() },
-                          { text: 'Tidak' }
-                        ])
-                      }
-                    >
-                      <View style={styles.buttonBottomStyle}>
-                        <Text style={styles.buttonBottomText}>LOGOUT</Text>
-                      </View>
-                    </TouchableWithoutFeedback>
-                  )}
-                </View>
-              </View>
-            </Col>
-          </Grid>
-        </Container>
-      </Container>
+
+            {!this.state.searchAutoComplete &&
+              !this.state.searchResults &&
+              !this.props.isCategoriesLoading && (
+                <ListCategories
+                  categories={this.props.categories}
+                  navigation={this.props.navigation}
+                />
+              )}
+
+            {this.state.searchResults && (
+              <ListProducts
+                navigation={this.props.navigation}
+                keyword={this.state.keyword}
+                totalProducts={this.props.totalProducts}
+                searchProduct={this.props.search}
+              />
+            )}
+          </View>
+        </View>
+        <View style={styles.rightColumn}>
+          {!showFilter && <Keranjang _signOutAsync={this._signOutAsync} />}
+          {showFilter && (
+            <FilterProducts cancelFilter={this.cancelFilter} deleteFilter={this.deleteFilter} />
+          )}
+        </View>
+      </View>
     );
   }
 }

@@ -8,30 +8,44 @@ export const styles = StyleSheet.create({
     height: 64,
     justifyContent: 'space-between'
   },
-  contentContainer: {
+  headerRightContainer: {
     flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  rightColumnTop: {
+    justifyContent: 'flex-start'
+  },
+  rightColumnContainer: {
+    flex: 1,
+    paddingTop: 15,
+    height: 64,
+    justifyContent: 'space-between'
+  },
+  headerRightFilterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16
+  },
+  headerRightText: {
+    fontWeight: 'bold',
     paddingTop: 16
   },
-  formContainer: {
-    paddingHorizontal: 14
+  removeButtonContainer: {
+    marginRight: -7
   },
-  hargaMinMaxLabel: {
-    width: 200,
-    fontSize: 16,
-    color: config.color.text,
-    paddingBottom: 8
+  filterCancelText: {
+    justifyContent: 'center',
+    fontSize: 17,
+    paddingTop: 15,
+    color: config.color.blue
   },
-  textInputStyle: {
-    width: 270,
-    height: 36,
-    borderRadius: 8,
-    backgroundColor: config.color.white,
-    borderWidth: 1,
-    borderColor: config.color.border,
-    padding: 8
-  },
-  separateFormElement: {
-    paddingVertical: 12
+  filterDeleteText: {
+    justifyContent: 'center',
+    paddingTop: 15,
+    fontSize: 17,
+    color: config.color.blue
   },
   buttonBottomContainer: {
     justifyContent: 'center',
@@ -51,40 +65,5 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     padding: 10
-  },
-  rightColumnTop: {
-    justifyContent: 'flex-start'
-  },
-  rightColumnContainer: {
-    flex: 1,
-    paddingTop: 15,
-    height: 64,
-    justifyContent: 'space-between'
-  },
-  headerRightFilterContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16
-  },
-  headerRightText: {
-    fontWeight: 'bold',
-    paddingTop: 17
-  },
-  removeButtonContainer: {
-    marginRight: -7
-  },
-  filterCancelText: {
-    justifyContent: 'center',
-    fontSize: 17,
-    paddingTop: 15,
-    color: config.color.blue
-  },
-  filterDeleteText: {
-    justifyContent: 'center',
-    paddingTop: 15,
-    fontSize: 17,
-    color: config.color.blue
   }
 });
-export default styles;

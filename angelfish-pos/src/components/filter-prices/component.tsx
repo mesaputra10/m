@@ -16,9 +16,8 @@ import numberFormat from '../../helpers/number-format';
 
 interface FilterPricesComponentProps {
   setValueFilterPrices?: any;
-  showFilterPage?: any;
-  setShowFilterPrices?: any;
-  setShowFilter?: any;
+  cancelFilterPrices?: any;
+  deleteFilterPrices?: any;
 }
 
 export class FilterPricesComponent extends Component<FilterPricesComponentProps, any> {
@@ -43,8 +42,7 @@ export class FilterPricesComponent extends Component<FilterPricesComponentProps,
       return null;
     }
     this.props.setValueFilterPrices(minValue, maxValue);
-    this.props.setShowFilterPrices(false);
-    this.props.setShowFilter(true);
+    this.props.cancelFilterPrices();
   };
   setValueMin = min => {
     if (min.length <= 3) return null;
@@ -78,6 +76,19 @@ export class FilterPricesComponent extends Component<FilterPricesComponentProps,
     const maxValue = `Rp ${numberFormat(max)}`;
     return (
       <View style={styles.container}>
+        <View style={styles.headerRightFilterContainer}>
+          <TouchableWithoutFeedback onPress={this.props.cancelFilterPrices}>
+            <View>
+              <Text style={styles.filterCancelText}>Batal</Text>
+            </View>
+          </TouchableWithoutFeedback>
+          <Text style={styles.headerRightText}>Harga</Text>
+          <TouchableWithoutFeedback onPress={this.props.deleteFilterPrices}>
+            <View style={styles.removeButtonContainer}>
+              <Text style={styles.filterDeleteText}>Hapus</Text>
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
         <View style={styles.contentContainer}>
           <View style={styles.formContainer}>
             <Text style={styles.hargaMinMaxLabel}>Harga Minimum</Text>

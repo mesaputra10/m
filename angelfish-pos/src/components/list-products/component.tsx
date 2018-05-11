@@ -159,14 +159,7 @@ export class ListProductsComponent extends Component<
             }
           }}
         >
-          <View
-            style={{
-              paddingHorizontal: 16,
-              paddingVertical: 10,
-              flexDirection: 'row',
-              justifyContent: 'space-between'
-            }}
-          >
+          <View style={styles.container}>
             <View>
               <Text style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.38)' }}>
                 {numberFormat(totalProducts)} Produk
@@ -201,11 +194,7 @@ export class ListProductsComponent extends Component<
         </ScrollView>
       );
     } else {
-      return (
-        <View style={{ flex: 1 }}>
-          <ProductsNotFound keyword={keyword} />
-        </View>
-      );
+      return <ProductsNotFound keyword={keyword} />;
     }
   }
 }

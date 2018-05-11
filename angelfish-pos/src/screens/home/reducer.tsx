@@ -9,9 +9,6 @@ const initialState = {
   totalPage: 0,
   totalProducts: 0,
   showFilter: false,
-  showFilterCategory: false,
-  showFilterBrands: false,
-  showFilterPrices: false,
   selectedCategoryId: '',
   selectedCategoryName: '',
   selectedBrandId: 0,
@@ -25,8 +22,7 @@ const initialState = {
   minPriceRange: 0,
   maxPriceRange: 0,
   isCategoriesLoading: false,
-  categories: [],
-  showSearchBrands: false
+  categories: []
 };
 
 export interface SearchAction extends Action {
@@ -48,21 +44,6 @@ export interface SearchResultAction extends Action {
 export interface FilterProducts extends Action {
   type: ActionTypes.PRODUCTS_FILTER;
   showFilter: boolean;
-}
-
-interface FilterCategoryProducts extends Action {
-  type: ActionTypes.PRODUCTS_FILTER_CATEGORY;
-  showFilterCategory: boolean;
-}
-
-interface FilterBrandsProducts extends Action {
-  type: ActionTypes.PRODUCTS_FILTER_BRANDS;
-  showFilterBrands: boolean;
-}
-
-interface FilterPricesInterface extends Action {
-  type: ActionTypes.PRODUCTS_FILTER_PRICES;
-  showFilterPrices: boolean;
 }
 
 interface ActionFilterCategoryInterface extends Action {
@@ -106,20 +87,12 @@ interface PriceRangeInterface extends Action {
   maxPriceRange: number;
 }
 
-interface ShowSearchBrandsInterface extends Action {
-  type: ActionTypes.SHOW_SEARCH_BRANDS;
-  showSearchBrands: boolean;
-}
-
 const reducer = (
   state = initialState,
   action:
     | SearchAction
     | SearchResultAction
     | FilterProducts
-    | FilterCategoryProducts
-    | FilterBrandsProducts
-    | FilterPricesInterface
     | ActionFilterCategoryInterface
     | ActionCategoriesLoadingInterface
     | ActionCategoriesInterface
@@ -128,7 +101,6 @@ const reducer = (
     | ActionChildBrandInterface
     | ActionIsLoadingInterface
     | PriceRangeInterface
-    | ShowSearchBrandsInterface
 ) => {
   switch (action.type) {
     case ActionTypes.PRODUCTS_SEARCH: {
@@ -157,21 +129,6 @@ const reducer = (
     case ActionTypes.PRODUCTS_FILTER: {
       return Object.assign({}, state, {
         showFilter: action.showFilter
-      });
-    }
-    case ActionTypes.PRODUCTS_FILTER_CATEGORY: {
-      return Object.assign({}, state, {
-        showFilterCategory: action.showFilterCategory
-      });
-    }
-    case ActionTypes.PRODUCTS_FILTER_BRANDS: {
-      return Object.assign({}, state, {
-        showFilterBrands: action.showFilterBrands
-      });
-    }
-    case ActionTypes.PRODUCTS_FILTER_PRICES: {
-      return Object.assign({}, state, {
-        showFilterPrices: action.showFilterPrices
       });
     }
     case ActionTypes.SET_FILTER_CATEGORY: {
@@ -210,12 +167,6 @@ const reducer = (
       return Object.assign({}, state, {
         minPriceRange: action.minPriceRange,
         maxPriceRange: action.maxPriceRange
-      });
-    }
-    case ActionTypes.SHOW_SEARCH_BRANDS: {
-      return Object.assign({}, state, {
-        type: ActionTypes.SHOW_SEARCH_BRANDS,
-        showSearchBrands: action.showSearchBrands
       });
     }
     default: {

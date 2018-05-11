@@ -3,8 +3,10 @@ import config from '../../config';
 
 export const styles = StyleSheet.create({
   container: {
-    marginTop: -16,
-    flex: 1
+    flex: 1,
+    paddingTop: 15,
+    height: 64,
+    justifyContent: 'space-between'
   },
   contentContainer: {
     flex: 1
@@ -38,7 +40,6 @@ export const styles = StyleSheet.create({
   buttonBottomContainer: {
     justifyContent: 'center',
     padding: 16,
-    paddingBottom: 0,
     alignItems: 'flex-end',
     backgroundColor: config.color.backgroundGrey
   },
@@ -54,6 +55,40 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 18,
     padding: 10
+  },
+  rightColumnTop: {
+    justifyContent: 'flex-start'
+  },
+  rightColumnContainer: {
+    flex: 1,
+    paddingTop: 15,
+    height: 64,
+    justifyContent: 'space-between'
+  },
+  headerRightFilterContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16
+  },
+  headerRightText: {
+    fontWeight: 'bold',
+    paddingTop: 17
+  },
+  removeButtonContainer: {
+    marginRight: -7
+  },
+  filterCancelText: {
+    justifyContent: 'center',
+    fontSize: 17,
+    paddingTop: 15,
+    color: config.color.blue
+  },
+  filterDeleteText: {
+    justifyContent: 'center',
+    paddingTop: 15,
+    fontSize: 17,
+    color: config.color.blue
   }
 });
 export default styles;
