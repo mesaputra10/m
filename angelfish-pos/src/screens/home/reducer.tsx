@@ -25,7 +25,8 @@ const initialState = {
   minPriceRange: 0,
   maxPriceRange: 0,
   isCategoriesLoading: false,
-  categories: []
+  categories: [],
+  showSearchBrands: false
 };
 
 export interface SearchAction extends Action {
@@ -105,6 +106,11 @@ interface PriceRangeInterface extends Action {
   maxPriceRange: number;
 }
 
+interface ShowSearchBrandsInterface extends Action {
+  type: ActionTypes.SHOW_SEARCH_BRANDS;
+  showSearchBrands: boolean;
+}
+
 const reducer = (
   state = initialState,
   action:
@@ -122,6 +128,7 @@ const reducer = (
     | ActionChildBrandInterface
     | ActionIsLoadingInterface
     | PriceRangeInterface
+    | ShowSearchBrandsInterface
 ) => {
   switch (action.type) {
     case ActionTypes.PRODUCTS_SEARCH: {
@@ -203,6 +210,12 @@ const reducer = (
       return Object.assign({}, state, {
         minPriceRange: action.minPriceRange,
         maxPriceRange: action.maxPriceRange
+      });
+    }
+    case ActionTypes.SHOW_SEARCH_BRANDS: {
+      return Object.assign({}, state, {
+        type: ActionTypes.SHOW_SEARCH_BRANDS,
+        showSearchBrands: action.showSearchBrands
       });
     }
     default: {

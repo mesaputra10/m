@@ -145,3 +145,9 @@ export const setValueFilterPrices = (min, max) => dispatch =>
     minPriceRange: min,
     maxPriceRange: max
   });
+
+export const setShowSearchBrands = data => dispatch =>
+  dispatch({
+    type: ActionTypes.SHOW_SEARCH_BRANDS,
+    showSearchBrands: data
+  });
