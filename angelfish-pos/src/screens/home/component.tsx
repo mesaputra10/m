@@ -23,7 +23,6 @@ import { FilterProducts } from '../../components/filter-products';
 import store from '../../store/store';
 import config from '../../config';
 import { ActivityIndicator } from 'react-native';
-import { setShowFilterPrices } from './action';
 import { Product, Category } from '../../bmd';
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
@@ -60,6 +59,8 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   setValueFilterPrices: any;
   isCategoriesLoading: boolean;
   categories: Category[];
+  setShowSearchBrands: any;
+  showSearchBrands: boolean;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
@@ -143,6 +144,10 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   deleteFilterPrices = () => {
     this.props.setValueFilterPrices(0, 0);
     this.backToFilter();
+  };
+  showHideSearchBrands = () => {
+    const { showSearchBrands } = this.props;
+    this.props.setShowSearchBrands(!showSearchBrands);
   };
   render() {
     const {
@@ -272,6 +277,14 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                   </View>
                 </TouchableWithoutFeedback>
                 <Text style={styles.headerRightText}>Brand</Text>
+                <TouchableWithoutFeedback onPress={this.showHideSearchBrands}>
+                  <View style={styles.removeButtonContainer}>
+                    <Icon
+                      name="ios-search"
+                      style={{ fontSize: 24, paddingTop: 16, color: config.color.blue }}
+                    />
+                  </View>
+                </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={this.deleteFilterBrands}>
                   <View style={styles.removeButtonContainer}>
                     <Text style={styles.filterDeleteText}>Hapus</Text>

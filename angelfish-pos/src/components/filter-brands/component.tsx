@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableWithoutFeedback, ScrollView } from 'react-native';
-import { Content, List, ListItem } from 'native-base';
+import { View, Text, Image, TouchableWithoutFeedback, ScrollView, TextInput } from 'react-native';
+import { Content, List, ListItem, Header, Icon } from 'native-base';
 import styles from './styles';
 import generateUniqKey from '../../helpers/generate-uniq-key';
 import config from '../../config';
@@ -14,15 +14,19 @@ interface FilterBrandsComponentProps {
   setShowFilterBrands?: any;
   setShowFilter?: any;
   showFilterBrands?: boolean;
+  showSearchBrands?: boolean;
+  setShowSearchBrands?: any;
 }
 
 export class FilterBrandsComponent extends Component<FilterBrandsComponentProps, any> {
   constructor(props) {
     super(props);
     this.state = {
-      dataBrands: [] || props.brands
+      dataBrands: props.brands,
+      keyword: ''
     };
   }
+  componentDidMount() {}
   clickChildBrand = brand => {
     let selectedBrandsNew = [...this.props.selectedBrands];
     if (selectedBrandsNew.includes(brand)) {
@@ -36,21 +40,71 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
     }
     this.props.setFilterBrands(selectedBrandsNew);
   };
-
   onPressTerapkan = () => {
     this.props.setFilterBrands([]);
     const selectedBrands = this.props.selectedBrands;
     this.props.setFilterBrands(selectedBrands);
     this.props.showFilterPage();
   };
+  searchBrands = text => {
+    const { brands } = this.props;
+    if (text.length > 0) {
+      const search = brands.filter(brand => {
+        const brandName = brand.brand.toLowerCase();
+        const keyword = text.toLowerCase();
+        return brandName.includes(keyword);
+      });
+      if (search) {
+        this.setState({ dataBrands: search, keyword: text });
+      }
+    }
+  };
   render() {
-    const { brands, showFilterBrands, selectedBrands } = this.props;
+    const { showFilterBrands, selectedBrands, showSearchBrands } = this.props;
+    let brands = this.props.brands;
+    if (showSearchBrands) {
+      brands = this.state.dataBrands;
+    }
     const disableTerapkan = selectedBrands.length < 1;
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
-
+    console.log(showSearchBrands, 'showSearchBrands');
     return (
       <View style={styles.container}>
         <ScrollView style={styles.contentContainer}>
+          {showSearchBrands && (
+            <View
+              style={{
+                height: 40,
+                paddingVertical: 8,
+                paddingHorizontal: 16
+              }}
+            >
+              <View
+                style={{
+                  height: 30,
+                  backgroundColor: '#f0f0f1',
+                  borderRadius: 5,
+                  paddingLeft: 8,
+                  flexDirection: 'row',
+                  alignItems: 'center'
+                }}
+              >
+                <Icon name="ios-search" style={{ fontSize: 16 }} />
+                <TextInput
+                  onChangeText={this.searchBrands}
+                  autoFocus={true}
+                  placeholder="Cari"
+                  returnKeyType="search"
+                  value={this.state.keyword}
+                  style={{
+                    color: config.color.text,
+                    fontSize: 16,
+                    paddingLeft: 8
+                  }}
+                />
+              </View>
+            </View>
+          )}
           {brands.map((brand, brandIndex) => {
             const circleColor = selectedBrands.includes(brand)
               ? config.color.blue
