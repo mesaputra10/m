@@ -79,8 +79,9 @@ export class FilterProductsComponent extends Component<
     this.showFilterPrices();
   };
   onPressTerapkan = () => {
-    const { selectedCategoryId, brands, minPriceRange, maxPriceRange } = this.props;
-    const filterParams = { categoryId: selectedCategoryId, brands, minPriceRange, maxPriceRange };
+    const { selectedCategoryId, selectedBrands, minPriceRange, maxPriceRange } = this.props;
+    let brandId = selectedBrands ? selectedBrands.map(x => x.aggrBrands) : selectedBrands;
+    const filterParams = { categoryId: selectedCategoryId, brandId, minPriceRange, maxPriceRange };
     this.props.search(this.props.keyword, filterParams);
     this.hideFilter();
   };

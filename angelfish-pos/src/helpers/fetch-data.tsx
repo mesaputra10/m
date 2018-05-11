@@ -186,9 +186,8 @@ export async function fetchData(
 }
 
 export interface FilterParams {
-  categoryId?: string;
-  brandId?: string;
-  brands?: any[];
+  categoryId?: string | string[];
+  brandId?: string | string[];
   minPriceRange?: string;
   maxPriceRange?: string;
 }
@@ -212,7 +211,9 @@ export async function searchProduct(
     'page[number]': pageNumber
   };
   if (filterParams.categoryId) params['filter[categoryId]'] = filterParams.categoryId;
-  if (filterParams.brandId) params['filter[brandId]'] = filterParams.brandId;
+  if (filterParams.brandId instanceof Array)
+    params['filter[brandId]'] = filterParams.brandId.join();
+  else if (filterParams.brandId) params['filter[brandId]'] = filterParams.brandId;
   if (filterParams.minPriceRange) params['filter[minPrice]'] = filterParams.minPriceRange;
   if (filterParams.maxPriceRange) params['filter[maxPrice]'] = filterParams.maxPriceRange;
 
