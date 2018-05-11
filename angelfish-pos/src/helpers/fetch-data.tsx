@@ -231,6 +231,7 @@ function remapCategories(data: any, level = 1) {
     return data.map(category => {
       if (childrenkey in category && category[childrenkey] != null) {
         category['children'] = remapCategories(category[childrenkey], level + 1);
+        category['level'] = level;
         delete category[childrenkey];
         return category;
       } else return category;

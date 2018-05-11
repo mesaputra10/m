@@ -106,6 +106,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     this.closeFilter();
   };
   cancelFilterCategory = () => {
+    this.props.setRemoveFilterCategory();
     this.backToFilter();
   };
   cancelFilterBrands = () => {

@@ -35,6 +35,7 @@ export class Category {
   id: string;
   name: string;
   docCount: string;
+  level: number;
   children?: Category[];
 
   public static fromPlain(data: any) {
