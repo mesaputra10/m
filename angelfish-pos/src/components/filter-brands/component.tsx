@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableWithoutFeedback, ScrollView, TextInput } fr
 import { Content, List, ListItem, Header, Icon } from 'native-base';
 import styles from './styles';
 import config from '../../config';
+import { Button } from 'native-base';
 
 interface FilterBrandsComponentProps {
   brands: any[];
@@ -104,6 +105,21 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
                   value={this.state.keyword}
                   style={styles.searchInputText}
                 />
+                <View style={styles.buttonClearSearch}>
+                  {this.state.keyword !== '' && (
+                    <Button
+                      transparent
+                      dark
+                      onPress={() => {
+                        this.setState({
+                          keyword: ''
+                        });
+                      }}
+                    >
+                      <Image source={require('./assets/cancel.png')} style={styles.iconCancel} />
+                    </Button>
+                  )}
+                </View>
               </View>
               <View style={styles.searchBrandBatalContainer}>
                 <TouchableWithoutFeedback onPress={this.showHideSearchBrands}>

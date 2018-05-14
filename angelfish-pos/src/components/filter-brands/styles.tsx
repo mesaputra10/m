@@ -112,7 +112,8 @@ export const styles = StyleSheet.create({
   searchInputText: {
     color: config.color.text,
     fontSize: 16,
-    paddingLeft: 8
+    paddingLeft: 8,
+    width: 170
   },
   searchBrandBatalContainer: {
     flex: 2,
@@ -126,6 +127,14 @@ export const styles = StyleSheet.create({
   batalSearchText: {
     color: config.color.blue,
     fontSize: 17
+  },
+  iconCancel: {
+    alignItems: 'center',
+    marginTop: -2,
+    marginRight: 8
+  },
+  buttonClearSearch: {
+    alignItems: 'center'
   }
 });
 export default styles;
