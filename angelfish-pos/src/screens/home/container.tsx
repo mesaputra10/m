@@ -12,7 +12,9 @@ import {
   startLoading,
   endLoading,
   resetProductsList,
-  setValueFilterPrices
+  setValueFilterPrices,
+  setShowSearchResults,
+  setShowParentCategory
 } from './action';
 import { start } from 'repl';
 import { fetchCategories } from './action';
@@ -31,7 +33,9 @@ const mapDispatchToProps = dispatch => ({
   setRemoveFilterBrands: () => dispatch(setRemoveFilterBrands()),
   setChildCategory: data => dispatch(setChildCategory(data)),
   setChildBrand: data => dispatch(setChildBrand(data)),
-  setValueFilterPrices: (min, max) => dispatch(setValueFilterPrices(min, max))
+  setValueFilterPrices: (min, max) => dispatch(setValueFilterPrices(min, max)),
+  setShowSearchResults: data => dispatch(setShowSearchResults(data)),
+  setShowParentCategory: data => dispatch(setShowParentCategory(data))
 });
 
 export const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(HomeComponent);

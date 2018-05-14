@@ -160,6 +160,33 @@ const styles = StyleSheet.create({
   removeButtonContainer: {
     marginRight: -7
   },
+  headerCategoryContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingTop: 15
+  },
+  backCategory: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  titleCategoryContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 9
+  },
+  buttonBackCategoryContainer: {
+    justifyContent: 'flex-start',
+    flex: 1
+  },
+  titleCategory: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  titleCategoryName: {
+    justifyContent: 'center'
+  },
 
   /// newstyle
   leftColumn: {

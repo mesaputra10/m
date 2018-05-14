@@ -1,1 +1,1 @@
-export { ListCategoriesComponent as ListCategories } from './component';
+export { ListCategoriesContainer as ListCategories } from './container';

@@ -1,6 +1,7 @@
 import ActionTypes from '../../store/action-types';
 import { Action } from 'redux';
 import { Brand, Product } from '../../bmd';
+import { setShowParentCategory } from './action';
 
 const initialState = {
   products: [],
@@ -22,7 +23,9 @@ const initialState = {
   minPriceRange: 0,
   maxPriceRange: 0,
   isCategoriesLoading: false,
-  categories: []
+  categories: [],
+  showSearchResults: false,
+  showParentCategory: true
 };
 
 export interface SearchAction extends Action {
@@ -91,6 +94,16 @@ interface PriceRangeInterface extends Action {
   maxPriceRange: number;
 }
 
+interface ShowResultInterface extends Action {
+  type: ActionTypes.SHOW_SEARCH_RESULTS_LIST;
+  showSearchResults: boolean;
+}
+
+interface ShowParentCategoryInterface extends Action {
+  type: ActionTypes.SHOW_CATEGORY_PARENT;
+  showParentCategory: boolean;
+}
+
 const reducer = (
   state = initialState,
   action:
@@ -106,6 +119,8 @@ const reducer = (
     | ActionChildBrandInterface
     | ActionIsLoadingInterface
     | PriceRangeInterface
+    | ShowResultInterface
+    | ShowParentCategoryInterface
 ) => {
   switch (action.type) {
     case ActionTypes.PRODUCTS_SEARCH: {
@@ -132,7 +147,6 @@ const reducer = (
       });
     }
     case ActionTypes.PRODUCTS_RESET: {
-      // reset products and selected search
       return {
         ...state,
         keyword: '',
@@ -189,6 +203,16 @@ const reducer = (
       return Object.assign({}, state, {
         minPriceRange: action.minPriceRange,
         maxPriceRange: action.maxPriceRange
+      });
+    }
+    case ActionTypes.SHOW_SEARCH_RESULTS_LIST: {
+      return Object.assign({}, state, {
+        showSearchResults: action.showSearchResults
+      });
+    }
+    case ActionTypes.SHOW_CATEGORY_PARENT: {
+      return Object.assign({}, state, {
+        showParentCategory: action.showParentCategory
       });
     }
     default: {

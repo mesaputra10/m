@@ -69,7 +69,8 @@ export const styles = StyleSheet.create({
   },
   headerRightText: {
     fontWeight: 'bold',
-    paddingTop: 17
+    paddingTop: 15,
+    fontSize: 17
   },
   removeButtonContainer: {
     marginRight: -7
