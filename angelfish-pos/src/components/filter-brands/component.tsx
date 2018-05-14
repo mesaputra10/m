@@ -21,7 +21,6 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
       showSearchBrands: false
     };
   }
-  componentDidMount() {}
   clickChildBrand = brand => {
     let selectedBrandsNew = [...this.state.selectedBrands];
     if (selectedBrandsNew.includes(brand)) {
@@ -69,62 +68,54 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
     return (
       <View style={styles.container}>
-        <View style={styles.headerRightFilterContainer}>
-          <TouchableWithoutFeedback onPress={this.props.cancelFilterBrands}>
-            <View>
-              <Text style={styles.filterCancelText}>Batal</Text>
-            </View>
-          </TouchableWithoutFeedback>
-          <Text style={styles.headerRightText}>Brand</Text>
-          <TouchableWithoutFeedback onPress={this.showHideSearchBrands}>
-            <View style={styles.removeButtonContainer}>
-              <Icon
-                name="ios-search"
-                style={{ fontSize: 24, paddingTop: 16, color: config.color.blue }}
-              />
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={this.deleteFilterBrands}>
-            <View style={styles.removeButtonContainer}>
-              <Text style={styles.filterDeleteText}>Hapus</Text>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-        <ScrollView style={styles.contentContainer}>
-          {showSearchBrands && (
-            <View
-              style={{
-                height: 40,
-                paddingVertical: 8,
-                paddingHorizontal: 16
-              }}
-            >
-              <View
-                style={{
-                  height: 30,
-                  backgroundColor: '#f0f0f1',
-                  borderRadius: 5,
-                  paddingLeft: 8,
-                  flexDirection: 'row',
-                  alignItems: 'center'
-                }}
-              >
-                <Icon name="ios-search" style={{ fontSize: 16 }} />
+        {!showSearchBrands && (
+          <View style={styles.headerRightFilterContainer}>
+            <TouchableWithoutFeedback onPress={this.props.cancelFilterBrands}>
+              <View>
+                <Text style={styles.filterCancelText}>Batal</Text>
+              </View>
+            </TouchableWithoutFeedback>
+            <Text style={styles.headerRightText}>Brand</Text>
+            <TouchableWithoutFeedback onPress={this.showHideSearchBrands}>
+              <View style={styles.removeButtonContainer}>
+                <Icon
+                  name="ios-search"
+                  style={{ fontSize: 24, paddingTop: 16, color: config.color.blue }}
+                />
+              </View>
+            </TouchableWithoutFeedback>
+            <TouchableWithoutFeedback onPress={this.deleteFilterBrands}>
+              <View style={styles.removeButtonContainer}>
+                <Text style={styles.filterDeleteText}>Hapus</Text>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+        )}
+        {showSearchBrands && (
+          <View style={styles.headerRightFilterContainer}>
+            <View style={styles.searchBrandContainer}>
+              <View style={styles.searchBrandWrap}>
+                <Icon name="ios-search" style={styles.iconSearch} />
                 <TextInput
                   onChangeText={this.searchBrands}
                   autoFocus={true}
                   placeholder="Cari"
                   returnKeyType="search"
                   value={this.state.keyword}
-                  style={{
-                    color: config.color.text,
-                    fontSize: 16,
-                    paddingLeft: 8
-                  }}
+                  style={styles.searchInputText}
                 />
               </View>
+              <View style={styles.searchBrandBatalContainer}>
+                <TouchableWithoutFeedback onPress={this.showHideSearchBrands}>
+                  <View style={styles.buttonBatalSearch}>
+                    <Text style={styles.batalSearchText}>Batal</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
             </View>
-          )}
+          </View>
+        )}
+        <ScrollView style={styles.contentContainer}>
           {brands.map((brand, brandIndex) => {
             const circleColor = selectedBrands.includes(brand)
               ? config.color.blue
