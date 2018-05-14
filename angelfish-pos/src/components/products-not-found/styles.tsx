@@ -3,11 +3,11 @@ import config from '../../config';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: '90%',
     flexDirection: 'column',
+    backgroundColor: config.color.white,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: config.color.white
+    alignItems: 'center'
   },
   imageContainer: {
     paddingBottom: 24

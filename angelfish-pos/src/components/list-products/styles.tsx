@@ -2,6 +2,12 @@ import { StyleSheet } from 'react-native';
 import config from '../../config';
 
 export const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
   searchResultText: {
     fontSize: 16
   },
