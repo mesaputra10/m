@@ -46,6 +46,10 @@ export interface FilterProducts extends Action {
   showFilter: boolean;
 }
 
+export interface FilterProductsReset extends Action {
+  type: ActionTypes.PRODUCTS_RESET;
+}
+
 interface ActionFilterCategoryInterface extends Action {
   type: ActionTypes.SET_FILTER_CATEGORY;
   selectedCategoryId: string;
@@ -92,6 +96,7 @@ const reducer = (
   action:
     | SearchAction
     | SearchResultAction
+    | FilterProductsReset
     | FilterProducts
     | ActionFilterCategoryInterface
     | ActionCategoriesLoadingInterface
@@ -125,6 +130,23 @@ const reducer = (
       return Object.assign({}, state, {
         isFetching: false
       });
+    }
+    case ActionTypes.PRODUCTS_RESET: {
+      // reset products and selected search
+      return {
+        ...state,
+        keyword: '',
+        products: [],
+        totalPage: 0,
+        totalProducts: 0,
+        brands: [],
+        page: 0,
+        priceRange: null,
+        selectedCategoryId: '',
+        selectedBrands: [],
+        minPriceRange: 0,
+        maxPriceRange: 0
+      };
     }
     case ActionTypes.PRODUCTS_FILTER: {
       return Object.assign({}, state, {

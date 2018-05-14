@@ -11,6 +11,7 @@ import {
   setChildBrand,
   startLoading,
   endLoading,
+  resetProductsList,
   setValueFilterPrices
 } from './action';
 import { start } from 'repl';
@@ -22,7 +23,7 @@ const mapDispatchToProps = dispatch => ({
   startLoading: () => dispatch(startLoading()),
   endLoading: () => dispatch(endLoading()),
   search: (keyword, page, filterParams) => dispatch(fetchSearch(keyword, page, filterParams)),
-  emptySearch: () => dispatch({ type: ActionTypes.PRODUCTS_SEARCH, keyword: '' }),
+  emptySearch: () => dispatch(resetProductsList()),
   loadCategories: () => dispatch(fetchCategories()),
   setShowFilter: value => dispatch(setShowFilter(value)),
   setRemoveFilter: () => dispatch(setRemoveFilter()),

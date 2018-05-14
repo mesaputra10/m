@@ -86,6 +86,8 @@ export const setDefaultFilterBrand = () => dispatch =>
     selectedBrands: []
   });
 
+export const resetProductsList = () => ({ type: ActionTypes.PRODUCTS_RESET });
+
 export const emptyProductsData = (): SearchResultAction => ({
   type: ActionTypes.PRODUCTS_DATA_LIST,
   keyword: '',
