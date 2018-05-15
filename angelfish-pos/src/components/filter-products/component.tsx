@@ -37,6 +37,7 @@ interface FilterProductsComponentProps {
   deleteFilterBrands?: any;
   cancelFilterPrices?: any;
   deleteFilterPrices?: any;
+  setFilterBrands?: any;
 }
 interface FilterProductsComponentState {
   filterPage: boolean;
@@ -135,6 +136,7 @@ export class FilterProductsComponent extends Component<
     const filterParams = { categoryId: selectedCategoryId, brandId, minPriceRange, maxPriceRange };
     this.props.search(this.props.keyword, filterParams);
     this.hideFilter();
+    this.props.setFilterBrands([]);
   };
   hideFilter = () => {
     this.props.setShowFilter(false);
