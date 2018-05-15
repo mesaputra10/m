@@ -78,19 +78,22 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
               </View>
             </TouchableWithoutFeedback>
             <Text style={styles.headerRightText}>Brand</Text>
-            <TouchableWithoutFeedback onPress={this.showHideSearchBrands}>
-              <View style={styles.removeButtonContainer}>
-                <Icon
-                  name="ios-search"
-                  style={{ fontSize: 24, paddingTop: 16, color: config.color.blue }}
-                />
+            <View style={styles.removeButtonRight}>
+              <View style={{ marginLeft: 0 }}>
+                <TouchableWithoutFeedback onPress={this.showHideSearchBrands}>
+                  <View style={styles.removeButtonContainer}>
+                    <Image source={require('./assets/search.png')} style={styles.searchStyle} />
+                  </View>
+                </TouchableWithoutFeedback>
               </View>
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback onPress={this.deleteFilterBrands}>
-              <View style={styles.removeButtonContainer}>
-                <Text style={styles.filterDeleteText}>Hapus</Text>
+              <View style={{ paddingLeft: 20 }}>
+                <TouchableWithoutFeedback onPress={this.deleteFilterBrands}>
+                  <View style={styles.removeButtonContainer}>
+                    <Text style={styles.filterDeleteText}>Hapus</Text>
+                  </View>
+                </TouchableWithoutFeedback>
               </View>
-            </TouchableWithoutFeedback>
+            </View>
           </View>
         )}
         {showSearchBrands && (
