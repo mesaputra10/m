@@ -4,6 +4,7 @@ import { Content, List, ListItem, Header, Icon } from 'native-base';
 import styles from './styles';
 import config from '../../config';
 import { Button } from 'native-base';
+import { uniqWith, isEqual } from 'lodash';
 
 interface FilterBrandsComponentProps {
   brands: any[];
@@ -33,7 +34,7 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
     } else {
       selectedBrandsNew = [...selectedBrandsNew, brand];
     }
-    this.setState({ selectedBrands: selectedBrandsNew });
+    this.setState({ selectedBrands: uniqWith(selectedBrandsNew, isEqual) });
   };
   onPressTerapkan = () => {
     const { selectedBrands } = this.state;
