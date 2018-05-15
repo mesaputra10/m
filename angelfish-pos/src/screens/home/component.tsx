@@ -5,13 +5,14 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   TextInput,
+  Text,
   Dimensions,
   Image,
   Alert,
   Modal
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import { Container, Header, Content, Item, Input, Icon, Button, Text } from 'native-base';
+import { Header } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
@@ -117,6 +118,8 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   backCategory = () => {
     this.setShowHeaderCategory('');
     this.props.setShowParentCategory(true);
+    this.setState({ searchResults: false });
+    this.props.setShowSearchResults(false);
   };
   render() {
     const { isLoading, products, brands, showFilter } = this.props;
@@ -138,16 +141,18 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       </Modal>
     );
 
+    const customHeaderSearch = showHeaderCategory ? { paddingTop: 5 } : null;
+
     const leftColumn = (
       <View>
         {showHeaderCategory && (
-          <Header>
+          <View style={styles.headerStyleCustom}>
             <View style={styles.headerCategoryContainer}>
               <View style={styles.buttonBackCategoryContainer}>
                 <TouchableWithoutFeedback onPress={this.backCategory}>
                   <View style={styles.backCategory}>
                     <Image source={require('./assets/backArrow.png')} />
-                    <Text style={{ color: config.color.blue }}>Kategori</Text>
+                    <Text style={styles.backCategoryText}>Kategori</Text>
                   </View>
                 </TouchableWithoutFeedback>
               </View>
@@ -157,9 +162,9 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                 </View>
               </View>
             </View>
-          </Header>
+          </View>
         )}
-        <Header style={styles.headerStyle}>
+        <View style={[styles.headerStyle, customHeaderSearch]}>
           <SearchBar
             actionSearch={this.onChangeTextSearch}
             actionCancel={() => {
@@ -178,7 +183,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
               this.onSubmitSearch(this.props.keyword);
             }}
           />
-        </Header>
+        </View>
         <View>
           {this.state.searchAutoComplete &&
             products &&
