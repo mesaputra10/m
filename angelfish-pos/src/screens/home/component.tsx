@@ -25,6 +25,7 @@ import { ActivityIndicator } from 'react-native';
 import { Product, Category } from '../../bmd';
 import { Keranjang } from '../../components/keranjang';
 import { Layout } from '../../components/layout';
+import { SearchBar } from '../../components/search-bar';
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   isLoading: boolean;
@@ -158,55 +159,25 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             </View>
           </Header>
         )}
-        <Header style={styles.headerStyle} searchBar>
-          <Item style={styles.searchContainer}>
-            <Icon name="ios-search" />
-            <Input
-              placeholder="Cari"
-              value={this.props.keyword}
-              onChangeText={this.onChangeTextSearch}
-              onSubmitEditing={() => {
-                Keyboard.dismiss();
-                this.onSubmitSearch(this.props.keyword);
-              }}
-              autoCorrect={false}
-              returnKeyType="search"
-            />
-            {!this.isKeywordEmpty() && (
-              <Button
-                transparent
-                dark
-                style={styles.buttonClearSearch}
-                onPress={() => {
-                  this.props.emptySearch();
-                  this.setState({
-                    searchAutoComplete: false,
-                    showCancelButton: false
-                  });
-                }}
-              >
-                <Image source={require('./assets/cancel.png')} style={styles.iconCancel} />
-              </Button>
-            )}
-          </Item>
-
-          {this.state.showCancelButton && (
-            <Button
-              transparent
-              onPress={() => {
-                Keyboard.dismiss();
-                this.setState({
-                  searchAutoComplete: false,
-                  searchResults: false,
-                  showCancelButton: false
-                });
-                this.props.setShowFilter(false);
-                this.props.setShowSearchResults(false);
-              }}
-            >
-              <Text style={styles.searchCancelText}>Batal</Text>
-            </Button>
-          )}
+        <Header style={styles.headerStyle}>
+          <SearchBar
+            actionSearch={this.onChangeTextSearch}
+            actionCancel={() => {
+              Keyboard.dismiss();
+              this.setState({
+                searchAutoComplete: false,
+                searchResults: false,
+                showCancelButton: false
+              });
+              this.props.setShowFilter(false);
+              this.props.setShowSearchResults(false);
+            }}
+            autoFocus={false}
+            actionSubmitEditing={() => {
+              Keyboard.dismiss();
+              this.onSubmitSearch(this.props.keyword);
+            }}
+          />
         </Header>
         <View>
           {this.state.searchAutoComplete &&

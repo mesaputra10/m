@@ -5,6 +5,7 @@ import styles from './styles';
 import config from '../../config';
 import { Button } from 'native-base';
 import { uniqWith, isEqual } from 'lodash';
+import { SearchBar } from '../../components/search-bar';
 
 interface FilterBrandsComponentProps {
   brands: any[];
@@ -95,41 +96,11 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
         )}
         {showSearchBrands && (
           <View style={styles.headerRightFilterContainer}>
-            <View style={styles.searchBrandContainer}>
-              <View style={styles.searchBrandWrap}>
-                <Icon name="ios-search" style={styles.iconSearch} />
-                <TextInput
-                  onChangeText={this.searchBrands}
-                  autoFocus={true}
-                  placeholder="Cari"
-                  returnKeyType="search"
-                  value={this.state.keyword}
-                  style={styles.searchInputText}
-                />
-                <View style={styles.buttonClearSearch}>
-                  {this.state.keyword !== '' && (
-                    <Button
-                      transparent
-                      dark
-                      onPress={() => {
-                        this.setState({
-                          keyword: ''
-                        });
-                      }}
-                    >
-                      <Image source={require('./assets/cancel.png')} style={styles.iconCancel} />
-                    </Button>
-                  )}
-                </View>
-              </View>
-              <View style={styles.searchBrandBatalContainer}>
-                <TouchableWithoutFeedback onPress={this.showHideSearchBrands}>
-                  <View style={styles.buttonBatalSearch}>
-                    <Text style={styles.batalSearchText}>Batal</Text>
-                  </View>
-                </TouchableWithoutFeedback>
-              </View>
-            </View>
+            <SearchBar
+              actionSearch={this.searchBrands}
+              actionCancel={this.showHideSearchBrands}
+              autoFocus={true}
+            />
           </View>
         )}
         <ScrollView style={styles.contentContainer}>
