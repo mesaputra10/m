@@ -1,5 +1,4 @@
 import React from 'react';
-import Expo from 'expo';
 import {
   View,
   TouchableWithoutFeedback,
@@ -9,20 +8,16 @@ import {
   Dimensions,
   Image,
   Alert,
-  Modal
+  Modal,
+  ActivityIndicator
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import { Header } from 'native-base';
-import { Col, Row, Grid } from 'react-native-easy-grid';
 import styles from './styles';
-import numberFormat from '../../helpers/number-format';
 import { SearchResultList } from '../../components/search-result-list';
 import { ListProducts } from '../../components/list-products';
 import { ListCategories } from '../../components/list-categories';
 import { FilterProducts } from '../../components/filter-products';
-import store from '../../store/store';
 import config from '../../config';
-import { ActivityIndicator } from 'react-native';
 import { Product, Category } from '../../bmd';
 import { Keranjang } from '../../components/keranjang';
 import { Layout } from '../../components/layout';

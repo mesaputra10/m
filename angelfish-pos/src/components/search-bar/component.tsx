@@ -44,6 +44,8 @@ export class SearchBarComponent extends Component<any, any> {
         <View style={styles.searchBrandWrap}>
           <Icon name="ios-search" style={styles.iconSearch} />
           <TextInput
+            autoCorrect={false}
+            multiline={false}
             onChangeText={this.actionSearch}
             onSubmitEditing={this.actionSubmitEditing}
             autoFocus={autoFocus}

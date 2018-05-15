@@ -59,7 +59,11 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
     this.setState({ selectedBrands: [] });
   };
   showHideSearchBrands = () => {
-    this.setState({ showSearchBrands: !this.state.showSearchBrands, keyword: '' });
+    this.setState({
+      showSearchBrands: !this.state.showSearchBrands,
+      keyword: '',
+      dataBrands: this.props.brands
+    });
   };
   render() {
     const { selectedBrands, showSearchBrands } = this.state;
