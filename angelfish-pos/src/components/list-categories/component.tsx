@@ -75,7 +75,7 @@ export class ListCategoriesComponent extends Component<ListCategoriesComponentPr
     const { showParentCategory } = this.props;
     if (showParentCategory) {
       return (
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="always">
           <Grid
             data={this.props.categories}
             itemStyle={{

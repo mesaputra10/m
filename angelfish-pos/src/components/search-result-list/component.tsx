@@ -19,7 +19,7 @@ export class SearchResultListComponent extends Component<SearchResultListCompone
   render() {
     const { products, maxItem, navigation } = this.props;
     return (
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="always">
         <View style={styles.container}>
           {products.length > 0 &&
             products.slice(0, maxItem).map((product, index) => {

@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { Grid } from 'antd-mobile';
-import { View, Text, Image, TouchableWithoutFeedback, ScrollView, Modal } from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  TouchableWithoutFeedback,
+  ScrollView,
+  Modal,
+  Alert
+} from 'react-native';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
 import { NavigationScreenProps } from 'react-navigation';
@@ -63,50 +71,52 @@ export class ListProductsComponent extends Component<
         : require('./assets/icGreyNoImage.png');
     return (
       <View style={styles.productItemContainer}>
-        <View style={styles.productItemBox}>
-          <Image source={productImage} style={styles.productItemImage} />
-          <View style={styles.productItemPriceContainer}>
-            <Text numberOfLines={2} style={styles.productItemName}>
-              {product.productName}
-            </Text>
-            {product.isDiscount > 0 && (
-              <View style={[styles.searchResultPriceContainer, { paddingTop: 4 }]}>
-                {product.variantPrice !== product.offerNormalPrice && (
-                  <Text style={styles.searchResultPriceDiscountText}>
-                    Rp {numberFormat(product.offerNormalPrice)}
-                  </Text>
-                )}
-                {product.offerDiscountPercentage > 0 && (
-                  <Text style={styles.searchResultDiscountText}>
-                    {' '}
-                    -{product.offerDiscountPercentage}%
-                  </Text>
-                )}
-              </View>
-            )}
-            {product.isDiscount && (
-              <Text style={styles.searchResultText}>
-                Rp {numberFormat(product.offerSpecialPrice)}
+        <TouchableWithoutFeedback
+          onLongPress={() => Alert.alert('Should show modal summary of product')}
+          onPress={() => {
+            const passProps = { title: product.productName, sku: product.variantSkuNo };
+            this.props.navigation.navigate('PageProductDetail', passProps);
+          }}
+        >
+          <View style={styles.productItemBox}>
+            <Image source={productImage} style={styles.productItemImage} />
+            <View style={styles.productItemPriceContainer}>
+              <Text numberOfLines={2} style={styles.productItemName}>
+                {product.productName}
               </Text>
-            )}
-            {!product.isDiscount && (
-              <Text style={styles.searchResultText}>Rp {numberFormat(product.variantPrice)}</Text>
-            )}
-            {product.isOutofStock && (
-              <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
-            )}
-          </View>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              const passProps = { title: product.productName, sku: product.variantSkuNo };
-              this.props.navigation.navigate('PageProductDetail', passProps);
-            }}
-          >
+              {product.isDiscount > 0 && (
+                <View style={[styles.searchResultPriceContainer, { paddingTop: 4 }]}>
+                  {product.variantPrice !== product.offerNormalPrice && (
+                    <Text style={styles.searchResultPriceDiscountText}>
+                      Rp {numberFormat(product.offerNormalPrice)}
+                    </Text>
+                  )}
+                  {product.offerDiscountPercentage > 0 && (
+                    <Text style={styles.searchResultDiscountText}>
+                      {' '}
+                      -{product.offerDiscountPercentage}%
+                    </Text>
+                  )}
+                </View>
+              )}
+              {product.isDiscount && (
+                <Text style={styles.searchResultText}>
+                  Rp {numberFormat(product.offerSpecialPrice)}
+                </Text>
+              )}
+              {!product.isDiscount && (
+                <Text style={styles.searchResultText}>Rp {numberFormat(product.variantPrice)}</Text>
+              )}
+              {product.isOutofStock && (
+                <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
+              )}
+            </View>
+
             <View style={styles.buttonBeliContainer}>
               <Text style={styles.buttonBeliText}>BELI</Text>
             </View>
-          </TouchableWithoutFeedback>
-        </View>
+          </View>
+        </TouchableWithoutFeedback>
       </View>
     );
   };
@@ -143,6 +153,7 @@ export class ListProductsComponent extends Component<
     if (products.length > 0) {
       return (
         <ScrollView
+          keyboardShouldPersistTaps="always"
           scrollEventThrottle={1000}
           onScroll={event => {
             if (this.state.loading) {

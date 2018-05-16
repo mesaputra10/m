@@ -110,7 +110,7 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
             />
           </View>
         )}
-        <ScrollView style={styles.contentContainer}>
+        <ScrollView keyboardShouldPersistTaps="always" style={styles.contentContainer}>
           {brands.map((brand, brandIndex) => {
             const circleColor = selectedBrands.includes(brand)
               ? config.color.blue
