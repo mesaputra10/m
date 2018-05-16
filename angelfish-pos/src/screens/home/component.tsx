@@ -9,7 +9,8 @@ import {
   Image,
   Alert,
   Modal,
-  ActivityIndicator
+  ActivityIndicator,
+  AsyncStorage
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import styles from './styles';
@@ -22,6 +23,7 @@ import { Product, Category } from '../../bmd';
 import { Keranjang } from '../../components/keranjang';
 import { Layout } from '../../components/layout';
 import { SearchBar } from '../../components/search-bar';
+import { HistoryProductSearch } from '../../components/history-product-search';
 
 interface HomeComponentProps extends NavigationScreenProps<any, any> {
   isLoading: boolean;
@@ -68,8 +70,11 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       searchResults: false,
       showCancelButton: false,
       showHeaderCategory: false,
-      categoryName: 'Kategori'
+      categoryName: 'Kategori',
+      showSearchHistory: false,
+      keyword: ''
     };
+    this.onChangeTextSearch = this.onChangeTextSearch.bind(this);
   }
   componentDidMount() {
     this.props.endLoading();
@@ -79,12 +84,57 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       this.setState({
         searchAutoComplete: true,
         searchResults: false,
-        showCancelButton: true
+        showCancelButton: true,
+        showSearchHistory: false,
+        keyword: text
       });
       this.props.search(text, 1);
     } else {
       this.setState({ searchAutoComplete: false, showCancelButton: true });
     }
+  };
+  actionSearchWithHistory = keyword => {
+    this.props.search(keyword, 1);
+    Keyboard.dismiss();
+    this.onSubmitSearch(keyword);
+    this.toggleSearchHistory();
+    this.setState({ keyword });
+  };
+  actionSubmitEditingSearch = () => {
+    const { keyword } = this.state;
+    this.props.search(keyword, 1);
+    this.addProductSearchHistories(keyword);
+    Keyboard.dismiss();
+    this.onSubmitSearch(this.state.keyword);
+    this.toggleSearchHistory();
+  };
+  actionCancelSearch = () => {
+    Keyboard.dismiss();
+    this.setState({
+      searchAutoComplete: false,
+      searchResults: false,
+      showCancelButton: false,
+      keyword: ''
+    });
+    this.props.setShowFilter(false);
+    this.props.setShowSearchResults(false);
+    this.toggleSearchHistory(false);
+  };
+  actionClearSearch = () => {
+    const { showSearchHistory } = this.state;
+    this.actionOnFocus();
+    this.setState({ keyword: '' });
+  };
+  addProductSearchHistories = async text => {
+    const key = config.key.historyProductSearch;
+    let histories: any = await AsyncStorage.getItem(key);
+    if (histories !== null) {
+      const dataHistories = histories.split(',');
+      histories = histories + ',' + text;
+    } else {
+      histories = text;
+    }
+    await AsyncStorage.setItem(key, histories);
   };
   onSubmitSearch = (keyword: string) => {
     if (keyword !== '' && keyword !== undefined) {
@@ -115,10 +165,20 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     this.props.setShowParentCategory(true);
     this.setState({ searchResults: false });
     this.props.setShowSearchResults(false);
+    this.props.setShowFilter(false);
+  };
+  actionOnFocus = () => {
+    this.setState({ searchResults: false });
+    this.props.setShowSearchResults(false);
+    this.toggleSearchHistory(true);
+  };
+  toggleSearchHistory = (value: boolean = undefined) => {
+    const showSearchHistory = value === undefined ? !this.state.showSearchHistory : value;
+    this.setState({ showSearchHistory });
   };
   render() {
     const { isLoading, products, brands, showFilter } = this.props;
-    const { showHeaderCategory, categoryName } = this.state;
+    const { showHeaderCategory, categoryName, showSearchHistory } = this.state;
     const modalLoading = (
       <Modal animationType="none" transparent={false} visible={isLoading}>
         <View
@@ -162,21 +222,12 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
         <View style={[styles.headerStyle, customHeaderSearch]}>
           <SearchBar
             actionSearch={this.onChangeTextSearch}
-            actionCancel={() => {
-              Keyboard.dismiss();
-              this.setState({
-                searchAutoComplete: false,
-                searchResults: false,
-                showCancelButton: false
-              });
-              this.props.setShowFilter(false);
-              this.props.setShowSearchResults(false);
-            }}
+            keyword={this.state.keyword}
+            actionCancel={this.actionCancelSearch}
+            actionClear={this.actionClearSearch}
             autoFocus={false}
-            actionSubmitEditing={() => {
-              Keyboard.dismiss();
-              this.onSubmitSearch(this.props.keyword);
-            }}
+            actionSubmitEditing={this.actionSubmitEditingSearch}
+            actionOnFocus={this.actionOnFocus}
           />
         </View>
         <View>
@@ -189,11 +240,18 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
                 navigation={this.props.navigation}
               />
             )}
-
           {!this.state.searchAutoComplete &&
             !this.state.searchResults &&
             !this.props.isCategoriesLoading &&
-            !this.props.showSearchResults && (
+            !this.props.showSearchResults &&
+            showSearchHistory && (
+              <HistoryProductSearch actionSearch={this.actionSearchWithHistory} />
+            )}
+          {!this.state.searchAutoComplete &&
+            !this.state.searchResults &&
+            !this.props.isCategoriesLoading &&
+            !this.props.showSearchResults &&
+            !showSearchHistory && (
               <ListCategories
                 categories={this.props.categories}
                 setShowHeaderCategory={this.setShowHeaderCategory}

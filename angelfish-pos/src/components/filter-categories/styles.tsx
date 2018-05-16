@@ -51,7 +51,8 @@ export const styles = StyleSheet.create({
     padding: 10
   },
   rightColumnTop: {
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
+    paddingBottom: 10
   },
   rightColumnContainer: {
     flex: 1,
@@ -91,8 +92,7 @@ export const styles = StyleSheet.create({
     padding: 16,
     justifyContent: 'space-between',
     flexDirection: 'row',
-    alignItems: 'center',
-    height: 56
+    alignItems: 'center'
   },
   listLeftCategory: {
     flexDirection: 'column',
@@ -100,13 +100,16 @@ export const styles = StyleSheet.create({
   },
   listRightCategory: {
     alignItems: 'flex-end',
-    flex: 1
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   titleListTextCategory: {
     fontSize: 16,
     width: '95%',
     flexDirection: 'row',
-    flexWrap: 'wrap'
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   circleStyle: {
     flex: 1

@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0,
     paddingTop: 16,
     paddingHorizontal: 16,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingBottom: 10
   },
   headerStyleCustom: {
     paddingTop: 32,

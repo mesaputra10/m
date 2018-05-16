@@ -98,7 +98,6 @@ export class FilterProductsComponent extends Component<
     const { setFilterCategory } = this.props;
     setFilterCategory(selectedCategoryId, selectedCategoryName);
   };
-
   clickBrands = () => {
     this.setState({
       dataBrands: this.props.brands,
@@ -115,7 +114,6 @@ export class FilterProductsComponent extends Component<
       showFilterPrices: false
     });
   };
-
   clickPrices = () => {
     this.setState({
       showFilterCategory: false,
