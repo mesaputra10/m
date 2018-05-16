@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback, Alert } from 'react-native';
+import { View, AsyncStorage, Text, TouchableWithoutFeedback, Alert } from 'react-native';
 import { styles } from './styles';
+import { NavigationScreenProps } from 'react-navigation';
 
-interface KeranjangProps {
+interface KeranjangProps extends NavigationScreenProps<any, any> {
   showFilter?: boolean;
   _signOutAsync?: any;
 }
 export class KeranjangComponent extends Component<KeranjangProps, any> {
+  _signOutAsync = async () => {
+    await AsyncStorage.clear();
+    this.props.navigation.navigate('Welcome');
+  };
   render() {
     const { showFilter } = this.props;
     return (
@@ -22,7 +27,7 @@ export class KeranjangComponent extends Component<KeranjangProps, any> {
             <TouchableWithoutFeedback
               onPress={() =>
                 Alert.alert('Konfirmasi!', 'Apakah anda yakin akan keluar?', [
-                  { text: 'Ya', onPress: () => this.props._signOutAsync() },
+                  { text: 'Ya', onPress: () => this._signOutAsync() },
                   { text: 'Tidak' }
                 ])
               }

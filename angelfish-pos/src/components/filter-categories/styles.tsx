@@ -67,7 +67,8 @@ export const styles = StyleSheet.create({
   },
   headerRightText: {
     fontWeight: 'bold',
-    paddingTop: 17
+    paddingTop: 15,
+    fontSize: 17
   },
   removeButtonContainer: {
     marginRight: -7
@@ -102,12 +103,10 @@ export const styles = StyleSheet.create({
     flex: 1
   },
   titleListTextCategory: {
-    fontSize: 14,
-    width: '80%'
-  },
-  categoryCount: {
-    fontSize: 14,
-    justifyContent: 'center'
+    fontSize: 16,
+    width: '95%',
+    flexDirection: 'row',
+    flexWrap: 'wrap'
   },
   circleStyle: {
     flex: 1

@@ -11,7 +11,15 @@ const styles = StyleSheet.create({
   },
   headerStyle: {
     backgroundColor: '#fff',
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
+    paddingTop: 16,
+    paddingHorizontal: 8,
+    flexDirection: 'row'
+  },
+  headerStyleCustom: {
+    paddingTop: 32,
+    paddingHorizontal: 8,
+    flexDirection: 'row'
   },
   headerColLeft: {
     marginRight: 13
@@ -159,6 +167,42 @@ const styles = StyleSheet.create({
   },
   removeButtonContainer: {
     marginRight: -7
+  },
+  headerCategoryContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 16
+  },
+  backCategory: {
+    flexDirection: 'row',
+    alignItems: 'center'
+  },
+  backCategoryText: {
+    color: config.color.blue,
+    fontSize: 17,
+    fontWeight: '600'
+  },
+  titleCategoryContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 9
+  },
+  buttonBackCategoryContainer: {
+    justifyContent: 'flex-start',
+    flex: 1,
+    alignItems: 'center'
+  },
+  titleCategory: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  titleCategoryName: {
+    justifyContent: 'center',
+    fontSize: 17,
+    fontWeight: '600'
   },
 
   /// newstyle

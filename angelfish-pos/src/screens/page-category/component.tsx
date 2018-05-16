@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+import { Layout } from '../../components/layout';
+import { ListCategoriesTree } from '../../components/list-categories-tree';
+import { Keranjang } from '../../components/keranjang';
+import styles from './styles';
 
 interface PageCategoryComponentProps extends NavigationScreenProps<any, any> {
   navigation: any;
@@ -20,11 +24,10 @@ export class PageCategoryComponent extends Component<PageCategoryComponentProps,
     });
   }
   render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <Text>Page Category</Text>
-      </View>
-    );
+    const { params } = this.props.navigation.state;
+    const leftColumn = <ListCategoriesTree categoryChildren={params.categoryChildren} />;
+    const rightColumn = <Keranjang navigation={this.props.navigation} />;
+    return <Layout leftColumn={leftColumn} rightColumn={rightColumn} />;
   }
 }
 

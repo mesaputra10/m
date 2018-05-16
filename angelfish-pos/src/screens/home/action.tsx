@@ -129,3 +129,15 @@ export const setValueFilterPrices = (min, max) => dispatch =>
     minPriceRange: min,
     maxPriceRange: max
   });
+
+export const setShowSearchResults = data => dispatch =>
+  dispatch({
+    type: ActionTypes.SHOW_SEARCH_RESULTS_LIST,
+    showSearchResults: data
+  });
+
+export const setShowParentCategory = data => dispatch =>
+  dispatch({
+    type: ActionTypes.SHOW_CATEGORY_PARENT,
+    showParentCategory: data
+  });

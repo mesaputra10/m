@@ -50,9 +50,18 @@ export class FilterCategoriesComponent extends Component<FilterCategoriesProps, 
   };
   selecCategory = category => {
     if (category.children) {
-      this.setState({
-        openChild: this.state.openChild.concat(category.id)
-      });
+      if (this.state.openChild.includes(category.id)) {
+        const { openChild } = this.state;
+        const index = openChild.indexOf(category.id);
+        if (index > -1) {
+          openChild.splice(index, 1);
+        }
+        this.setState({ openChild });
+      } else {
+        this.setState({
+          openChild: this.state.openChild.concat(category.id)
+        });
+      }
     } else {
       this.setFilterCategory(category.id, category.name);
     }
@@ -82,10 +91,13 @@ export class FilterCategoriesComponent extends Component<FilterCategoriesProps, 
                     {level === 4 && <View style={styles.circleStyle}>{imageCheck}</View>}
                     <View style={styles.listLeftCategory}>
                       <View style={{ flexDirection: 'row' }}>
-                        <Text style={styles.titleListTextCategory} ellipsizeMode="tail">
-                          {category.name}
+                        <Text
+                          style={styles.titleListTextCategory}
+                          numberOfLines={3}
+                          ellipsizeMode="tail"
+                        >
+                          {category.name} ({category.docCount})
                         </Text>
-                        <Text style={styles.categoryCount}> ({category.docCount})</Text>
                       </View>
                     </View>
                     {category.children && (
