@@ -76,7 +76,8 @@ export const styles = StyleSheet.create({
     paddingTop: 17
   },
   removeButtonContainer: {
-    marginRight: -7
+    marginRight: -7,
+    alignItems: 'baseline'
   },
   filterCancelText: {
     justifyContent: 'center',
@@ -134,6 +135,16 @@ export const styles = StyleSheet.create({
     marginRight: 8
   },
   buttonClearSearch: {
+    alignItems: 'center'
+  },
+  searchStyle: {
+    width: 20,
+    height: 20,
+    marginBottom: -15
+  },
+  removeButtonRight: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
     alignItems: 'center'
   }
 });
