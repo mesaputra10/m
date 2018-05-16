@@ -4,7 +4,7 @@ export const styles = StyleSheet.create({
   itemContainer: {
     backgroundColor: '#fff',
     flex: 1,
-    padding: 10
+    padding: 16
   },
   itemBox: {
     backgroundColor: 'rgb(236, 236, 236)',
