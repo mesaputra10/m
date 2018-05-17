@@ -23,6 +23,7 @@ interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   setFilter?: any;
   showFilter?: boolean;
   searchProduct(keyword, page, filterParams): any;
+  isFetching?: boolean;
 }
 
 interface ListProductsComponentState {
@@ -140,8 +141,8 @@ export class ListProductsComponent extends Component<
   };
   render() {
     const products = this.state.products;
-    const { navigation, setFilter, showFilter, keyword, totalProducts } = this.props;
-    if (this.state.loading) {
+    const { navigation, setFilter, showFilter, keyword, totalProducts, isFetching } = this.props;
+    if (this.state.loading || isFetching) {
       return (
         <Image
           source={require('./assets/load-structure.png')}

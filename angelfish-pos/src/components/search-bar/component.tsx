@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, TextInput, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './styles';
 import { Icon, Button } from 'native-base';
@@ -8,15 +9,21 @@ interface SearchBarProps {
   actionCancel?: any;
   autoFocus?: boolean;
   actionSubmitEditing?: any;
+  actionClear?: any;
+  keyword?: string;
 }
 
 export class SearchBarComponent extends Component<any, any> {
   constructor(props) {
     super(props);
     this.state = {
-      keyword: '',
+      keyword: props.keyword,
       showButtonCancel: false
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    const keyword = nextProps.keyword;
+    this.setState({ keyword });
   }
   actionSearch = text => {
     if (text !== '') {
@@ -26,16 +33,18 @@ export class SearchBarComponent extends Component<any, any> {
   };
   actionClear = () => {
     this.setState({ keyword: '' });
+    this.props.actionClear();
   };
   actionCancel = () => {
+    this.setState({ showButtonCancel: false, keyword: '' });
     this.props.actionCancel();
-    this.setState({ showButtonCancel: false });
   };
   actionSubmitEditing = () => {
     this.props.actionSubmitEditing();
   };
   actionOnFocus = () => {
     this.setState({ showButtonCancel: true });
+    this.props.actionOnFocus();
   };
   render() {
     const { autoFocus } = this.props;
@@ -78,4 +87,14 @@ export class SearchBarComponent extends Component<any, any> {
     );
   }
 }
+
+SearchBarComponent.defaultProps = {
+  actionOnFocus: () => {},
+  actionCancel: () => {},
+  actionClear: () => {},
+  actionSearch: () => {},
+  actionSubmitEditing: () => {},
+  keyword: ''
+};
+
 export default SearchBarComponent;

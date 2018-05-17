@@ -1,6 +1,15 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import config from '../../config';
+
+const heightDevice = Dimensions.get('window').height;
+const paddingBottom = 64;
+const heightScroll = heightDevice - paddingBottom;
+
 export const styles = StyleSheet.create({
+  container: {
+    height: heightScroll,
+    paddingBottom
+  },
   itemContainer: {
     backgroundColor: '#fff',
     flex: 1,

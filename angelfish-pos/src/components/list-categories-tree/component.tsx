@@ -110,9 +110,11 @@ export class ListCategoriesTreeComponent extends Component<ListCategoriesTreeCom
   };
   render() {
     return (
-      <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
-        {this._renderChildCategory(this.props.categoryChildren)}
-      </ScrollView>
+      <View style={styles.container}>
+        <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
+          {this._renderChildCategory(this.props.categoryChildren)}
+        </ScrollView>
+      </View>
     );
   }
 }

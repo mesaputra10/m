@@ -11,6 +11,9 @@ export const config = {
     buttonGrey: 'rgb(189, 189, 189)',
     backgroundGrey: 'rgba(248, 248, 248, 0.82)',
     black: '#000'
+  },
+  key: {
+    historyProductSearch: '@Bhinneka@ProductSearch'
   }
 };
 export default config;
