@@ -1,5 +1,7 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import config from '../../config';
+
+const heightDevice = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   container: {
@@ -33,12 +35,14 @@ export const styles = StyleSheet.create({
   productItemContainer: {
     backgroundColor: config.color.white,
     flex: 1,
-    padding: 8
+    marginLeft: -6,
+    marginRight: -6
   },
   productItemBox: {
     backgroundColor: config.color.white,
     flex: 1,
-    padding: 12.5
+    paddingHorizontal: 24,
+    paddingVertical: 8
   },
   productItemImage: {
     width: '100%',
@@ -55,7 +59,8 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 22,
     textAlign: 'left',
-    color: config.color.text
+    color: config.color.text,
+    paddingBottom: 8
   },
   buttonBeliContainer: {
     height: 40,

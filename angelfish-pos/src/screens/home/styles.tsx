@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderBottomWidth: 0,
     paddingTop: 16,
-    paddingHorizontal: 8,
+    paddingHorizontal: 16,
     flexDirection: 'row'
   },
   headerStyleCustom: {
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16
+    paddingHorizontal: 8
   },
   backCategory: {
     flexDirection: 'row',
@@ -188,12 +188,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 9
+    flex: 8
   },
   buttonBackCategoryContainer: {
     justifyContent: 'flex-start',
-    flex: 1,
-    alignItems: 'center'
+    flex: 2
   },
   titleCategory: {
     alignItems: 'center',

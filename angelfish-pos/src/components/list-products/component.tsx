@@ -85,7 +85,7 @@ export class ListProductsComponent extends Component<
                 {product.productName}
               </Text>
               {product.isDiscount > 0 && (
-                <View style={[styles.searchResultPriceContainer, { paddingTop: 4 }]}>
+                <View style={[styles.searchResultPriceContainer, { paddingTop: 8 }]}>
                   {product.variantPrice !== product.offerNormalPrice && (
                     <Text style={styles.searchResultPriceDiscountText}>
                       Rp {numberFormat(product.offerNormalPrice)}
@@ -154,6 +154,7 @@ export class ListProductsComponent extends Component<
       return (
         <ScrollView
           keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}
           scrollEventThrottle={1000}
           onScroll={event => {
             if (this.state.loading) {
