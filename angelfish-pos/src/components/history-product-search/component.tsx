@@ -68,7 +68,7 @@ export class HistoryProductSearchComponent extends Component<any, any> {
           <View>
             <Text style={styles.titleHistoryText}>RIWAYAT PENCARIAN</Text>
             {histories !== null &&
-              histories.map(history => {
+              histories.reverse().map(history => {
                 return (
                   <TouchableWithoutFeedback
                     key={history}
