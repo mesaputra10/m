@@ -122,15 +122,21 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   };
   actionClearSearch = () => {
     const { showSearchHistory } = this.state;
-    this.actionOnFocus();
     this.setState({ keyword: '' });
   };
   addProductSearchHistories = async text => {
+    if (text === '') return null;
     const key = config.key.historyProductSearch;
     let histories: any = await AsyncStorage.getItem(key);
     if (histories !== null) {
       const dataHistories = histories.split(',');
-      histories = histories + ',' + text;
+      if (dataHistories.length >= 5) {
+        dataHistories.shift();
+        dataHistories.push(text);
+        histories = dataHistories.join();
+      } else {
+        histories = histories + ',' + text;
+      }
     } else {
       histories = text;
     }
