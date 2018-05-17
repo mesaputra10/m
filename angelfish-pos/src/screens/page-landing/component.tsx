@@ -27,8 +27,6 @@ export class PageLandingComponent extends Component<any, any> {
     const keyRefreshToken = '@KeyRefreshToken';
     const userToken = await AsyncStorage.getItem(keyAccessToken);
     const refreshToken = await AsyncStorage.getItem(keyRefreshToken);
-    console.log('userToken: ', userToken);
-    console.log('refreshToken: ', refreshToken);
     this.props.navigation.navigate(userToken ? 'Home' : 'Welcome');
   };
   render() {

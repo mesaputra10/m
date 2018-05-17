@@ -3,7 +3,6 @@ import store from '../store/store';
 import { NetInfo } from 'react-native';
 
 function handleFirstConnectivityChange(isConnected) {
-  console.log('your connection is ' + (isConnected ? 'online' : 'offline'));
   store.dispatch({ type: ActionTypes.GLOBAL_CONNECTION, isConnected });
   if (isConnected == false) {
     NetInfo.isConnected.removeEventListener('connectionChange', handleFirstConnectivityChange);
