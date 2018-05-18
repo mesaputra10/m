@@ -7,9 +7,9 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Alert,
-  AsyncStorage
+  AsyncStorage,
+  Image
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import styles from './styles';
 
 const BG_IMAGE = require('../../../assets/images/ilLoginGetAccess.png');
@@ -31,9 +31,9 @@ export class SigninComponent extends Component<any, any> {
     this.setState({ securePassword: !value });
   }
   render() {
-    const iconSecretClassName: string = this.state.securePassword
-      ? 'ios-eye-off-outline'
-      : 'ios-eye-outline';
+    const iconShowHidePassword: string = this.state.securePassword
+      ? require('./assets/off.png')
+      : require('./assets/on.png');
     const buttonLoginContainer = this.state.buttonLoginDisabled
       ? styles.buttonLoginContainerDisabled
       : styles.buttonLoginContainer;
@@ -95,12 +95,7 @@ export class SigninComponent extends Component<any, any> {
                     onPress={() => this.toggleShowPassword(this.state.securePassword)}
                   >
                     <View style={styles.buttonSecret}>
-                      <Ionicons
-                        name={iconSecretClassName}
-                        color="rgba(0, 0, 0, 0.38)"
-                        size={25}
-                        style={styles.iconSecretStyle}
-                      />
+                      <Image source={iconShowHidePassword} />
                     </View>
                   </TouchableWithoutFeedback>
                 </View>
