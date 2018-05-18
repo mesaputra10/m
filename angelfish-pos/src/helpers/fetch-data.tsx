@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
-import Expo from 'expo';
+import { Constants } from 'expo';
 import { stringify } from 'query-string';
 import { filter } from 'minimatch';
 import { Category } from '../bmd';
@@ -11,7 +11,7 @@ const keyAuthorization =
   'Basic NDlmZTc3NTQtZjgyZS00OTA3LTkyMjgtN2MyNmE1Y2Q2MjQ0OkRySkxGMDhDYTR3SUVwUFlHOGl0aUxha3gyU0pZTmdu';
 const headerContentType = 'application/x-www-form-urlencoded';
 const baseURL: string = 'http://api-krab-dev.bhinneka.com:8080';
-const deviceId = Expo.Constants.deviceId;
+const deviceId = Constants.deviceId;
 
 function getUrl(config) {
   if (config.baseURL) {
@@ -21,7 +21,7 @@ function getUrl(config) {
 }
 
 // set to true to debug axios
-if (false) {
+if (Constants.manifest.extra.loggingRedux) {
   // Intercept all requests
   axios.interceptors.request.use(
     config => {
@@ -227,14 +227,14 @@ function remapCategories(data: any, level = 1) {
   if (level > MAX_CATEGORY_LEVEL) return;
   let childrenkey = 'categoryTree' + (level + 1);
   if (data != null) {
-    data = Object.assign([], data); // copy
+    data = [...data];
     return data.map(category => {
-      if (childrenkey in category && category[childrenkey] != null) {
-        category['children'] = remapCategories(category[childrenkey], level + 1);
-        category['level'] = level;
-        delete category[childrenkey];
-        return category;
-      } else return category;
+      category['level'] = level;
+      category['children'] = category[childrenkey]
+        ? remapCategories(category[childrenkey], level + 1)
+        : null;
+      delete category[childrenkey];
+      return category;
     });
   }
   return data;
