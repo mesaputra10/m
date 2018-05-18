@@ -23,13 +23,6 @@ export class PageServerErrorComponent extends Component<any, any> {
     };
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.isServerError) {
-      nextProps.navigation.navigate('PageServerError');
-    }
-    return {};
-  }
-
   tryAgain = () => {
     this.setState({ loading: true });
     setTimeout(() => {

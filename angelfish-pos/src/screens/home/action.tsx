@@ -53,8 +53,12 @@ export const productsData = (keyword, page, filterParams, data): SearchResultAct
 
 export const fetchCategories = () => async dispatch => {
   dispatch({ type: ActionTypes.CATEGORIES_LOADING });
-  let data = await categories();
-  return dispatch({ type: ActionTypes.CATEGORIES_LIST, categories: data });
+  try {
+    let data = await categories();
+    return dispatch({ type: ActionTypes.CATEGORIES_LIST, categories: data });
+  } catch (err) {
+    dispatch({ type: ActionTypes.SERVER_ERROR, error: err });
+  }
 };
 
 export const setRemoveFilter = () => dispatch => {

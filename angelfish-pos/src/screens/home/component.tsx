@@ -56,6 +56,7 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   showSearchResults: boolean;
   setShowSearchResults?: any;
   setShowParentCategory?: any;
+  isServerError: boolean;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
@@ -75,6 +76,11 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       keyword: ''
     };
     this.onChangeTextSearch = this.onChangeTextSearch.bind(this);
+  }
+  componentDidUpdate() {
+    if (this.props.isServerError) {
+      this.props.navigation.navigate('PageServerError');
+    }
   }
   componentDidMount() {
     this.props.endLoading();

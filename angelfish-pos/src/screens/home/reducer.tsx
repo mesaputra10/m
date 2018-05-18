@@ -25,7 +25,8 @@ const initialState = {
   isCategoriesLoading: false,
   categories: [],
   showSearchResults: false,
-  showParentCategory: true
+  showParentCategory: true,
+  isServerError: false
 };
 
 export interface SearchAction extends Action {
@@ -104,6 +105,10 @@ interface ShowParentCategoryInterface extends Action {
   showParentCategory: boolean;
 }
 
+interface ServerError extends Action {
+  type: ActionTypes.SERVER_ERROR;
+}
+
 const reducer = (
   state = initialState,
   action:
@@ -121,6 +126,7 @@ const reducer = (
     | PriceRangeInterface
     | ShowResultInterface
     | ShowParentCategoryInterface
+    | ServerError
 ) => {
   switch (action.type) {
     case ActionTypes.PRODUCTS_SEARCH: {
@@ -214,6 +220,9 @@ const reducer = (
       return Object.assign({}, state, {
         showParentCategory: action.showParentCategory
       });
+    }
+    case ActionTypes.SERVER_ERROR: {
+      return { ...state, isServerError: true };
     }
     default: {
       return state;
