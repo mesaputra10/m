@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { View, Text, TextInput, Image, TouchableWithoutFeedback } from 'react-native';
 import styles from './styles';
-import { Icon, Button } from 'native-base';
+import config from '../../config';
 
 interface SearchBarProps {
   actionSearch?: any;
@@ -51,7 +51,7 @@ export class SearchBarComponent extends Component<any, any> {
     return (
       <View style={styles.searchBrandContainer}>
         <View style={styles.searchBrandWrap}>
-          <Icon name="ios-search" style={styles.iconSearch} />
+          <Image source={require('./assets/search.png')} style={styles.iconSearch} />
           <TextInput
             autoCorrect={false}
             multiline={false}
