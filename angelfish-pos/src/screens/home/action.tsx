@@ -30,12 +30,14 @@ export const fetchSearch = (
   filterParams: FilterParams = {}
 ) => dispatch => {
   dispatch(startSearch(keyword));
-  return searchProduct(keyword, page, filterParams).then(data => {
-    let cond = data.hits !== undefined || data.facets.aggregationBrand !== undefined;
-    if (data.hits !== undefined || data.facets.aggregationBrand !== undefined) {
-      dispatch(productsData(keyword, page, filterParams, data));
-    }
-  });
+  return searchProduct(keyword, page, filterParams)
+    .then(data => {
+      let cond = data.hits !== undefined || data.facets.aggregationBrand !== undefined;
+      if (data.hits !== undefined || data.facets.aggregationBrand !== undefined) {
+        dispatch(productsData(keyword, page, filterParams, data));
+      }
+    })
+    .catch(err => dispatch({ type: ActionTypes.SERVER_ERROR, error: err }));
 };
 
 export const productsData = (keyword, page, filterParams, data): SearchResultAction => ({

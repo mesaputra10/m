@@ -7,15 +7,26 @@ interface GlobalAction extends Action {
 }
 
 const initialGlobalState = {
-  isConnected: true
+  isConnected: true,
+  isServerError: false
 };
 const globalReducer = (state = initialGlobalState, action: GlobalAction) => {
   if (action.type === ActionTypes.GLOBAL_CONNECTION) {
     return Object.assign({}, state, {
       isConnected: action.isConnected
     });
-  }
-  return state;
+  } else if (action.type == ActionTypes.SERVER_ERROR) {
+    return { ...state, isServerError: true };
+  } else if (
+    action.type in
+    [
+      ActionTypes.PRODUCTS_DATA_LIST,
+      ActionTypes.CATEGORIES_LIST,
+      ActionTypes.PRODUCTS_DATA_LIST_RECOMMENDATION
+    ]
+  ) {
+    return { ...state, isServerError: false };
+  } else return state;
 };
 
 export default globalReducer;

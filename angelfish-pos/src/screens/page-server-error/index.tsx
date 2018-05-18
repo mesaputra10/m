@@ -1,1 +1,1 @@
-export { PageServerErrorComponent as PageServerError } from './component';
+export { PageServerErrorContainer as PageServerError } from './container';
