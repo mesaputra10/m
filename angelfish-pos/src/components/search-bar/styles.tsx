@@ -20,13 +20,12 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   iconSearch: {
-    fontSize: 16,
     justifyContent: 'flex-start'
   },
   searchInputText: {
     flex: 8,
     color: config.color.text,
-    fontSize: 16,
+    fontSize: 15,
     paddingLeft: 8
   },
   searchBrandBatalContainer: {
