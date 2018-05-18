@@ -66,9 +66,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: 'transparent'
   },
-  iconSecretStyle: {
-    backgroundColor: 'transparent'
-  },
   buttonLoginContainer: {
     borderRadius: 5,
     marginTop: 24,
