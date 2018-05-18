@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
 interface PageProductDetailComponentProps extends NavigationScreenProps<any, any> {
@@ -18,8 +18,12 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
   }
   render() {
     const { params } = this.props.navigation.state;
+    const productImage = params.productImage
+      ? { uri: params.productImage }
+      : require('./assets/icGreyNoImage.png');
     return (
       <View style={{ flex: 1 }}>
+        <Image source={productImage} style={{ width: 450, height: 300 }} />
         <Text>Page Product Detail</Text>
         <Text>SKU: {params.sku}</Text>
       </View>

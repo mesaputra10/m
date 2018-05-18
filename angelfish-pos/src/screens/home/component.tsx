@@ -103,7 +103,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   actionSubmitEditingSearch = () => {
     const { keyword } = this.state;
     this.props.search(keyword, 1);
-    this.addProductSearchHistories(keyword);
+    this.addKeywordToProductSearchHistories(keyword);
     Keyboard.dismiss();
     this.onSubmitSearch(this.state.keyword);
     this.toggleSearchHistory();
@@ -124,7 +124,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     const { showSearchHistory } = this.state;
     this.setState({ keyword: '' });
   };
-  addProductSearchHistories = async text => {
+  addKeywordToProductSearchHistories = async text => {
     if (text === '') return null;
     const key = config.key.historyProductSearch;
     let histories: any = await AsyncStorage.getItem(key);
@@ -251,7 +251,10 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             !this.props.isCategoriesLoading &&
             !this.props.showSearchResults &&
             showSearchHistory && (
-              <HistoryProductSearch actionSearch={this.actionSearchWithHistory} />
+              <HistoryProductSearch
+                actionSearch={this.actionSearchWithHistory}
+                navigation={this.props.navigation}
+              />
             )}
           {!this.state.searchAutoComplete &&
             !this.state.searchResults &&

@@ -6,7 +6,8 @@ import {
   AsyncStorage,
   ActivityIndicator,
   TouchableWithoutFeedback,
-  Alert
+  Alert,
+  Image
 } from 'react-native';
 import styles from './styles';
 import config from '../../config';
@@ -17,7 +18,8 @@ export class HistoryProductSearchComponent extends Component<any, any> {
     super(props);
     this.state = {
       isLoaded: false,
-      histories: []
+      histories: [],
+      productHistories: []
     };
   }
   componentDidMount() {
@@ -25,11 +27,21 @@ export class HistoryProductSearchComponent extends Component<any, any> {
   }
   getHistories = async () => {
     const histories: string = await AsyncStorage.getItem(config.key.historyProductSearch);
+    const historiesOfProductsString: string = await AsyncStorage.getItem(
+      config.key.historyProductVisited
+    );
+    const historiesOfProducts =
+      historiesOfProductsString !== null ? JSON.parse(historiesOfProductsString) : [];
+
     if (histories !== null) {
       const arrHistories = histories.split(',');
-      this.setState({ isLoaded: true, histories: uniq(arrHistories) });
+      this.setState({
+        isLoaded: true,
+        histories: uniq(arrHistories).reverse(),
+        productHistories: historiesOfProducts.reverse()
+      });
     } else {
-      this.setState({ isLoaded: true, histories: [] });
+      this.setState({ isLoaded: true, histories: [], productHistories: historiesOfProducts });
     }
   };
   removeHistories = () => {
@@ -41,14 +53,19 @@ export class HistoryProductSearchComponent extends Component<any, any> {
   actionRemoveHistories = async () => {
     this.setState({ isLoaded: false });
     await AsyncStorage.removeItem(config.key.historyProductSearch);
+    await AsyncStorage.removeItem(config.key.historyProductVisited);
     this.getHistories();
   };
   onPressKeyword = history => {
     const { actionSearch } = this.props;
     actionSearch(history);
   };
+  onPressImage = product => {
+    this.props.navigation.navigate('PageProductDetail', product);
+  };
   render() {
-    const { isLoaded, histories } = this.state;
+    const { isLoaded, histories, productHistories } = this.state;
+
     if (!isLoaded) {
       return (
         <ScrollView keyboardShouldPersistTaps="always">
@@ -66,21 +83,54 @@ export class HistoryProductSearchComponent extends Component<any, any> {
           scrollEventThrottle={1000}
         >
           <View>
-            <Text style={styles.titleHistoryText}>RIWAYAT PENCARIAN</Text>
-            {histories !== null &&
-              histories.reverse().map(history => {
-                return (
-                  <TouchableWithoutFeedback
-                    key={history}
-                    onPress={() => this.onPressKeyword(history)}
-                  >
-                    <View>
-                      <Text style={styles.historyText}>{history}</Text>
-                    </View>
-                  </TouchableWithoutFeedback>
-                );
-              })}
-            {histories.length > 0 &&
+            {histories.length > 0 && (
+              <View>
+                <Text style={styles.titleHistoryText}>RIWAYAT PENCARIAN</Text>
+                {histories.map(history => {
+                  return (
+                    <TouchableWithoutFeedback
+                      key={history}
+                      onPress={() => this.onPressKeyword(history)}
+                    >
+                      <View>
+                        <Text style={styles.historyText}>{history}</Text>
+                      </View>
+                    </TouchableWithoutFeedback>
+                  );
+                })}
+              </View>
+            )}
+            {productHistories.length > 0 && (
+              <View>
+                <Text style={styles.titleHistoryText}>PRODUK YANG TERAKHIR DILIHAT</Text>
+                <ScrollView
+                  showsHorizontalScrollIndicator={false}
+                  keyboardShouldPersistTaps="always"
+                  scrollEventThrottle={1000}
+                  horizontal={true}
+                >
+                  {productHistories.map((productHistory, index) => {
+                    const keyElement = productHistory.sku + '-' + index;
+                    const productImage =
+                      productHistory.productImage !== ''
+                        ? { uri: productHistory.productImage }
+                        : require('./assets/icGreyNoImage.png');
+
+                    return (
+                      <TouchableWithoutFeedback
+                        key={keyElement}
+                        onPress={() => this.onPressImage(productHistory)}
+                      >
+                        <View>
+                          <Image source={productImage} style={{ width: 80, height: 80 }} />
+                        </View>
+                      </TouchableWithoutFeedback>
+                    );
+                  })}
+                </ScrollView>
+              </View>
+            )}
+            {(histories.length > 0 || productHistories.length > 0) &&
               histories !== null && (
                 <TouchableWithoutFeedback onPress={this.removeHistories}>
                   <View>

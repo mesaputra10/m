@@ -7,7 +7,8 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
   Modal,
-  Alert
+  Alert,
+  AsyncStorage
 } from 'react-native';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
@@ -15,6 +16,8 @@ import { NavigationScreenProps } from 'react-navigation';
 import { ProductsNotFound } from '../products-not-found';
 import { searchProduct, FilterParams } from '../../helpers/fetch-data';
 import { Product } from '../../bmd';
+import config from '../../config';
+import { uniqBy } from 'lodash';
 
 interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   products?: Product[];
@@ -65,6 +68,26 @@ export class ListProductsComponent extends Component<
       500
     );
   }
+  addProductToProductSearchHistories = async product => {
+    if (product === '' || product === '{}') return null;
+
+    const key = config.key.historyProductVisited;
+    const historiesString: any = await AsyncStorage.getItem(key);
+    const dataHistories = historiesString !== null ? JSON.parse(historiesString) : [];
+    let histories = dataHistories.length > 0 ? dataHistories.slice(0) : [];
+
+    if (histories.length >= 10) histories.shift();
+    histories.push(product);
+    histories.map((h, i) => {
+      if (h.sku === product.sku) {
+        histories.splice(i, 2, histories[histories.length - 1], histories[i]);
+      }
+    });
+    histories = uniqBy(histories, 'sku');
+
+    const historiesJsonToString = JSON.stringify(histories);
+    await AsyncStorage.setItem(key, historiesJsonToString);
+  };
   _renderProductItem = (product, index) => {
     const productImage =
       product.variantImageThumbnail !== ''
@@ -75,7 +98,12 @@ export class ListProductsComponent extends Component<
         <TouchableWithoutFeedback
           onLongPress={() => Alert.alert('Should show modal summary of product')}
           onPress={() => {
-            const passProps = { title: product.productName, sku: product.variantSkuNo };
+            const passProps = {
+              title: product.productName,
+              sku: product.variantSkuNo,
+              productImage: product.variantImageThumbnail
+            };
+            this.addProductToProductSearchHistories(passProps);
             this.props.navigation.navigate('PageProductDetail', passProps);
           }}
         >
