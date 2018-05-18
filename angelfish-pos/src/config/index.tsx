@@ -13,7 +13,8 @@ export const config = {
     black: '#000'
   },
   key: {
-    historyProductSearch: '@Bhinneka@ProductSearch'
+    historyProductSearch: '@Bhinneka@ProductSearch',
+    historyProductVisited: '@Bhinneka@ProductVisited'
   }
 };
 export default config;
