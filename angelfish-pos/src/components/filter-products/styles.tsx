@@ -31,7 +31,8 @@ export const styles = StyleSheet.create({
     paddingBottom: 4
   },
   titleListSelectedDefault: {
-    fontSize: 12
+    fontSize: 12,
+    color: config.color.grey
   },
   titleListSelected: {
     color: config.color.blue,
