@@ -43,7 +43,7 @@ export class SigninComponent extends Component<any, any> {
     return (
       <View style={styles.container}>
         <ImageBackground source={BG_IMAGE} style={styles.bgImage}>
-          <KeyboardAvoidingView style={styles.loginContainer} behavior="position">
+          <KeyboardAvoidingView style={styles.loginContainer} behavior="position" enabled>
             <View style={styles.formContainer}>
               <View style={styles.loginHeaderContainer}>
                 <Text style={styles.loginHeaderText}>Login</Text>
