@@ -161,6 +161,9 @@ export class FilterProductsComponent extends Component<
       minPriceRange <= 0 &&
       maxPriceRange <= 0;
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
+    const filterDeleteText = disableTerapkan
+      ? styles.filterDeleteText
+      : [styles.filterDeleteText, { color: config.color.blue }];
 
     if (this.props.showFilter && !showFilterCategory && !showFilterBrands && !showFilterPrices) {
       return (
@@ -175,7 +178,7 @@ export class FilterProductsComponent extends Component<
               <Text style={styles.headerRightText}>Filter</Text>
               <TouchableWithoutFeedback onPress={this.props.deleteFilter}>
                 <View style={styles.removeButtonContainer}>
-                  <Text style={styles.filterDeleteText}>Hapus</Text>
+                  <Text style={filterDeleteText}>Hapus</Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>

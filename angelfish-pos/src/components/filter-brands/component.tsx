@@ -73,6 +73,9 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
     }
     const disableTerapkan = selectedBrands.length < 1;
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
+    const filterDeleteText = disableTerapkan
+      ? styles.filterDeleteText
+      : [styles.filterDeleteText, { color: config.color.blue }];
     return (
       <View style={styles.container}>
         {!showSearchBrands && (
@@ -94,7 +97,7 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
               <View style={{ paddingLeft: 20 }}>
                 <TouchableWithoutFeedback onPress={this.deleteFilterBrands}>
                   <View style={styles.removeButtonContainer}>
-                    <Text style={styles.filterDeleteText}>Hapus</Text>
+                    <Text style={filterDeleteText}>Hapus</Text>
                   </View>
                 </TouchableWithoutFeedback>
               </View>
