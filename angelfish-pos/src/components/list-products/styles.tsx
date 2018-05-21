@@ -11,7 +11,8 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between'
   },
   searchResultText: {
-    fontSize: 16
+    fontSize: 16,
+    fontWeight: 'bold'
   },
   searchResultPriceDiscountText: {
     fontSize: 16,
