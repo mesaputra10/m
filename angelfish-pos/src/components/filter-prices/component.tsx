@@ -17,7 +17,6 @@ import numberFormat from '../../helpers/number-format';
 interface FilterPricesComponentProps {
   setValueFilterPrices?: any;
   cancelFilterPrices?: any;
-  deleteFilterPrices?: any;
 }
 
 export class FilterPricesComponent extends Component<FilterPricesComponentProps, any> {
@@ -66,14 +65,21 @@ export class FilterPricesComponent extends Component<FilterPricesComponentProps,
     const withOutDot = value.replace(/[.]/g, '');
     return parseFloat(withOutDot);
   };
+  deleteFilter = () => {
+    this.setState({ max: '', min: '' });
+    this.props.setValueFilterPrices(0, 0);
+  };
   render() {
     const { min, max } = this.state;
     const minFloat = this.removeDot(min);
     const maxFloat = this.removeDot(max);
     const disableTerapkan = min === '' || max === '' || maxFloat < minFloat;
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
-    const minValue = `Rp ${numberFormat(min)}`;
-    const maxValue = `Rp ${numberFormat(max)}`;
+    const minValue = min > 0 ? `Rp ${numberFormat(min)}` : '';
+    const maxValue = max > 0 ? `Rp ${numberFormat(max)}` : '';
+    const filterDeleteText = disableTerapkan
+      ? styles.filterDeleteText
+      : [styles.filterDeleteText, { color: config.color.blue }];
     return (
       <View style={styles.container}>
         <View style={styles.headerRightFilterContainer}>
@@ -83,9 +89,9 @@ export class FilterPricesComponent extends Component<FilterPricesComponentProps,
             </View>
           </TouchableWithoutFeedback>
           <Text style={styles.headerRightText}>Harga</Text>
-          <TouchableWithoutFeedback onPress={this.props.deleteFilterPrices}>
+          <TouchableWithoutFeedback onPress={this.deleteFilter}>
             <View style={styles.removeButtonContainer}>
-              <Text style={styles.filterDeleteText}>Hapus</Text>
+              <Text style={filterDeleteText}>Hapus</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

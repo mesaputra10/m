@@ -121,6 +121,9 @@ export class FilterCategoriesComponent extends Component<FilterCategoriesProps, 
     const disableTerapkanCategoryStyle = disableTerapkanCategory
       ? { backgroundColor: config.color.grey }
       : null;
+    const filterDeleteText = disableTerapkanCategory
+      ? styles.filterDeleteText
+      : [styles.filterDeleteText, { color: config.color.blue }];
     return (
       <View style={styles.container}>
         <View style={styles.rightColumnTop}>
@@ -133,7 +136,7 @@ export class FilterCategoriesComponent extends Component<FilterCategoriesProps, 
             <Text style={styles.headerRightText}>Kategori</Text>
             <TouchableWithoutFeedback onPress={this.deleteFilterCategory}>
               <View style={styles.removeButtonContainer}>
-                <Text style={styles.filterDeleteText}>Hapus</Text>
+                <Text style={filterDeleteText}>Hapus</Text>
               </View>
             </TouchableWithoutFeedback>
           </View>

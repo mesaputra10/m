@@ -117,7 +117,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 15,
     fontSize: 17,
-    color: config.color.blue
+    color: config.color.grey
   }
 });
 export default styles;
