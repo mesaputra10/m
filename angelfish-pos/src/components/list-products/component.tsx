@@ -22,6 +22,7 @@ import { uniqBy } from 'lodash';
 interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   products?: Product[];
   keyword?: string;
+  selectedCategoryId?: string;
   totalProducts?: number;
   setFilter?: any;
   showFilter?: boolean;
@@ -89,6 +90,8 @@ export class ListProductsComponent extends Component<
     await AsyncStorage.setItem(key, historiesJsonToString);
   };
   _renderProductItem = (product, index) => {
+    if (!product) return null;
+
     const productImage =
       product.variantImageThumbnail !== ''
         ? { uri: product.variantImageThumbnail }
@@ -152,8 +155,9 @@ export class ListProductsComponent extends Component<
   fetchProducts = async () => {
     const keyword = this.state.keyword;
     const page = this.state.page;
-    let data = await searchProduct(keyword, page + 1);
-    let nextproducts = Product.fromPlain(data.hits);
+    let filterParams = { categoryId: this.props.selectedCategoryId };
+    let data = await searchProduct(keyword, page + 1, filterParams);
+    let nextproducts = data.hits ? Product.fromPlain(data.hits) : undefined;
     this.setState({
       fetching: false,
       products: this.state.products.concat(nextproducts),
@@ -162,9 +166,9 @@ export class ListProductsComponent extends Component<
   };
   loadMore = () => {
     this.setState({ fetching: true }, () => {
-      setTimeout(() => {
-        this.fetchProducts();
-      }, 500);
+      // setTimeout(() => {
+      this.fetchProducts();
+      // }, 500);
     });
   };
   render() {

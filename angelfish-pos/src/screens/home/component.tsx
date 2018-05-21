@@ -277,6 +277,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             <ListProducts
               navigation={this.props.navigation}
               keyword={this.state.keyword}
+              selectedCategoryId={this.props.selectedCategoryId}
               totalProducts={this.props.totalProducts}
               searchProduct={this.props.search}
             />

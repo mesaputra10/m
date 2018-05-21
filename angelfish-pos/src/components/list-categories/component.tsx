@@ -66,8 +66,7 @@ export class ListCategoriesComponent extends Component<ListCategoriesComponentPr
     );
   };
   onPressTerapkan = (categoryId: string) => {
-    const filterParams = { categoryId };
-    this.props.search(filterParams);
+    this.props.search(categoryId);
     this.props.setShowSearchResults(true);
     this.setState({ parentCategory: true });
   };
