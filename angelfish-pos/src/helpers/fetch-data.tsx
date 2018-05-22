@@ -202,6 +202,7 @@ export async function searchProduct(
   keyword: string,
   pageNumber: number = 1,
   filterParams: FilterParams = {},
+  sort?: 'price' | '-price' | 'name' | '-name',
   pageSize = 21
 ) {
   let params = {
@@ -216,6 +217,7 @@ export async function searchProduct(
   else if (filterParams.brandId) params['filter[brandId]'] = filterParams.brandId;
   if (filterParams.minPriceRange) params['filter[minPrice]'] = filterParams.minPriceRange;
   if (filterParams.maxPriceRange) params['filter[maxPrice]'] = filterParams.maxPriceRange;
+  if (sort) params['sort'] = sort;
 
   let tokens = await getUserToken();
   return fetchData('/api/products/search', 'GET', params, tokens);
@@ -244,6 +246,6 @@ function remapCategories(data: any, level = 1) {
  * Load all category tree
  */
 export async function categories(): Promise<Category[]> {
-  let res = await searchProduct('', 1, {}, 1);
+  let res = await searchProduct('', 1, {}, undefined, 1);
   return Category.fromPlain(remapCategories(res.facets.categoryTree1));
 }
