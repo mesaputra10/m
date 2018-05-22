@@ -1,6 +1,19 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import config from '../../config';
+
+//grid
+const widthLeftSide = 0.7; // 70%
+const widthDevice = Dimensions.get('window').width * widthLeftSide;
+const heightDevice = Dimensions.get('window').height - 56;
+const column = 4;
+const padding = 16;
+const totalPadding = padding * (column * 2);
+const cardBoxWidth = (widthDevice - totalPadding) / column;
+
 export const styles = StyleSheet.create({
+  container: {
+    height: heightDevice
+  },
   itemContainer: {
     backgroundColor: '#fff',
     flex: 1,
@@ -43,6 +56,19 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     paddingRight: 8,
     marginTop: 3
+  },
+
+  //grid
+  elementContainer: {
+    backgroundColor: config.color.white,
+    padding: 16
+  },
+  elementContent: {
+    height: 145,
+    width: cardBoxWidth - 1,
+    backgroundColor: 'rgb(236, 236, 236)',
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 export default styles;

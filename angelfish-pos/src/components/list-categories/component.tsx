@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid } from 'antd-mobile';
+import { Grid } from '../../components/grid';
 import { ScrollView, View, Text, Image, TouchableWithoutFeedback, Alert } from 'react-native';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
@@ -70,21 +70,30 @@ export class ListCategoriesComponent extends Component<ListCategoriesComponentPr
     this.props.setShowSearchResults(true);
     this.setState({ parentCategory: true });
   };
+  renderItemGrid = (element, index) => {
+    return (
+      <View style={styles.elementContainer}>
+        <TouchableWithoutFeedback onPress={() => this.clickParentCategory(element)}>
+          <View style={styles.elementContent}>
+            <Text style={{ justifyContent: 'center', textAlign: 'center', padding: 8 }}>
+              {element.name}
+            </Text>
+          </View>
+        </TouchableWithoutFeedback>
+      </View>
+    );
+  };
   render() {
-    const { showParentCategory } = this.props;
+    const { showParentCategory, categories } = this.props;
+
     if (showParentCategory) {
       return (
-        <ScrollView keyboardShouldPersistTaps="always" showsVerticalScrollIndicator={false}>
-          <Grid
-            data={this.props.categories}
-            itemStyle={{
-              width: 145,
-              height: 145
-            }}
-            onClick={category => this.clickParentCategory(category)}
-            renderItem={(el, i) => this._renderItem(el, i)}
-            hasLine={false}
-          />
+        <ScrollView
+          keyboardShouldPersistTaps="always"
+          showsVerticalScrollIndicator={false}
+          style={styles.container}
+        >
+          <Grid data={categories} renderItem={this.renderItemGrid} />
         </ScrollView>
       );
     }
