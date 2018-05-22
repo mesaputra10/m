@@ -5,7 +5,8 @@ const heightDevice = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
   scrollContainer: {
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
+    height: heightDevice - 56
   },
   container: {
     paddingVertical: 10,

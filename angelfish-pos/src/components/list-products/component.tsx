@@ -157,12 +157,18 @@ export class ListProductsComponent extends Component<
     const page = this.state.page;
     let filterParams = { categoryId: this.props.selectedCategoryId };
     let data = await searchProduct(keyword, page + 1, filterParams);
-    let nextproducts = data.hits ? Product.fromPlain(data.hits) : undefined;
-    this.setState({
-      fetching: false,
-      products: this.state.products.concat(nextproducts),
-      page: page + 1
-    });
+    if (data.hits) {
+      let nextproducts = Product.fromPlain(data.hits);
+      this.setState({
+        fetching: false,
+        products: this.state.products.concat(nextproducts),
+        page: page + 1
+      });
+    } else {
+      this.setState({
+        fetching: false
+      });
+    }
   };
   loadMore = () => {
     this.setState({ fetching: true }, () => {
