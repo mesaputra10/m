@@ -143,12 +143,12 @@ export class ListProductsComponent extends Component<
                 <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
               )}
             </View>
-
             <View style={styles.buttonBeliContainer}>
               <Text style={styles.buttonBeliText}>BELI</Text>
             </View>
           </View>
         </TouchableWithoutFeedback>
+        <View style={styles.productBorderBottom} />
       </View>
     );
   };
@@ -203,6 +203,7 @@ export class ListProductsComponent extends Component<
               }
             }
           }}
+          style={styles.scrollContainer}
         >
           <View style={styles.container}>
             <View>

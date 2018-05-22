@@ -4,8 +4,10 @@ import config from '../../config';
 const heightDevice = Dimensions.get('window').height;
 
 export const styles = StyleSheet.create({
+  scrollContainer: {
+    paddingHorizontal: 16
+  },
   container: {
-    paddingHorizontal: 16,
     paddingVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -35,15 +37,15 @@ export const styles = StyleSheet.create({
   },
   productItemContainer: {
     backgroundColor: config.color.white,
-    flex: 1,
-    marginLeft: -6,
-    marginRight: -6
+    flex: 1
   },
   productItemBox: {
     backgroundColor: config.color.white,
     flex: 1,
-    paddingHorizontal: 24,
-    paddingVertical: 8
+    flexDirection: 'column',
+    paddingHorizontal: 16,
+    paddingTop: 8,
+    justifyContent: 'space-between'
   },
   productItemImage: {
     width: '100%',
@@ -53,12 +55,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    paddingVertical: 8,
-    paddingBottom: 16
+    paddingVertical: 8
   },
   productItemName: {
     fontSize: 16,
-    lineHeight: 22,
     textAlign: 'left',
     color: config.color.text,
     paddingBottom: 8
@@ -72,8 +72,7 @@ export const styles = StyleSheet.create({
   },
   buttonBeliText: {
     color: config.color.text,
-    fontWeight: 'bold',
-    fontSize: 16
+    fontWeight: 'bold'
   },
   loadStructure: {
     width: '100%',
@@ -87,6 +86,11 @@ export const styles = StyleSheet.create({
   filterText: {
     fontSize: 14,
     color: config.color.text
+  },
+  productBorderBottom: {
+    borderBottomWidth: 1,
+    borderBottomColor: config.color.border,
+    paddingVertical: 8
   }
 });
 export default styles;
