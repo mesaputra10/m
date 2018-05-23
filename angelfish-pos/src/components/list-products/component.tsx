@@ -26,7 +26,7 @@ interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   totalProducts?: number;
   setFilter?: any;
   showFilter?: boolean;
-  searchProduct(keyword, page, filterParams): any;
+  searchProduct(keyword, page, filterParams, sortBy): any;
   isFetching?: boolean;
 }
 
@@ -36,7 +36,11 @@ interface ListProductsComponentState {
   page: number;
   keyword: string;
   products: Product[];
+  showFilterSort: boolean;
+  sortBy: string;
+  selectedSortBy: string;
 }
+
 export class ListProductsComponent extends Component<
   ListProductsComponentProps,
   ListProductsComponentState
@@ -47,8 +51,11 @@ export class ListProductsComponent extends Component<
       loading: true,
       fetching: false,
       page: 1,
-      keyword: '',
-      products: props.products
+      keyword: props.keyword,
+      products: props.products,
+      showFilterSort: false,
+      sortBy: '',
+      selectedSortBy: 'Paling Sesuai'
     };
   }
 
@@ -153,10 +160,9 @@ export class ListProductsComponent extends Component<
     );
   };
   fetchProducts = async () => {
-    const keyword = this.state.keyword;
-    const page = this.state.page;
+    const { keyword, page, sortBy } = this.state;
     let filterParams = { categoryId: this.props.selectedCategoryId };
-    let data = await searchProduct(keyword, page + 1, filterParams);
+    let data = await searchProduct(keyword, page + 1, filterParams, sortBy);
     if (data.hits) {
       let nextproducts = Product.fromPlain(data.hits);
       this.setState({
@@ -172,14 +178,55 @@ export class ListProductsComponent extends Component<
   };
   loadMore = () => {
     this.setState({ fetching: true }, () => {
-      // setTimeout(() => {
       this.fetchProducts();
-      // }, 500);
     });
   };
+  selectSortBy = async (value: string = 'Paling Sesuai') => {
+    let apiValue = '';
+    if (value === 'A-Z') {
+      apiValue = 'name';
+    }
+    if (value === 'Z-A') {
+      apiValue = '-name';
+    }
+    if (value === 'Harga Terendah') {
+      apiValue = 'price';
+    }
+    if (value === 'Harga Tertinggi') {
+      apiValue = '-price';
+    }
+    this.setState({ showFilterSort: false, selectedSortBy: value, sortBy: apiValue });
+    const { keyword } = this.props;
+    let filterParams = { categoryId: this.props.selectedCategoryId };
+    let data = await searchProduct(keyword, 1, filterParams, apiValue);
+    if (data.hits) {
+      let nextproducts = Product.fromPlain(data.hits);
+      this.setState({
+        fetching: false,
+        products: nextproducts,
+        page: 1
+      });
+    } else {
+      this.setState({
+        fetching: false
+      });
+    }
+  };
   render() {
-    const products = this.state.products;
     const { navigation, setFilter, showFilter, keyword, totalProducts, isFetching } = this.props;
+    const { products, showFilterSort, sortBy, selectedSortBy } = this.state;
+
+    const checkSelectedSortBy = (
+      <View style={styles.checkContainer}>
+        <Image source={require('./assets/check.png')} width={24} height={24} style={styles.check} />
+      </View>
+    );
+    const marginLeftPalingSesuai = selectedSortBy === 'Paling Sesuai' ? { marginLeft: 35 } : null;
+    const marginLeftAz = selectedSortBy === 'A-Z' ? { marginLeft: 35 } : null;
+    const marginLeftZa = selectedSortBy === 'Z-A' ? { marginLeft: 35 } : null;
+    const marginLeftLowPrice = selectedSortBy === 'Harga Terendah' ? { marginLeft: 35 } : null;
+    const marginLeftHighPrice = selectedSortBy === 'Harga Tertinggi' ? { marginLeft: 35 } : null;
+
     if (this.state.loading || isFetching) {
       return (
         <Image
@@ -213,22 +260,81 @@ export class ListProductsComponent extends Component<
         >
           <View style={styles.container}>
             <View>
-              <Text style={{ fontSize: 14, color: 'rgba(0, 0, 0, 0.38)' }}>
-                {numberFormat(totalProducts)} Produk
-              </Text>
+              <Text style={styles.totalProductsText}>{numberFormat(totalProducts)} Produk</Text>
             </View>
-            <View>
+            <View style={styles.filterContainerSection}>
+              <View style={styles.filterSortContainer}>
+                <TouchableWithoutFeedback
+                  onPress={() => this.setState({ showFilterSort: !showFilterSort })}
+                >
+                  <View style={styles.filterContainer}>
+                    <Text style={styles.filterTextSort}>{selectedSortBy}</Text>
+                    <Image source={require('./assets/chevronDown.png')} style={styles.filterIcon} />
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
               <TouchableWithoutFeedback
                 onPress={() => setFilter(!showFilter)}
                 disabled={showFilter}
               >
                 <View style={styles.filterContainer}>
-                  <Image source={require('./assets/filter.png')} />
+                  <Image source={require('./assets/filter.png')} style={styles.filterIcon} />
                   <Text style={styles.filterText}>Filter</Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>
           </View>
+
+          {showFilterSort && (
+            <View style={styles.filterDropdownContainer}>
+              <View style={styles.centilanContainer}>
+                <Image source={require('./assets/triangle.png')} />
+              </View>
+              <View style={styles.optionsContainer}>
+                <TouchableWithoutFeedback onPress={() => this.selectSortBy()}>
+                  <View style={styles.sortContainer}>
+                    <View style={[styles.sectionSortContainer, marginLeftPalingSesuai]}>
+                      <Text style={styles.textSort}>Paling Sesuai</Text>
+                    </View>
+                    {selectedSortBy === 'Paling Sesuai' && checkSelectedSortBy}
+                  </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => this.selectSortBy('A-Z')}>
+                  <View style={styles.sortContainer}>
+                    <View style={[styles.sectionSortContainer, marginLeftAz]}>
+                      <Text style={styles.textSort}>A-Z</Text>
+                    </View>
+                    {selectedSortBy === 'A-Z' && checkSelectedSortBy}
+                  </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => this.selectSortBy('Z-A')}>
+                  <View style={styles.sortContainer}>
+                    <View style={[styles.sectionSortContainer, marginLeftZa]}>
+                      <Text style={styles.textSort}>Z-A</Text>
+                    </View>
+                    {selectedSortBy === 'Z-A' && checkSelectedSortBy}
+                  </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => this.selectSortBy('Harga Terendah')}>
+                  <View style={styles.sortContainer}>
+                    <View style={[styles.sectionSortContainer, marginLeftLowPrice]}>
+                      <Text style={styles.textSort}>Harga Terendah</Text>
+                    </View>
+                    {selectedSortBy === 'Harga Terendah' && checkSelectedSortBy}
+                  </View>
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback onPress={() => this.selectSortBy('Harga Tertinggi')}>
+                  <View style={[styles.sortContainer, styles.noBorderBottom]}>
+                    <View style={[styles.sectionSortContainer, marginLeftHighPrice]}>
+                      <Text style={styles.textSort}>Harga Tertinggi</Text>
+                    </View>
+                    {selectedSortBy === 'Harga Tertinggi' && checkSelectedSortBy}
+                  </View>
+                </TouchableWithoutFeedback>
+              </View>
+            </View>
+          )}
+
           <Grid
             data={products}
             itemStyle={{
