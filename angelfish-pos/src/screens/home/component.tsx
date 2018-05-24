@@ -126,7 +126,6 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     this.toggleSearchHistory();
   };
   actionCancelSearch = () => {
-    this.props.emptySearch();
     Keyboard.dismiss();
     this.setState({
       searchAutoComplete: false,
