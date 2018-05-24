@@ -23,12 +23,16 @@ export class PageServerErrorComponent extends Component<any, any> {
     };
   }
 
+  componentDidUpdate() {
+    if (!this.props.isServerError) {
+      this.props.navigation.goBack();
+    }
+  }
+
   tryAgain = () => {
     this.setState({ loading: true });
-    setTimeout(() => {
-      this.setState({ loading: false });
-      this.props.navigation.goBack();
-    }, 1000);
+    const { params } = this.props.navigation.state;
+    if (params.retry) params.retry();
   };
   render() {
     return (

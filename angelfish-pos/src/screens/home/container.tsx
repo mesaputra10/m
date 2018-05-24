@@ -19,7 +19,9 @@ import {
 import { start } from 'repl';
 import { fetchCategories } from './action';
 
-const mapStateToProps = (state: any) => state.homeReducer;
+const mapStateToProps = (state: any) => {
+  return { ...state.homeReducer, isServerError: state.globalReducer.isServerError };
+};
 
 const mapDispatchToProps = dispatch => ({
   startLoading: () => dispatch(startLoading()),

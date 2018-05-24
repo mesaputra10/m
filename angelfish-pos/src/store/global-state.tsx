@@ -18,12 +18,12 @@ const globalReducer = (state = initialGlobalState, action: GlobalAction) => {
   } else if (action.type == ActionTypes.SERVER_ERROR) {
     return { ...state, isServerError: true };
   } else if (
-    action.type in
     [
+      ActionTypes.SERVER_RETRY,
       ActionTypes.PRODUCTS_DATA_LIST,
       ActionTypes.CATEGORIES_LIST,
       ActionTypes.PRODUCTS_DATA_LIST_RECOMMENDATION
-    ]
+    ].indexOf(action.type) > -1
   ) {
     return { ...state, isServerError: false };
   } else return state;

@@ -73,18 +73,29 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       showHeaderCategory: false,
       categoryName: 'Kategori',
       showSearchHistory: false,
-      keyword: ''
+      keyword: '',
+      isPrevServerError: false
     };
     this.onChangeTextSearch = this.onChangeTextSearch.bind(this);
   }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (prevState.isPrevServerError && prevState.isPrevServerError !== nextProps.isServerError) {
+      return { isPrevServerError: false };
+    }
+    return {};
+  }
   componentDidUpdate() {
-    if (this.props.isServerError) {
-      this.props.navigation.navigate('PageServerError');
+    if (this.props.isServerError && !this.state.isPrevServerError) {
+      this.setState({ isPrevServerError: true });
+      this.props.navigation.navigate('PageServerError', { retry: this.retryServer });
     }
   }
   componentDidMount() {
     this.props.endLoading();
   }
+  retryServer = () => {
+    this.props.loadCategories();
+  };
   onChangeTextSearch = text => {
     if (text.length >= 3) {
       this.setState({
@@ -115,6 +126,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     this.toggleSearchHistory();
   };
   actionCancelSearch = () => {
+    this.props.emptySearch();
     Keyboard.dismiss();
     this.setState({
       searchAutoComplete: false,
