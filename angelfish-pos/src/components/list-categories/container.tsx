@@ -10,9 +10,9 @@ import { setFilterCategory } from '../filter-products/action';
 const mapStateToProps = (state: any) => state.homeReducer;
 
 const mapDispatchToProps = dispatch => ({
-  search: categoryId => {
+  search: (categoryId, categoryName) => {
     let filterParams = { categoryId };
-    dispatch(setFilterCategory(categoryId));
+    dispatch(setFilterCategory(categoryId, categoryName));
     dispatch(fetchSearch('', 1, filterParams));
   },
   setShowSearchResults: data => dispatch(setShowSearchResults(data)),

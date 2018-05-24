@@ -56,17 +56,8 @@ export class ListCategoriesComponent extends Component<ListCategoriesComponentPr
       openChild: []
     });
   };
-  _renderItem = (el, index) => {
-    return (
-      <View style={styles.itemContainer}>
-        <View style={styles.itemBox}>
-          <Text style={{ textAlign: 'center' }}>{el.name}</Text>
-        </View>
-      </View>
-    );
-  };
-  onPressTerapkan = (categoryId: string) => {
-    this.props.search(categoryId);
+  onPressTerapkan = (categoryId: string, categoryName: string) => {
+    this.props.search(categoryId, categoryName);
     this.props.setShowSearchResults(true);
     this.setState({ parentCategory: true });
   };
