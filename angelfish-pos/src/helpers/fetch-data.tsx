@@ -202,7 +202,7 @@ export async function searchProduct(
   keyword: string,
   pageNumber: number = 1,
   filterParams: FilterParams = {},
-  sort?: 'price' | '-price' | 'name' | '-name',
+  sort?: '' | 'price' | '-price' | 'name' | '-name',
   pageSize = 21
 ) {
   let params = {

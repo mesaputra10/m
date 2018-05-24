@@ -79,19 +79,95 @@ export const styles = StyleSheet.create({
     width: '100%',
     height: '80%'
   },
+  totalProductsText: {
+    fontSize: 14,
+    color: 'rgba(0, 0, 0, 0.38)'
+  },
   filterContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
   },
+  filterIcon: {
+    marginRight: 8
+  },
   filterText: {
     fontSize: 14,
     color: config.color.text
+  },
+  filterTextSort: {
+    fontSize: 14,
+    color: config.color.text,
+    paddingRight: 12
+  },
+  filterSortContainer: {
+    paddingRight: 8
+  },
+  filterContainerSection: {
+    flexDirection: 'row'
   },
   productBorderBottom: {
     borderBottomWidth: 1,
     borderBottomColor: config.color.border,
     paddingVertical: 8
+  },
+  filterDropdownContainer: {
+    position: 'absolute',
+    zIndex: 2,
+    marginTop: 30,
+    marginLeft: 258 * 1.65,
+    backgroundColor: 'rgb(255, 255, 255)'
+  },
+  centilanContainer: {
+    flex: 1,
+    zIndex: 3,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    shadowColor: 'rgba(0, 0, 0, 0.2)'
+  },
+  optionsContainer: {
+    width: 258,
+    backgroundColor: 'rgb(255, 255, 255)',
+    shadowColor: 'rgba(0, 0, 0, 0.2)',
+    shadowOffset: {
+      width: 0,
+      height: 6
+    },
+    shadowRadius: 20,
+    shadowOpacity: 1,
+    borderRadius: 20
+  },
+  sortContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: config.color.border
+  },
+  sectionSortContainer: {
+    flex: 9,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  textSort: {
+    fontSize: 16,
+    paddingVertical: 11,
+    flexDirection: 'row'
+  },
+  noBorderBottom: {
+    borderBottomWidth: 0
+  },
+  checkContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingRight: 16
+  },
+  check: {
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 export default styles;
