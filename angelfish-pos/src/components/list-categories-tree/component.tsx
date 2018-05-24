@@ -58,7 +58,7 @@ export class ListCategoriesTreeComponent extends Component<ListCategoriesTreeCom
         });
       }
     } else {
-      this.props.onPressTerapkan(category.id);
+      this.props.onPressTerapkan(category.id, category.name);
     }
   };
   _renderChildCategory = children => {
