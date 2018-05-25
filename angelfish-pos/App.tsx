@@ -41,6 +41,7 @@ const RootNavigator = StackNavigator(
   },
   {
     initialRouteName: 'PageLanding',
+    headerMode: 'none',
     navigationOptions: {
       gesturesEnabled: false
     }
