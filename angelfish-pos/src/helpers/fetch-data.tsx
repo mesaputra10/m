@@ -249,3 +249,9 @@ export async function categories(): Promise<Category[]> {
   let res = await searchProduct('', 1, {}, undefined, 1);
   return Category.fromPlain(remapCategories(res.facets.categoryTree1));
 }
+
+export async function fetchProduct(sku: string) {
+  let tokens = await getUserToken();
+  const params = {};
+  return await fetchData(`/api/products/${sku}`, 'GET', params, tokens);
+}

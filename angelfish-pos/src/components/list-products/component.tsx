@@ -109,7 +109,6 @@ export class ListProductsComponent extends Component<
           onLongPress={() => Alert.alert('Should show modal summary of product')}
           onPress={() => {
             const passProps = {
-              title: product.productName,
               sku: product.variantSkuNo,
               productImage: product.variantImageThumbnail
             };
