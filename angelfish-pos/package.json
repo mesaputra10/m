@@ -70,6 +70,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-27.0.0.tar.gz",
     "react-native-easy-grid": "^0.1.17",
     "react-native-elements": "1.0.0-beta4",
+    "react-native-image-slider": "https://github.com/yudapc/react-native-image-slider.git#custom",
     "react-native-vector-icons": "^4.2.0",
     "react-navigation": "1.5.11",
     "react-redux": "^5.0.7",
@@ -82,10 +83,6 @@
     "indent_size": 2,
     "indent_char": " ",
     "singleQuote": true,
-    "trallingComma": {
-      "array": true,
-      "object": true,
-      "function": false
-    }
+    "trailingComma": "all"
   }
 }
