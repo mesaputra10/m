@@ -25,8 +25,12 @@ export const styles = StyleSheet.create({
     paddingTop: 10,
     paddingBottom: 10
   },
-  searchResultText: {
+  titleProduct: {
     fontSize: 16
+  },
+  searchResultText: {
+    fontSize: 16,
+    fontWeight: 'bold'
   },
   searchResultPriceDiscountText: {
     fontSize: 16,

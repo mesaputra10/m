@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
   backCategoryText: {
     color: config.color.blue,
     fontSize: 17,
-    fontWeight: '600'
+    marginLeft: -8
   },
   titleCategoryContainer: {
     flexDirection: 'row',

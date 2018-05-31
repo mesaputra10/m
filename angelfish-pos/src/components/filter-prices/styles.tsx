@@ -22,7 +22,7 @@ export const styles = StyleSheet.create({
     paddingBottom: 8
   },
   textInputStyle: {
-    width: 270,
+    width: 278,
     height: 36,
     borderRadius: 8,
     backgroundColor: config.color.white,
