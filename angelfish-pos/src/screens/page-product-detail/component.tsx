@@ -211,7 +211,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
                 <Image source={require('./assets/warehouse.png')} style={styles.iconSection} />
                 <Text style={styles.textSectionTitle}>Stok</Text>
               </View>
-              <StokList stocks={this.state.variant.stock} />
+              {this.state.variant && <StokList stocks={this.state.variant.stock} />}
               <View style={styles.buttonStokHabis}>
                 <Text style={styles.textButtonStokHabis}>STOK HABIS</Text>
               </View>
