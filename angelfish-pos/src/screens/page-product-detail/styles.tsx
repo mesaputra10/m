@@ -242,6 +242,32 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  //react-native-image-slider start
+  buttons: {
+    height: 15,
+    marginTop: 16,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
+  },
+  button: {
+    margin: 3,
+    width: 8,
+    height: 8,
+    borderRadius: 8 / 2,
+    backgroundColor: '#ccc',
+    opacity: 0.9
+  },
+  buttonSelected: {
+    margin: 3,
+    width: 8,
+    height: 8,
+    borderRadius: 8 / 2,
+    backgroundColor: config.color.blue,
+    opacity: 0.9
   }
+  //react-native-image-slider end
 });
 export default styles;

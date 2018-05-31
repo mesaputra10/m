@@ -13,10 +13,11 @@ export class LayoutComponent extends Component<LayoutComponentProps, any> {
     super(props);
   }
   render() {
+    const { leftColumn, rightColumn } = this.props;
     return (
       <View style={styles.container}>
-        <View style={styles.leftColumn}>{this.props.leftColumn}</View>
-        <View style={styles.rightColumn}>{this.props.rightColumn}</View>
+        {leftColumn && <View style={styles.leftColumn}>{leftColumn}</View>}
+        {rightColumn && <View style={styles.rightColumn}>{rightColumn}</View>}
       </View>
     );
   }

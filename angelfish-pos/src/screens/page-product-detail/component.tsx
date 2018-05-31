@@ -6,8 +6,10 @@ import {
   TouchableWithoutFeedback,
   Image,
   ActivityIndicator,
-  Alert
+  Alert,
+  TouchableHighlight,
 } from 'react-native';
+import ImageSlider from 'react-native-image-slider';
 import { NavigationScreenProps } from 'react-navigation';
 import { Layout } from '../../components/layout';
 import { StokList } from '../../components/stok-list';
@@ -17,6 +19,7 @@ import config from '../../config';
 import { Rating } from '../../components/rating';
 import { fetchDataProduct } from './action';
 import { Price } from './libraries/price';
+import { Dimensions } from 'react-native';
 
 interface PageProductDetailComponentProps extends NavigationScreenProps<any, any> {
   navigation: any;
@@ -32,8 +35,8 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         sku: '',
         categoryName: '',
         images: null,
-        loading: true
-      }
+        loading: true,
+      },
     };
   }
   componentDidMount() {
@@ -44,11 +47,11 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         if (data.sku !== '') {
           this.setState({
             product: data,
-            loading: false
+            loading: false,
           });
         } else {
           Alert.alert('Error!', `Error Hubungi API Engineer dengan SKU: ${sku}`, [
-            { text: 'OK', onPress: () => this.props.navigation.pop() }
+            { text: 'OK', onPress: () => this.props.navigation.pop() },
           ]);
         }
       })
@@ -60,12 +63,51 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
   productImage = () => {
     const { product } = this.state;
     let image = require('./assets/icGreyNoImage.png');
+    const winWidth = Dimensions.get('window').width * 0.667;
     if (product.images !== null) {
-      if (product.images.length > 0) {
-        image = { uri: product.images[0].imagePath };
+      if (product.images.length > 1) {
+        const productImages = product.images.map(i => i.imagePath);
+        return (
+          <ImageSlider
+            autoPlayWithInterval={3000}
+            images={productImages}
+            width={winWidth}
+            backgroundColor="#fff"
+            customSlide={({ index, item, style, width }) => {
+              return (
+                <View key={item}>
+                  <Image
+                    source={{ uri: item }}
+                    resizeMode="cover"
+                    style={{ width: winWidth, height: 700 }}
+                  />
+                </View>
+              );
+            }}
+            customButtons={(position, move) => (
+              <View style={styles.buttons}>
+                {productImages.map((image, index) => {
+                  const styleSelected = position === index ? styles.buttonSelected : styles.button;
+                  return (
+                    <TouchableHighlight
+                      key={index}
+                      underlayColor="#ccc"
+                      onPress={() => move(index)}
+                      style={styleSelected}
+                    >
+                      <Text />
+                    </TouchableHighlight>
+                  );
+                })}
+              </View>
+            )}
+          />
+        );
+      } else {
+        return <Image source={{ uri: product.images[0].imagePath }} style={styles.productImage} />;
       }
     }
-    return image;
+    return null;
   };
   render() {
     const { product, loading } = this.state;
@@ -95,9 +137,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         {headerLeftColumn}
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.content}>
-            <View style={styles.productImageContainer}>
-              <Image source={productImage} style={styles.productImage} />
-            </View>
+            <View style={styles.productImageContainer}>{productImage}</View>
             <Text style={styles.productTitle}>{product.fullName}</Text>
             <View style={styles.productCategorySku}>
               <Text style={styles.categoryText}>
@@ -181,7 +221,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         </ScrollView>
       </View>
     );
-    const rightColumn = null;
+    const rightColumn = <View />;
     if (loading === false) {
       return <Layout leftColumn={leftColumn} rightColumn={rightColumn} />;
     } else {
