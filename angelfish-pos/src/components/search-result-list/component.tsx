@@ -44,7 +44,7 @@ export class SearchResultListComponent extends Component<SearchResultListCompone
                       <Image source={productImage} style={styles.searchResultImage} />
                     </View>
                     <View style={styles.searchResultListItemRight}>
-                      <Text style={styles.searchResultText}>{product.productName}</Text>
+                      <Text style={styles.titleProduct}>{product.productName}</Text>
                       {product.isDiscount && (
                         <View style={styles.searchResultPriceContainer}>
                           {product.isDiscount && (

@@ -241,6 +241,7 @@ export class ListProductsComponent extends Component<
           keyboardShouldPersistTaps="always"
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={1000}
+          scrollEnabled={!this.state.showFilterSort}
           onScroll={event => {
             if (this.state.loading) {
               return;

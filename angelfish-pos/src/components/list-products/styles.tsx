@@ -73,6 +73,7 @@ export const styles = StyleSheet.create({
   },
   buttonBeliText: {
     color: config.color.text,
+    fontSize: 16,
     fontWeight: 'bold'
   },
   loadStructure: {
@@ -98,7 +99,7 @@ export const styles = StyleSheet.create({
   filterTextSort: {
     fontSize: 14,
     color: config.color.text,
-    paddingRight: 12
+    paddingRight: 6
   },
   filterSortContainer: {
     paddingRight: 8
@@ -107,7 +108,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   productBorderBottom: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 0.5,
     borderBottomColor: config.color.border,
     paddingVertical: 8
   },
