@@ -87,7 +87,7 @@ export async function login(
   let requestApi = await axios({
     baseURL,
     method: 'POST',
-    url: '/api/auth',
+    url: '/api/v1/auth',
     data: stringify({
       grantType,
       username,
@@ -131,7 +131,7 @@ export async function refreshToken(oldAccessToken: string, refreshToken: string)
   let requestApi = await axios({
     baseURL,
     method: 'POST',
-    url: '/api/auth',
+    url: '/api/v1/auth',
     data: stringify({
       grantType: 'refresh_token',
       oldAccessToken,
@@ -220,7 +220,7 @@ export async function searchProduct(
   if (sort) params['sort'] = sort;
 
   let tokens = await getUserToken();
-  return fetchData('/api/products/search', 'GET', params, tokens);
+  return fetchData('/api/v1/products/search', 'GET', params, tokens);
 }
 
 const MAX_CATEGORY_LEVEL = 4;
@@ -253,5 +253,5 @@ export async function categories(): Promise<Category[]> {
 export async function fetchProduct(sku: string) {
   let tokens = await getUserToken();
   const params = {};
-  return await fetchData(`/api/products/${sku}`, 'GET', params, tokens);
+  return await fetchData(`/api/v1/products/${sku}`, 'GET', params, tokens);
 }
