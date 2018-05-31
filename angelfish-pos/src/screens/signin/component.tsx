@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   Alert,
   AsyncStorage,
-  Image
+  Image,
 } from 'react-native';
 import styles from './styles';
 
@@ -16,7 +16,7 @@ const BG_IMAGE = require('../../../assets/images/ilLoginGetAccess.png');
 
 export class SigninComponent extends Component<any, any> {
   static navigationOptions = {
-    header: null
+    header: null,
   };
   constructor(props: any) {
     super(props);
@@ -24,11 +24,17 @@ export class SigninComponent extends Component<any, any> {
       email: '',
       password: '',
       securePassword: true,
-      buttonLoginDisabled: true
+      buttonLoginDisabled: true,
     };
   }
   toggleShowPassword(value) {
-    this.setState({ securePassword: !value });
+    this.setState({ password: this.state.password + ' ' });
+    setTimeout(() => {
+      this.setState({
+        password: this.state.password.substring(0, this.state.password.length - 1),
+      });
+      this.setState({ securePassword: !value });
+    }, 100);
   }
   render() {
     const iconShowHidePassword: string = this.state.securePassword
