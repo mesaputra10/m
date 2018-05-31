@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { Constants } from 'expo';
 import { stringify } from 'query-string';
 import { filter } from 'minimatch';
-import { Category } from '../bmd';
+import { Category, Offer, Variant } from '../bmd';
 
 const keyAccessToken = '@KeyAccessToken';
 const keyRefreshToken = '@KeyRefreshToken';
@@ -28,13 +28,13 @@ if (Constants.manifest.extra.loggingRedux) {
       console.log(
         '%c ' + ' - ' + getUrl(config) + ':',
         'color: #0086b3; font-weight: bold',
-        config
+        config,
       );
       return config;
     },
     error => {
       return Promise.reject(error);
-    }
+    },
   );
 
   // Intercept all responses
@@ -43,7 +43,7 @@ if (Constants.manifest.extra.loggingRedux) {
       console.log(
         '%c ' + response.status + ' - ' + getUrl(response.config) + ':',
         'color: #008000; font-weight: bold',
-        response
+        response,
       );
       return response;
     },
@@ -52,10 +52,10 @@ if (Constants.manifest.extra.loggingRedux) {
       console.log(
         '%c ' + error.response.status + ' - ' + getUrl(error.response.config) + ':',
         'color: #a71d5d; font-weight: bold',
-        error.response
+        error.response,
       );
       return Promise.reject(error);
-    }
+    },
   );
 }
 
@@ -69,7 +69,7 @@ export enum GrantType {
   PASSWORD = 'password',
   AZURE = 'azure',
   FACEBOOK = 'facebook',
-  GOOGLE = 'google'
+  GOOGLE = 'google',
 }
 
 export const fetchDataLogin = async (username: string, password: string) => {
@@ -82,7 +82,7 @@ export async function login(
   username: string,
   password: string,
   deviceId: string,
-  grantType = GrantType.PASSWORD
+  grantType = GrantType.PASSWORD,
 ) {
   let requestApi = await axios({
     baseURL,
@@ -92,12 +92,12 @@ export async function login(
       grantType,
       username,
       password,
-      deviceId
+      deviceId,
     }),
     headers: {
       Authorization: keyAuthorization,
-      'Content-Type': headerContentType
-    }
+      'Content-Type': headerContentType,
+    },
   });
   if (requestApi.status === 200) return requestApi.data;
 }
@@ -105,7 +105,7 @@ export async function login(
 const setUserToken = async (data: Tokens) => {
   await AsyncStorage.multiSet([
     [keyAccessToken, data.accessToken],
-    [keyRefreshToken, data.refreshToken]
+    [keyRefreshToken, data.refreshToken],
   ]);
 };
 
@@ -135,12 +135,12 @@ export async function refreshToken(oldAccessToken: string, refreshToken: string)
     data: stringify({
       grantType: 'refresh_token',
       oldAccessToken,
-      refreshToken
+      refreshToken,
     }),
     headers: {
       Authorization: keyAuthorization,
-      'Content-Type': headerContentType
-    }
+      'Content-Type': headerContentType,
+    },
   });
   if (requestApi.status === 200) return requestApi.data;
 }
@@ -156,7 +156,7 @@ export async function fetchData(
   method: string,
   inputParams = {},
   token: Tokens,
-  retry = 0
+  retry = 0,
 ) {
   try {
     let requestApi = await axios({
@@ -165,9 +165,9 @@ export async function fetchData(
       url,
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${token.accessToken}`
+        Authorization: `Bearer ${token.accessToken}`,
       },
-      params: inputParams
+      params: inputParams,
     });
     if (requestApi.status === 200) {
       return requestApi.data;
@@ -203,13 +203,13 @@ export async function searchProduct(
   pageNumber: number = 1,
   filterParams: FilterParams = {},
   sort?: '' | 'price' | '-price' | 'name' | '-name',
-  pageSize = 21
+  pageSize = 21,
 ) {
   let params = {
     include: 'facets',
     'filter[query]': keyword,
     'page[size]': pageSize,
-    'page[number]': pageNumber
+    'page[number]': pageNumber,
   };
   if (filterParams.categoryId) params['filter[categoryId]'] = filterParams.categoryId;
   if (filterParams.brandId instanceof Array)
@@ -254,4 +254,44 @@ export async function fetchProduct(sku: string) {
   let tokens = await getUserToken();
   const params = {};
   return await fetchData(`/api/v1/products/${sku}`, 'GET', params, tokens);
+}
+
+async function fetchPlankton({
+  url = '/',
+  params = undefined,
+  method = 'GET',
+}: {
+  url: string;
+  params?: any;
+  method?: 'GET' | 'POST';
+}) {
+  return axios({
+    baseURL: 'http://plankton-api-staging.ap-southeast-1.elasticbeanstalk.com',
+    method: 'GET',
+    url,
+    headers: {
+      Accept: 'application/vnd.plankton_api.v3+json',
+      'x-api-key': '74bfb4277e931989784fe54f04ea3951a8631a60',
+    },
+    params,
+  });
+}
+
+export async function fetchProductOffer(offerId: string) {
+  let resp = await fetchPlankton({
+    url: '/master/offers/' + offerId,
+  });
+  let offer = Offer.fromPlain(resp.data.data.attributes);
+  offer.id = resp.data.data.id;
+  return offer;
+}
+
+export async function fetchProductVariant(variantId: string) {
+  let resp = await fetchPlankton({
+    url: '/master/variants/' + variantId,
+  });
+  let variant = Variant.fromPlain(resp.data.data.attributes);
+  variant.id = resp.data.data.id;
+  variant.stock = variant.stock.filter(x => x.available > 0);
+  return variant;
 }

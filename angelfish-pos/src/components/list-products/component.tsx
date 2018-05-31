@@ -8,7 +8,7 @@ import {
   ScrollView,
   Modal,
   Alert,
-  AsyncStorage
+  AsyncStorage,
 } from 'react-native';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
@@ -55,7 +55,7 @@ export class ListProductsComponent extends Component<
       products: props.products,
       showFilterSort: false,
       sortBy: '',
-      selectedSortBy: 'Paling Sesuai'
+      selectedSortBy: 'Paling Sesuai',
     };
   }
 
@@ -71,9 +71,9 @@ export class ListProductsComponent extends Component<
     setTimeout(
       () =>
         this.setState({
-          loading: false
+          loading: false,
         }),
-      500
+      500,
     );
   }
   addProductToProductSearchHistories = async product => {
@@ -110,7 +110,9 @@ export class ListProductsComponent extends Component<
           onPress={() => {
             const passProps = {
               sku: product.variantSkuNo,
-              productImage: product.variantImageThumbnail
+              productImage: product.variantImageThumbnail,
+              offerId: product.offerId,
+              variantId: product.variantId,
             };
             this.addProductToProductSearchHistories(passProps);
             this.props.navigation.navigate('PageProductDetail', passProps);
@@ -167,11 +169,11 @@ export class ListProductsComponent extends Component<
       this.setState({
         fetching: false,
         products: this.state.products.concat(nextproducts),
-        page: page + 1
+        page: page + 1,
       });
     } else {
       this.setState({
-        fetching: false
+        fetching: false,
       });
     }
   };
@@ -203,11 +205,11 @@ export class ListProductsComponent extends Component<
       this.setState({
         fetching: false,
         products: nextproducts,
-        page: 1
+        page: 1,
       });
     } else {
       this.setState({
-        fetching: false
+        fetching: false,
       });
     }
   };
@@ -339,7 +341,7 @@ export class ListProductsComponent extends Component<
             data={products}
             itemStyle={{
               width: 168,
-              height: 350
+              height: 350,
             }}
             onClick={(product, i) => {
               const passProps = { title: product.productName, sku: product.variantSkuNo };

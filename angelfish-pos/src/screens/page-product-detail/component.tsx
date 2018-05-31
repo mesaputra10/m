@@ -20,6 +20,7 @@ import { Rating } from '../../components/rating';
 import { fetchDataProduct } from './action';
 import { Price } from './libraries/price';
 import { Dimensions } from 'react-native';
+import { fetchProductOffer, fetchProductVariant } from '../../helpers/fetch-data';
 
 interface PageProductDetailComponentProps extends NavigationScreenProps<any, any> {
   navigation: any;
@@ -37,6 +38,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         images: null,
         loading: true,
       },
+      variant: null,
     };
   }
   componentDidMount() {
@@ -56,6 +58,9 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         }
       })
       .catch(err => console.log('Error', err));
+    fetchProductVariant(params.variantId)
+      .then(variant => this.setState({ variant }))
+      .catch(err => console.log(err));
   }
   backCategory = () => {
     this.props.navigation.pop();
@@ -206,7 +211,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
                 <Image source={require('./assets/warehouse.png')} style={styles.iconSection} />
                 <Text style={styles.textSectionTitle}>Stok</Text>
               </View>
-              <StokList />
+              <StokList stocks={this.state.variant.stock} />
               <View style={styles.buttonStokHabis}>
                 <Text style={styles.textButtonStokHabis}>STOK HABIS</Text>
               </View>

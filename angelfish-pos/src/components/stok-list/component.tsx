@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { styles } from './styles';
 
-export class StokListComponent extends Component {
+interface Stock {
+  available: number;
+  locationCode: string;
+}
+
+export class StokListComponent extends Component<{ stocks: Stock[] }, any> {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOutletId: 0
+      selectedOutletId: 0,
     };
   }
   selectOutlet = id => this.setState({ selectedOutletId: id });
