@@ -292,6 +292,7 @@ export async function fetchProductVariant(variantId: string) {
   });
   let variant = Variant.fromPlain(resp.data.data.attributes);
   variant.id = resp.data.data.id;
-  variant.stock = variant.stock.filter(x => x.available > 0);
+  // skrg hanya ambil stok dari HO dan store Gunung Sahari
+  variant.stock = variant.stock.filter(x => ['HO', 'GSR'].indexOf(x.locationCode) > -1);
   return variant;
 }

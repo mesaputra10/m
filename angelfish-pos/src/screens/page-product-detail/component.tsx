@@ -59,7 +59,10 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
       })
       .catch(err => console.log('Error', err));
     fetchProductVariant(params.variantId)
-      .then(variant => this.setState({ variant }))
+      .then(variant => {
+        console.log(variant);
+        this.setState({ variant });
+      })
       .catch(err => console.log(err));
   }
   backCategory = () => {
