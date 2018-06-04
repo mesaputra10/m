@@ -3,6 +3,7 @@ import { View, Text, TouchableWithoutFeedback } from 'react-native';
 import { styles } from './styles';
 import config from '../../config';
 import { ContentWrap } from './libraries/content-wrap';
+import { ContentSpecification } from './libraries/content-specification';
 
 export class ProductDescriptionComponent extends Component<any, any> {
   constructor(props) {
@@ -11,13 +12,13 @@ export class ProductDescriptionComponent extends Component<any, any> {
       leftActive: true,
       rightActive: false,
       selengkapnyaSpec: false,
-      selengkapnyaInfo: false
+      selengkapnyaInfo: false,
     };
   }
   toggleTab = () => {
     this.setState({
       leftActive: !this.state.leftActive,
-      rightActive: !this.state.rightActive
+      rightActive: !this.state.rightActive,
     });
   };
   selengkapnyaSpec = () => {
@@ -35,8 +36,8 @@ export class ProductDescriptionComponent extends Component<any, any> {
       styles.tabButtonContainer,
       {
         borderTopLeftRadius: 4,
-        borderBottomLeftRadius: 4
-      }
+        borderBottomLeftRadius: 4,
+      },
     ];
     let leftText = styles.tabTitleText;
     if (this.state.leftActive) {
@@ -44,8 +45,8 @@ export class ProductDescriptionComponent extends Component<any, any> {
         styles.tabButtonContainerActive,
         {
           borderTopLeftRadius: 0,
-          borderBottomLeftRadius: 0
-        }
+          borderBottomLeftRadius: 0,
+        },
       ];
       leftText = styles.tabTitleTextActive;
       contentInfo = productDescription;
@@ -55,8 +56,8 @@ export class ProductDescriptionComponent extends Component<any, any> {
       styles.tabButtonContainer,
       {
         borderTopRightRadius: 4,
-        borderBottomRightRadius: 4
-      }
+        borderBottomRightRadius: 4,
+      },
     ];
     let rightText = styles.tabTitleText;
     if (this.state.rightActive) {
@@ -64,12 +65,16 @@ export class ProductDescriptionComponent extends Component<any, any> {
         styles.tabButtonContainerActive,
         {
           borderTopRightRadius: 0,
-          borderBottomRightRadius: 0
-        }
+          borderBottomRightRadius: 0,
+        },
       ];
       rightText = styles.tabTitleTextActive;
       contentSpec = productSpecification;
-      summarySpec = contentSpec.substring(0, lengthContent);
+      if (Array.isArray(contentSpec)) {
+        if (contentSpec[0] !== undefined) {
+          summarySpec = contentSpec[0];
+        }
+      }
     }
 
     return (
@@ -97,7 +102,7 @@ export class ProductDescriptionComponent extends Component<any, any> {
           />
         )}
         {this.state.rightActive && (
-          <ContentWrap
+          <ContentSpecification
             summary={summarySpec}
             content={contentSpec}
             selengkapnya={selengkapnyaSpec}

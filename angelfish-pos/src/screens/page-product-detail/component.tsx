@@ -20,7 +20,11 @@ import { Rating } from '../../components/rating';
 import { fetchDataProduct } from './action';
 import { Price } from './libraries/price';
 import { Dimensions } from 'react-native';
-import { fetchProductOffer, fetchProductVariant } from '../../helpers/fetch-data';
+import {
+  fetchProductOffer,
+  fetchProductVariant,
+  fetchProductSpecification,
+} from '../../helpers/fetch-data';
 
 interface PageProductDetailComponentProps extends NavigationScreenProps<any, any> {
   navigation: any;
@@ -39,6 +43,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         loading: true,
       },
       variant: null,
+      specification: [],
     };
   }
   componentDidMount() {
@@ -64,6 +69,9 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         this.setState({ variant });
       })
       .catch(err => console.log(err));
+    fetchProductSpecification(sku)
+      .then(specification => this.setState({ specification }))
+      .catch(err => console.log('error product specifications: ', err));
   }
   backCategory = () => {
     this.props.navigation.pop();
@@ -118,7 +126,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
     return null;
   };
   render() {
-    const { product, loading } = this.state;
+    const { product, loading, specification } = this.state;
     const productImage = this.productImage();
 
     if (loading) {
@@ -233,8 +241,8 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
             </View>
             <View style={styles.rowSectionContainerNoBorder}>
               <ProductDescription
-                productDescription="Smart TV SAMSUNG UHD MU6300 televisi 4K UHD Samsung yang sudah mendapat sertifikasi 4K RGB (4K RGB Certified). Dengan adanya sertifikasi RGB ini, kualitas warna yang dapat ditampilkan TV Samsung MU6300 akan terlihat lebih hidup, cerah, dan seperti aslinya, dikarenakan ragam warna yang lebih banyak."
-                productSpecification="Produk Spesifikasi Yang Mumpuni"
+                productDescription={product.description}
+                productSpecification={specification}
               />
             </View>
           </View>
