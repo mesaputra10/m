@@ -60,6 +60,14 @@ export class Offer {
   }
 }
 
+interface Stock {
+  available: number;
+  locationCode: string;
+  name: string;
+  onHand: number;
+  onReserve: number;
+}
+
 export class Variant {
   id: string;
   fullname: string;
@@ -67,9 +75,7 @@ export class Variant {
   status: string;
   isBhinneka: boolean;
   vendor: { id: string; name: string; primary: boolean };
-  stock: [
-    { available: number; locationCode: string; name: string; onHand: number; onReserve: number }
-  ];
+  stock: Stock[];
 
   public static fromPlain(data: any) {
     return plainToClass(Variant, data);

@@ -4,6 +4,7 @@ import { Constants } from 'expo';
 import { stringify } from 'query-string';
 import { filter } from 'minimatch';
 import { Category, Offer, Variant } from '../bmd';
+import { plainToClass } from 'class-transformer';
 
 const keyAccessToken = '@KeyAccessToken';
 const keyRefreshToken = '@KeyRefreshToken';
@@ -281,7 +282,7 @@ export async function fetchProductOffer(offerId: string) {
   let resp = await fetchPlankton({
     url: '/master/offers/' + offerId,
   });
-  let offer = Offer.fromPlain(resp.data.data.attributes);
+  let offer = plainToClass<Offer, object>(Offer, resp.data.data.attributes);
   offer.id = resp.data.data.id;
   return offer;
 }
@@ -290,7 +291,7 @@ export async function fetchProductVariant(variantId: string) {
   let resp = await fetchPlankton({
     url: '/master/variants/' + variantId,
   });
-  let variant = Variant.fromPlain(resp.data.data.attributes);
+  let variant = plainToClass<Variant, object>(Variant, resp.data.data.attributes);
   variant.id = resp.data.data.id;
   // skrg hanya ambil stok dari HO dan store Gunung Sahari
   variant.stock = variant.stock.filter(x => ['HO', 'GSR'].indexOf(x.locationCode) > -1);
