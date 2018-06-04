@@ -121,6 +121,10 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
     const { product, loading } = this.state;
     const productImage = this.productImage();
 
+    if (loading) {
+      return <ActivityIndicator color={config.color.blue} />;
+    }
+
     const headerLeftColumn = (
       <View style={styles.headerStyleCustom}>
         <View style={styles.headerCategoryContainer}>
@@ -156,7 +160,15 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
                 <Rating />
               </View>
             </View>
-            <Price normalPrice={20000000} specialPrice={18000000} discount={20} />
+            {console.log('price: ', product.price)}
+            {product.price && (
+              <Price
+                normalPrice={product.price.bhinneka.normalPrice}
+                specialPrice={product.price.bhinneka.specialPrice}
+                discount={20}
+                offerStatus={product.offerStatus}
+              />
+            )}
             <View style={styles.rowSectionContainer}>
               <View style={styles.rowTitleSectionContainer}>
                 <Image source={require('./assets/bank.png')} style={{ marginRight: 8 }} />
