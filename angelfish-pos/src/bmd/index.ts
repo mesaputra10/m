@@ -6,19 +6,49 @@
  */
 import { plainToClass } from 'class-transformer';
 
+interface Spec {
+  id: string;
+  name: string;
+  slug: string;
+  value: string;
+}
+
 export class Product {
   productId: string;
   productName: string;
-  offerId: string;
-  offerNormalPrice: number;
+  productDescription: string[];
+  productSpecs: Spec[];
+  productStatus: string;
+  productModel: string;
+  productIsComplement: boolean;
+  productCategory: { id: string; name: string; slug: string };
+  productBrand: {
+    id: string;
+    name: string;
+    slug: string;
+    imageSmall: string;
+    imageMedium: string;
+    imageLarge: string;
+  };
   variantId: string;
+  variantName: string;
+  variantFullname: string;
+  variantStatus: string;
   variantPrice: number;
   variantSkuNo: string;
+  variantImageMedium: string;
+  variantImageSmall: string;
   variantImageThumbnail: string;
+  variantIsBhinneka: boolean;
+  offerId: string;
+  offerInfo: string;
+  offerNormalPrice: number;
   offerSpecialPrice: number;
   offerSpecialPriceIsActive: boolean;
   offerDiscountPercentage: number;
   offerStatus: string;
+  offerSpecialPriceStartDate: string;
+  offerSpecialPriceEndDate: string;
 
   get isOutofStock(): boolean {
     return this.variantPrice === 0 && this.offerStatus !== 'active';
