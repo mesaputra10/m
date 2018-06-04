@@ -151,9 +151,20 @@ export class ListProductsComponent extends Component<
                 <Text style={styles.searchResultEmptyStockText}>Stok Habis</Text>
               )}
             </View>
-            <View style={styles.buttonBeliContainer}>
-              <Text style={styles.buttonBeliText}>BELI</Text>
-            </View>
+            {product.variantStatus === 'published' &&
+              product.offerStatus === 'active' &&
+              product.variantPrice > 0 && (
+                <View style={styles.buttonBeliContainer}>
+                  <Text style={styles.buttonBeliText}>BELI</Text>
+                </View>
+              )}
+            {(product.variantStatus !== 'published' ||
+              product.offerStatus !== 'active' ||
+              product.variantPrice === 0) && (
+              <View style={styles.buttonBeliContainerDisabled}>
+                <Text style={styles.buttonBeliTextDisabled}>BELI</Text>
+              </View>
+            )}
           </View>
         </TouchableWithoutFeedback>
         <View style={styles.productBorderBottom} />
