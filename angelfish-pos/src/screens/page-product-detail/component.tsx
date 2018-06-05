@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Alert,
   TouchableHighlight,
+  Dimensions,
 } from 'react-native';
 import ImageSlider from 'react-native-image-slider';
 import { NavigationScreenProps } from 'react-navigation';
@@ -19,12 +20,12 @@ import config from '../../config';
 import { Rating } from '../../components/rating';
 import { fetchDataProduct } from './action';
 import { Price } from './libraries/price';
-import { Dimensions } from 'react-native';
 import {
   fetchProductOffer,
   fetchProductVariant,
   fetchProductSpecification,
 } from '../../helpers/fetch-data';
+import numberFormat from '../../helpers/number-format';
 
 interface PageProductDetailComponentProps extends NavigationScreenProps<any, any> {
   navigation: any;
@@ -44,6 +45,10 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
       },
       variant: null,
       specification: [],
+      showListBank: false,
+      bankName: '',
+      showListMonth: false,
+      selectedMonth: 24,
     };
   }
   componentDidMount() {
@@ -65,7 +70,6 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
       .catch(err => console.log('Error', err));
     fetchProductVariant(params.variantId)
       .then(variant => {
-        console.log(variant);
         this.setState({ variant });
       })
       .catch(err => console.log(err));
@@ -125,6 +129,111 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
     }
     return null;
   };
+  toggleListBank = (value: boolean, bankName: string = '') => {
+    this.setState({ showListBank: value, bankName, showListMonth: false });
+  };
+  listDataBank = () => {
+    return (
+      <View style={styles.filterDropdownContainer}>
+        <View style={styles.centilanContainer}>
+          <Image source={require('./assets/triangle.png')} />
+        </View>
+        <View style={styles.optionsContainer}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              this.toggleListBank(false, 'BCA');
+            }}
+          >
+            <View style={styles.sortContainer}>
+              <View style={styles.sectionSortContainer}>
+                <Text style={styles.textSort}>BCA</Text>
+              </View>
+              {this.state.bankName == 'BCA' && this.checkSelectedSortBy()}
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => this.toggleListBank(false, 'BNI')}>
+            <View style={styles.sortContainer}>
+              <View style={styles.sectionSortContainer}>
+                <Text style={styles.textSort}>BNI</Text>
+              </View>
+              {this.state.bankName == 'BNI' && this.checkSelectedSortBy()}
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => this.toggleListBank(false, 'Bank Mandiri')}>
+            <View style={styles.sortContainer}>
+              <View style={styles.sectionSortContainer}>
+                <Text style={styles.textSort}>Bank Mandiri</Text>
+              </View>
+              {this.state.bankName == 'Bank Mandiri' && this.checkSelectedSortBy()}
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => this.toggleListBank(false, 'ANZ')}>
+            <View style={[styles.sortContainer, styles.noBorderBottom]}>
+              <View style={styles.sectionSortContainer}>
+                <Text style={styles.textSort}>ANZ</Text>
+              </View>
+              {this.state.bankName == 'ANZ' && this.checkSelectedSortBy()}
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+    );
+  };
+  toggleListMonth = (value: boolean, selectedMonth: number = 24) => {
+    this.setState({ showListMonth: value, selectedMonth, showListBank: false });
+  };
+  listDataMonth = () => {
+    return (
+      <View style={styles.filterDropdownMonthContainer}>
+        <View style={styles.centilanContainer}>
+          <Image source={require('./assets/triangle.png')} />
+        </View>
+        <View style={styles.optionsContainer}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              this.toggleListMonth(false, 3);
+            }}
+          >
+            <View style={styles.sortContainer}>
+              <View style={styles.sectionSortContainer}>
+                <Text style={styles.textSort}>3 Bulan</Text>
+              </View>
+              {this.state.selectedMonth === 3 && this.checkSelectedSortBy()}
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => this.toggleListMonth(false, 6)}>
+            <View style={styles.sortContainer}>
+              <View style={styles.sectionSortContainer}>
+                <Text style={styles.textSort}>6 Bulan</Text>
+              </View>
+              {this.state.selectedMonth === 6 && this.checkSelectedSortBy()}
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => this.toggleListMonth(false, 12)}>
+            <View style={styles.sortContainer}>
+              <View style={styles.sectionSortContainer}>
+                <Text style={styles.textSort}>12 Bulan</Text>
+              </View>
+              {this.state.selectedMonth === 12 && this.checkSelectedSortBy()}
+            </View>
+          </TouchableWithoutFeedback>
+          <TouchableWithoutFeedback onPress={() => this.toggleListMonth(false, 24)}>
+            <View style={[styles.sortContainer, styles.noBorderBottom]}>
+              <View style={styles.sectionSortContainer}>
+                <Text style={styles.textSort}>24 Bulan</Text>
+              </View>
+              {this.state.selectedMonth === 24 && this.checkSelectedSortBy()}
+            </View>
+          </TouchableWithoutFeedback>
+        </View>
+      </View>
+    );
+  };
+  checkSelectedSortBy = () => (
+    <View style={styles.checkContainer}>
+      <Image source={require('./assets/check.png')} width={24} height={24} style={styles.check} />
+    </View>
+  );
   render() {
     const { product, loading, specification } = this.state;
     const productImage = this.productImage();
@@ -152,12 +261,21 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         </View>
       </View>
     );
+    let totalCicilan = 0;
+    if (product.price) {
+      const normalPrice = product.price.bhinneka.normalPrice;
+      const specialPrice = product.price.bhinneka.specialPrice;
+      const finalPrice = specialPrice.isActive ? specialPrice.specialPrice : normalPrice;
+      totalCicilan = numberFormat(Math.floor(finalPrice / this.state.selectedMonth));
+    }
     const leftColumn = (
       <View style={styles.container}>
         {headerLeftColumn}
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.content}>
             <View style={styles.productImageContainer}>{productImage}</View>
+            {this.state.showListBank && this.listDataBank()}
+            {this.state.showListMonth && this.listDataMonth()}
             <Text style={styles.productTitle}>{product.fullName}</Text>
             <View style={styles.productCategorySku}>
               <Text style={styles.categoryText}>
@@ -165,10 +283,9 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
               </Text>
               <View style={styles.skuRating}>
                 <Text style={styles.skuText}>{product.sku}</Text>
-                <Rating />
+                <Rating totalRating={product.rating} totalReview={product.totalReview} />
               </View>
             </View>
-            {console.log('price: ', product.price)}
             {product.price && (
               <Price
                 normalPrice={product.price.bhinneka.normalPrice}
@@ -181,32 +298,50 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
               <View style={styles.rowTitleSectionContainer}>
                 <Image source={require('./assets/bank.png')} style={{ marginRight: 8 }} />
                 <Text style={styles.cicilanText}>
-                  Simulasi cicilan: <Text style={styles.bold}>Rp 950.000/bulan</Text>
+                  Simulasi cicilan: <Text style={styles.bold}>Rp {totalCicilan}/bulan</Text>
                 </Text>
               </View>
               <View style={[styles.rowContentContainer, { flexDirection: 'row' }]}>
-                <View style={styles.dropdownContainer}>
-                  <View style={styles.dropdownTextContainer}>
-                    <Text style={styles.dropdownText}>ANZ</Text>
+                <TouchableWithoutFeedback
+                  onPress={() => this.toggleListBank(!this.state.showListBank, this.state.bankName)}
+                >
+                  <View style={styles.dropdownContainer}>
+                    <View style={styles.dropdownTextContainer}>
+                      <Text style={styles.dropdownText}>
+                        {this.state.bankName === '' ? 'Pilih' : this.state.bankName}
+                      </Text>
+                    </View>
+                    <View style={styles.dropdownIconContainer}>
+                      <Image
+                        source={require('./assets/chevronDown.png')}
+                        style={styles.dropdownIcon}
+                      />
+                    </View>
                   </View>
-                  <View style={styles.dropdownIconContainer}>
-                    <Image
-                      source={require('./assets/chevronDown.png')}
-                      style={styles.dropdownIcon}
-                    />
+                </TouchableWithoutFeedback>
+                <TouchableWithoutFeedback
+                  disabled={this.state.bankName === ''}
+                  onPress={() =>
+                    this.toggleListMonth(!this.state.showListMonth, this.state.selectedMonth)
+                  }
+                >
+                  <View
+                    style={[
+                      styles.dropdownTime,
+                      this.state.bankName === '' ? { backgroundColor: config.color.border } : null,
+                    ]}
+                  >
+                    <View style={styles.dropdownTextContainer}>
+                      <Text style={styles.dropdownText}>{this.state.selectedMonth}</Text>
+                    </View>
+                    <View style={styles.dropdownIconContainer}>
+                      <Image
+                        source={require('./assets/chevronDown.png')}
+                        style={[styles.dropdownIcon, { marginRight: 32 }]}
+                      />
+                    </View>
                   </View>
-                </View>
-                <View style={styles.dropdownTime}>
-                  <View style={styles.dropdownTextContainer}>
-                    <Text style={styles.dropdownText}>24</Text>
-                  </View>
-                  <View style={styles.dropdownIconContainer}>
-                    <Image
-                      source={require('./assets/chevronDown.png')}
-                      style={[styles.dropdownIcon, { marginRight: 32 }]}
-                    />
-                  </View>
-                </View>
+                </TouchableWithoutFeedback>
               </View>
             </View>
             <View style={styles.rowSectionContainer}>
