@@ -1,1 +1,1 @@
-export { SigninContainer as Signin } from './container';
+export { SigninComponent as Signin } from './component';
