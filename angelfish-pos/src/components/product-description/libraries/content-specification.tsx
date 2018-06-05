@@ -5,23 +5,39 @@ import { styles } from '../styles';
 import config from '../../../config';
 
 interface componentProps {
-  summary: string;
-  content: string;
+  summary: any;
+  content: any;
   selengkapnya: boolean;
   setSelengkapnya: any;
 }
 
-export class ContentWrap extends Component<componentProps, any> {
+export class ContentSpecification extends Component<componentProps, any> {
   constructor(props) {
     super(props);
   }
+  renderContent = (isSummary: boolean = false) => {
+    const { content } = this.props;
+    return (
+      <View>
+        {content.map((spec, specIndex) => {
+          if (isSummary && specIndex > 4) return null;
+          return (
+            <View style={{ flex: 1, flexDirection: 'row' }} key={spec.ID + '-' + specIndex}>
+              <Text style={styles.contentStyle}>{spec.Name}: </Text>
+              <Text style={styles.contentStyle}>{spec.Value.value}</Text>
+            </View>
+          );
+        })}
+      </View>
+    );
+  };
   render() {
     const { summary, content, selengkapnya, setSelengkapnya } = this.props;
     return (
       <View>
         <View style={styles.contentContainer}>
-          {!selengkapnya && <Text style={styles.contentStyle}>{summary}...</Text>}
-          {selengkapnya && <Text style={styles.contentStyle}>{content}</Text>}
+          {!selengkapnya && this.renderContent(true)}
+          {selengkapnya && this.renderContent()}
         </View>
         {!selengkapnya && (
           <TouchableWithoutFeedback onPress={() => setSelengkapnya()}>
@@ -34,14 +50,14 @@ export class ContentWrap extends Component<componentProps, any> {
     );
   }
 }
-ContentWrap.propTypes = {
-  summary: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
+ContentSpecification.propTypes = {
+  summary: PropTypes.any.isRequired,
+  content: PropTypes.any.isRequired,
   selengkapnya: PropTypes.bool,
   setSelengkapnya: PropTypes.func,
 };
-ContentWrap.defaultProps = {
+ContentSpecification.defaultProps = {
   selengkapnya: false,
   setSelengkapnya: () => {},
 };
-export default ContentWrap;
+export default ContentSpecification;

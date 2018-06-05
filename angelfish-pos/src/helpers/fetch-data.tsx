@@ -297,3 +297,9 @@ export async function fetchProductVariant(variantId: string) {
   variant.stock = variant.stock.filter(x => ['HO', 'GSR'].indexOf(x.locationCode) > -1);
   return variant;
 }
+
+export async function fetchProductSpecification(sku: string) {
+  let tokens = await getUserToken();
+  const params = {};
+  return await fetchData(`/api/v1/products/specification/${sku}`, 'GET', params, tokens);
+}
