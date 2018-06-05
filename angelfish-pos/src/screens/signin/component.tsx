@@ -11,6 +11,7 @@ import {
   Image,
 } from 'react-native';
 import styles from './styles';
+import { fetchDataLogin } from '../../helpers/fetch-data';
 
 const BG_IMAGE = require('../../../assets/images/ilLoginGetAccess.png');
 
@@ -125,14 +126,17 @@ export class SigninComponent extends Component<any, any> {
     if (!this.state.buttonLoginDisabled) {
       const email: string = this.state.email;
       const password: string = this.state.password;
-      await this.props.login(email, password);
-      AsyncStorage.getItem('@KeyAccessToken').then(accessToken => {
+      try {
+        await fetchDataLogin(email, password);
+        let accessToken = AsyncStorage.getItem('@KeyAccessToken');
         if (accessToken !== null) {
           this.props.navigation.navigate('Home');
         } else {
           Alert.alert('Gagal', 'Email atau password yang Anda masukan salah', [{ text: 'Tutup' }]);
         }
-      });
+      } catch (err) {
+        Alert.alert('Gagal', 'Email atau password yang Anda masukan salah', [{ text: 'Tutup' }]);
+      }
     }
   };
 }
