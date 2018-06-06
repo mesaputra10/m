@@ -7,7 +7,7 @@ export const styles = StyleSheet.create({
     backgroundColor: config.color.white,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   tabHeaderContainer: {
     flexDirection: 'row',
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     borderRadius: 4,
     borderWidth: 1,
     borderColor: config.color.blue,
-    backgroundColor: config.color.blue
+    backgroundColor: config.color.blue,
   },
   tabButtonContainer: {
     flex: 5,
@@ -24,50 +24,56 @@ export const styles = StyleSheet.create({
     paddingVertical: 5,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   tabButtonContainerActive: {
     flex: 5,
     backgroundColor: config.color.blue,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   tabButtonRight: {
     borderTopRightRadius: 4,
     borderBottomRightRadius: 4,
-    backgroundColor: config.color.blue
+    backgroundColor: config.color.blue,
   },
   tabButtonLeft: {
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
-    backgroundColor: config.color.blue
+    backgroundColor: config.color.blue,
   },
   tabTitleText: {
-    color: config.color.blue
+    color: config.color.blue,
   },
   tabTitleTextActive: {
-    color: config.color.white
+    color: config.color.white,
   },
   contentContainer: {
     flex: 1,
-    marginTop: 16
+    marginTop: 16,
+  },
+  contentStyleName: {
+    fontSize: 14,
+    fontWeight: '600',
+    lineHeight: 24,
+    letterSpacing: -0.08,
   },
   contentStyle: {
     fontSize: 14,
     fontWeight: 'normal',
     lineHeight: 24,
-    letterSpacing: -0.08
+    letterSpacing: -0.08,
   },
   selengkapnyaContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 16
+    marginTop: 16,
   },
   selengkapnya: {
     fontSize: 16,
-    color: config.color.blue
-  }
+    color: config.color.blue,
+  },
 });
 export default styles;

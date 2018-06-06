@@ -22,9 +22,23 @@ export class ContentSpecification extends Component<componentProps, any> {
         {content.map((spec, specIndex) => {
           if (isSummary && specIndex > 4) return null;
           return (
-            <View style={{ flex: 1, flexDirection: 'row' }} key={spec.ID + '-' + specIndex}>
-              <Text style={styles.contentStyle}>{spec.Name}: </Text>
-              <Text style={styles.contentStyle}>{spec.Value.value}</Text>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: 'row',
+                paddingVertical: 8,
+                borderBottomColor: config.color.border,
+                borderBottomWidth: 1,
+                alignItems: 'center',
+              }}
+              key={spec.ID + '-' + specIndex}
+            >
+              <View style={{ width: 100 }}>
+                <Text style={styles.contentStyleName}>{spec.Name} </Text>
+              </View>
+              <View style={{ marginLeft: 16 }}>
+                <Text style={styles.contentStyle}>{spec.Value.value}</Text>
+              </View>
             </View>
           );
         })}
