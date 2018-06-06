@@ -90,12 +90,16 @@ export class Offer {
   }
 }
 
-interface Stock {
+export class Stock {
   available: number;
   locationCode: string;
   name: string;
   onHand: number;
   onReserve: number;
+
+  get isStore(): boolean {
+    return ['GSR'].indexOf(this.locationCode) > -1;
+  }
 }
 
 export class Variant {
@@ -110,6 +114,17 @@ export class Variant {
   public static fromPlain(data: any) {
     return plainToClass(Variant, data);
   }
+}
+
+export class Installment {
+  id: number;
+  method: string;
+  name: string;
+  image: string;
+  bankName: string;
+  bankCode: string;
+  currency: string;
+  term: { [month: string]: string };
 }
 
 export class Category {

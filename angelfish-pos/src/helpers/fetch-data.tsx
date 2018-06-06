@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { Constants } from 'expo';
 import { stringify } from 'query-string';
 import { filter } from 'minimatch';
-import { Category, Offer, Variant, Installment } from '../bmd';
+import { Category, Offer, Variant, Installment, Stock } from '../bmd';
 import { plainToClass } from 'class-transformer';
 
 const keyAccessToken = '@KeyAccessToken';
@@ -303,6 +303,7 @@ export async function fetchProductVariant(variantId: string) {
   });
   let variant = plainToClass<Variant, object>(Variant, resp.data.data.attributes);
   variant.id = resp.data.data.id;
+  variant.stock = plainToClass(Stock, variant.stock);
   // skrg hanya ambil stok dari HO dan store Gunung Sahari
   variant.stock = variant.stock.filter(x => ['HO', 'GSR'].indexOf(x.locationCode) > -1);
   return variant;
