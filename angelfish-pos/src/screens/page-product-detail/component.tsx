@@ -98,7 +98,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
                 <View key={item}>
                   <Image
                     source={{ uri: item }}
-                    resizeMode="cover"
+                    resizeMode="contain"
                     style={{ width: winWidth, height: 700 }}
                   />
                 </View>
@@ -124,7 +124,13 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
           />
         );
       } else {
-        return <Image source={{ uri: product.images[0].imagePath }} style={styles.productImage} />;
+        return (
+          <Image
+            source={{ uri: product.images[0].imagePath }}
+            resizeMode="contain"
+            style={styles.productImage}
+          />
+        );
       }
     }
     return null;
