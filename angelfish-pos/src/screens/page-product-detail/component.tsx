@@ -266,12 +266,15 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
       const normalPrice = product.price.bhinneka.normalPrice;
       const specialPrice = product.price.bhinneka.specialPrice;
       const finalPrice = specialPrice.isActive ? specialPrice.specialPrice : normalPrice;
-      totalCicilan = numberFormat(Math.floor(finalPrice / this.state.selectedMonth));
+      totalCicilan = numberFormat(Math.round(finalPrice / this.state.selectedMonth));
     }
     const leftColumn = (
       <View style={styles.container}>
         {headerLeftColumn}
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          scrollEnabled={!this.state.showListBank && !this.state.showListMonth}
+        >
           <View style={styles.content}>
             <View style={styles.productImageContainer}>{productImage}</View>
             {this.state.showListBank && this.listDataBank()}
@@ -290,7 +293,6 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
               <Price
                 normalPrice={product.price.bhinneka.normalPrice}
                 specialPrice={product.price.bhinneka.specialPrice}
-                discount={20}
                 offerStatus={product.offerStatus}
               />
             )}
@@ -298,7 +300,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
               <View style={styles.rowTitleSectionContainer}>
                 <Image source={require('./assets/bank.png')} style={{ marginRight: 8 }} />
                 <Text style={styles.cicilanText}>
-                  Simulasi cicilan: <Text style={styles.bold}>Rp {totalCicilan}/bulan</Text>
+                  Simulasi cicilan: <Text style={styles.bold}>Rp {totalCicilan} / bulan</Text>
                 </Text>
               </View>
               <View style={[styles.rowContentContainer, { flexDirection: 'row' }]}>
