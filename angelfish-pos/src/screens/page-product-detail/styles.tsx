@@ -265,6 +265,7 @@ export const styles = StyleSheet.create({
     shadowRadius: 20,
     shadowOpacity: 1,
     borderRadius: 20,
+    paddingVertical: 4,
   },
   sortContainer: {
     flex: 1,

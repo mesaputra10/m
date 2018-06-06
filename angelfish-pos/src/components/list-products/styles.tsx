@@ -6,39 +6,39 @@ const heightDevice = Dimensions.get('window').height;
 export const styles = StyleSheet.create({
   scrollContainer: {
     paddingHorizontal: 16,
-    height: heightDevice - 56
+    height: heightDevice - 56,
   },
   container: {
     paddingVertical: 10,
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   searchResultText: {
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   searchResultPriceDiscountText: {
     fontSize: 16,
     textDecorationLine: 'line-through',
     paddingRight: 5,
-    color: config.color.textGrey
+    color: config.color.textGrey,
   },
   searchResultPriceContainer: {
     flexDirection: 'row',
-    paddingTop: 15
+    paddingTop: 15,
   },
   searchResultDiscountText: {
     fontSize: 16,
-    color: 'red'
+    color: 'red',
   },
   searchResultEmptyStockText: {
     fontSize: 16,
     color: 'red',
-    paddingTop: 16
+    paddingTop: 16,
   },
   productItemContainer: {
     backgroundColor: config.color.white,
-    flex: 1
+    flex: 1,
   },
   productItemBox: {
     backgroundColor: config.color.white,
@@ -46,78 +46,78 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     paddingHorizontal: 16,
     paddingTop: 8,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   productItemImage: {
     width: '100%',
-    height: 170
+    height: 170,
   },
   productItemPriceContainer: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    paddingVertical: 8
+    paddingVertical: 8,
   },
   productItemName: {
     fontSize: 16,
     textAlign: 'left',
     color: config.color.text,
-    paddingBottom: 8
+    paddingBottom: 8,
   },
   buttonBeliContainer: {
     height: 40,
     borderRadius: 3,
     backgroundColor: config.color.yellow,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   buttonBeliText: {
     color: config.color.text,
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   loadStructure: {
     width: '100%',
-    height: '80%'
+    height: '80%',
   },
   totalProductsText: {
     fontSize: 14,
-    color: 'rgba(0, 0, 0, 0.38)'
+    color: 'rgba(0, 0, 0, 0.38)',
   },
   filterContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   filterIcon: {
-    marginRight: 8
+    marginRight: 8,
   },
   filterText: {
     fontSize: 14,
-    color: config.color.text
+    color: config.color.text,
   },
   filterTextSort: {
     fontSize: 14,
     color: config.color.text,
-    paddingRight: 6
+    paddingRight: 6,
   },
   filterSortContainer: {
-    paddingRight: 8
+    paddingRight: 8,
   },
   filterContainerSection: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   productBorderBottom: {
     borderBottomWidth: 0.5,
     borderBottomColor: config.color.border,
-    paddingVertical: 8
+    paddingVertical: 8,
   },
   filterDropdownContainer: {
     position: 'absolute',
     zIndex: 2,
     marginTop: 30,
     marginLeft: 258 * 1.65,
-    backgroundColor: 'rgb(255, 255, 255)'
+    backgroundColor: 'rgb(255, 255, 255)',
   },
   centilanContainer: {
     flex: 1,
@@ -126,7 +126,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'transparent',
-    shadowColor: 'rgba(0, 0, 0, 0.2)'
+    shadowColor: 'rgba(0, 0, 0, 0.2)',
   },
   optionsContainer: {
     width: 258,
@@ -134,41 +134,42 @@ export const styles = StyleSheet.create({
     shadowColor: 'rgba(0, 0, 0, 0.2)',
     shadowOffset: {
       width: 0,
-      height: 6
+      height: 6,
     },
     shadowRadius: 20,
     shadowOpacity: 1,
-    borderRadius: 20
+    borderRadius: 20,
+    paddingVertical: 4,
   },
   sortContainer: {
     flex: 1,
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: config.color.border
+    borderBottomColor: config.color.border,
+    marginHorizontal: 16,
   },
   sectionSortContainer: {
     flex: 9,
     flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   textSort: {
     fontSize: 16,
     paddingVertical: 11,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   noBorderBottom: {
-    borderBottomWidth: 0
+    borderBottomWidth: 0,
   },
   checkContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingRight: 16
+    paddingRight: 0,
   },
   check: {
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 export default styles;
