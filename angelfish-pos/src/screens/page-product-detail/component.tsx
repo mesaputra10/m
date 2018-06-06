@@ -24,6 +24,7 @@ import {
   fetchProductOffer,
   fetchProductVariant,
   fetchProductSpecification,
+  fetchProductInstallments,
 } from '../../helpers/fetch-data';
 import numberFormat from '../../helpers/number-format';
 
@@ -322,6 +323,12 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
     fetchProductSpecification(sku)
       .then(specification => this.setState({ specification }))
       .catch(err => console.log('error product specifications: ', err));
+    fetchProductInstallments(sku)
+      .then(data => {
+        let { installments, price } = data;
+        console.log(installments);
+      })
+      .catch(err => console.log(err));
   }
   backCategory = () => {
     this.props.navigation.pop();

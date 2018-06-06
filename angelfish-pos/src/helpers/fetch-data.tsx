@@ -3,7 +3,7 @@ import { AsyncStorage } from 'react-native';
 import { Constants } from 'expo';
 import { stringify } from 'query-string';
 import { filter } from 'minimatch';
-import { Category, Offer, Variant } from '../bmd';
+import { Category, Offer, Variant, Installment } from '../bmd';
 import { plainToClass } from 'class-transformer';
 
 const keyAccessToken = '@KeyAccessToken';
@@ -255,6 +255,16 @@ export async function fetchProduct(sku: string) {
   let tokens = await getUserToken();
   const params = {};
   return await fetchData(`/api/v1/products/${sku}`, 'GET', params, tokens);
+}
+
+export async function fetchProductInstallments(sku: string) {
+  let tokens = await getUserToken();
+  let data = await fetchData('/api/v1/products/installments', 'GET', { sku }, tokens);
+  return {
+    sku,
+    price: data.price,
+    installments: plainToClass(Installment, data.installments),
+  };
 }
 
 async function fetchPlankton({
