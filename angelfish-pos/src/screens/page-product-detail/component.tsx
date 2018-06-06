@@ -32,6 +32,249 @@ interface PageProductDetailComponentProps extends NavigationScreenProps<any, any
   sku: string;
 }
 
+const installments = [
+  {
+    id: 13,
+    method: 'Cicilan 0% Danamon',
+    name: 'Cicilan Danamon 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-installment-danamon.png',
+    bankName: 'Danamon',
+    bankCode: '011',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 10,
+    method: 'Cicilan 0% Bukopin',
+    name: 'Cicilan Bukopin 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-bukopin.png',
+    bankName: 'Bukopin',
+    bankCode: '441',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 19,
+    method: 'Cicilan 0% Permata',
+    name: 'Cicilan Permata 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-permata.png',
+    bankName: 'Permata Bank',
+    bankCode: '013',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 12,
+    method: 'Cicilan 0% Citibank',
+    name: 'Cicilan Citibank 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-citibank.png',
+    bankName: 'Citibank',
+    bankCode: '031',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 20,
+    method: 'Cicilan 0% Standard Chartered',
+    name: 'Cicilan Standard Chartered 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-standarchartered.png',
+    bankName: 'Standard Chartered Bank',
+    bankCode: '050',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 14,
+    method: 'Cicilan 0% HSBC',
+    name: 'Cicilan HSBC 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-hsbc.png',
+    bankName: 'HSBC',
+    bankCode: '087',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 16,
+    method: 'Cicilan 0% Maybank',
+    name: 'Cicilan Maybank 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-maybank.png',
+    bankName: 'Maybank',
+    bankCode: '016',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 17,
+    method: 'Cicilan 0% OCBC NISP',
+    name: 'Cicilan OCBC NISP 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-ocbc.png',
+    bankName: 'OCBC NISP',
+    bankCode: '028',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 9,
+    method: 'Cicilan 0% BRI',
+    name: 'Cicilan BRI 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-bri.png',
+    bankName: 'BRI',
+    bankCode: '002',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 21,
+    method: 'Cicilan 0% UOB',
+    name: 'Cicilan UOB 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-uob.png',
+    bankName: 'UOB Indonesia',
+    bankCode: '023',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 6,
+    method: 'Cicilan 0% ANZ',
+    name: 'Cicilan ANZ 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-installment-anz.png',
+    bankName: '',
+    bankCode: '',
+    currency: '',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 87,
+    method: 'Bank DKI',
+    name: 'Bank DKI',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/klikbca.png',
+    bankName: 'Bank DKI',
+    bankCode: '2163162372678',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 8,
+    method: 'Cicilan 0% BNI',
+    name: 'Cicilan BNI 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-bni.png',
+    bankName: 'BNI',
+    bankCode: '009',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 7,
+    method: 'Cicilan 0% BCA',
+    name: 'Cicilan BCA 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-installment-bca.png',
+    bankName: 'BCA',
+    bankCode: '014',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 15,
+    method: 'Cicilan 0% Mandiri',
+    name: 'Cicilan Mandiri 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-bank-mandiri.png',
+    bankName: 'Mandiri',
+    bankCode: '008',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+  {
+    id: 11,
+    method: 'Cicilan 0% CIMB Niaga',
+    name: 'Cicilan CIMB Niaga 0%',
+    image:
+      'https://s3-ap-southeast-1.amazonaws.com/static.bmdstatic.com/sf/payment_method_images/logo-installment-cimb.png',
+    bankName: 'CIMB Niaga',
+    bankCode: '022',
+    currency: 'IDR',
+    term: {
+      '3': 4928000,
+      '6': 2464000,
+      '12': 1232000,
+    },
+  },
+];
+
 export class PageProductDetailComponent extends Component<PageProductDetailComponentProps, any> {
   constructor(props) {
     super(props);
@@ -48,7 +291,8 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
       showListBank: false,
       bankName: '',
       showListMonth: false,
-      selectedMonth: 24,
+      selectedMonth: '',
+      cicilan: 0,
       outletLocation: '',
       stockAvailable: 0,
     };
@@ -147,92 +391,60 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
           <Image source={require('./assets/triangle.png')} />
         </View>
         <View style={styles.optionsContainer}>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              this.toggleListBank(false, 'BCA');
-            }}
-          >
-            <View style={styles.sortContainer}>
-              <View style={styles.sectionSortContainer}>
-                <Text style={styles.textSort}>BCA</Text>
-              </View>
-              {this.state.bankName == 'BCA' && this.checkSelectedSortBy()}
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.toggleListBank(false, 'BNI')}>
-            <View style={styles.sortContainer}>
-              <View style={styles.sectionSortContainer}>
-                <Text style={styles.textSort}>BNI</Text>
-              </View>
-              {this.state.bankName == 'BNI' && this.checkSelectedSortBy()}
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.toggleListBank(false, 'Bank Mandiri')}>
-            <View style={styles.sortContainer}>
-              <View style={styles.sectionSortContainer}>
-                <Text style={styles.textSort}>Bank Mandiri</Text>
-              </View>
-              {this.state.bankName == 'Bank Mandiri' && this.checkSelectedSortBy()}
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.toggleListBank(false, 'ANZ')}>
-            <View style={[styles.sortContainer, styles.noBorderBottom]}>
-              <View style={styles.sectionSortContainer}>
-                <Text style={styles.textSort}>ANZ</Text>
-              </View>
-              {this.state.bankName == 'ANZ' && this.checkSelectedSortBy()}
-            </View>
-          </TouchableWithoutFeedback>
+          {installments.map((bank, bankIndex) => {
+            const noBorder = installments.length - 1 === bankIndex ? styles.noBorderBottom : null;
+            return (
+              <TouchableWithoutFeedback
+                key={bankIndex + '-' + bank.bankName}
+                onPress={() => {
+                  this.toggleListBank(false, bank.bankName);
+                }}
+              >
+                <View style={[styles.sortContainer, noBorder]}>
+                  <View style={styles.sectionSortContainer}>
+                    <Text style={styles.textSort}>{bank.bankName}</Text>
+                  </View>
+                  {this.state.bankName == bank.bankName && this.checkSelectedSortBy()}
+                </View>
+              </TouchableWithoutFeedback>
+            );
+          })}
         </View>
       </View>
     );
   };
-  toggleListMonth = (value: boolean, selectedMonth: number = 24) => {
-    this.setState({ showListMonth: value, selectedMonth, showListBank: false });
+  toggleListMonth = (value: boolean, selectedMonth: number = 0, cicilan: number = 0) => {
+    this.setState({ showListMonth: value, selectedMonth, showListBank: false, cicilan });
   };
   listDataMonth = () => {
+    const bank = installments.find(i => i.bankName === this.state.bankName);
     return (
       <View style={styles.filterDropdownMonthContainer}>
         <View style={styles.centilanContainer}>
           <Image source={require('./assets/triangle.png')} />
         </View>
         <View style={styles.optionsContainer}>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              this.toggleListMonth(false, 3);
-            }}
-          >
-            <View style={styles.sortContainer}>
-              <View style={styles.sectionSortContainer}>
-                <Text style={styles.textSort}>3 Bulan</Text>
-              </View>
-              {this.state.selectedMonth === 3 && this.checkSelectedSortBy()}
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.toggleListMonth(false, 6)}>
-            <View style={styles.sortContainer}>
-              <View style={styles.sectionSortContainer}>
-                <Text style={styles.textSort}>6 Bulan</Text>
-              </View>
-              {this.state.selectedMonth === 6 && this.checkSelectedSortBy()}
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.toggleListMonth(false, 12)}>
-            <View style={styles.sortContainer}>
-              <View style={styles.sectionSortContainer}>
-                <Text style={styles.textSort}>12 Bulan</Text>
-              </View>
-              {this.state.selectedMonth === 12 && this.checkSelectedSortBy()}
-            </View>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => this.toggleListMonth(false, 24)}>
-            <View style={[styles.sortContainer, styles.noBorderBottom]}>
-              <View style={styles.sectionSortContainer}>
-                <Text style={styles.textSort}>24 Bulan</Text>
-              </View>
-              {this.state.selectedMonth === 24 && this.checkSelectedSortBy()}
-            </View>
-          </TouchableWithoutFeedback>
+          {Object.keys(bank.term).map((b, bIndex) => {
+            const month = parseInt(b);
+            const cicilan = bank.term[b];
+            const noBorder =
+              Object.keys(bank.term).length - 1 === bIndex ? styles.noBorderBottom : null;
+            return (
+              <TouchableWithoutFeedback
+                key={b + '-' + bIndex}
+                onPress={() => {
+                  this.toggleListMonth(false, month, cicilan);
+                }}
+              >
+                <View style={[styles.sortContainer, noBorder]}>
+                  <View style={styles.sectionSortContainer}>
+                    <Text style={styles.textSort}>{month} Bulan</Text>
+                  </View>
+                  {this.state.selectedMonth === month && this.checkSelectedSortBy()}
+                </View>
+              </TouchableWithoutFeedback>
+            );
+          })}
         </View>
       </View>
     );
@@ -253,6 +465,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
       return <ActivityIndicator color={config.color.blue} />;
     }
 
+    const totalCicilan = numberFormat(this.state.cicilan);
     const headerLeftColumn = (
       <View style={styles.headerStyleCustom}>
         <View style={styles.headerCategoryContainer}>
@@ -272,13 +485,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         </View>
       </View>
     );
-    let totalCicilan = 0;
-    if (product.price) {
-      const normalPrice = product.price.bhinneka.normalPrice;
-      const specialPrice = product.price.bhinneka.specialPrice;
-      const finalPrice = specialPrice.isActive ? specialPrice.specialPrice : normalPrice;
-      totalCicilan = numberFormat(Math.round(finalPrice / this.state.selectedMonth));
-    }
+
     const leftColumn = (
       <View style={styles.container}>
         {headerLeftColumn}
@@ -335,7 +542,11 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
                 <TouchableWithoutFeedback
                   disabled={this.state.bankName === ''}
                   onPress={() =>
-                    this.toggleListMonth(!this.state.showListMonth, this.state.selectedMonth)
+                    this.toggleListMonth(
+                      !this.state.showListMonth,
+                      this.state.selectedMonth,
+                      totalCicilan,
+                    )
                   }
                 >
                   <View
