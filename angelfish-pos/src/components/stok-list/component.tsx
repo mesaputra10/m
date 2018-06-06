@@ -1,53 +1,71 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, Image } from 'react-native';
 import { styles } from './styles';
+import { CheckBox } from 'native-base';
 
 interface Stock {
   available: number;
   locationCode: string;
+  name: string;
+  onHand: number;
+  onReserve: number;
 }
 
-export class StokListComponent extends Component<{ stocks: Stock[] }, any> {
+interface componentProps {
+  stocks: Stock[];
+  onSelect: any;
+}
+
+interface componentState {
+  selectedOutletId: string;
+}
+
+export class StokListComponent extends Component<componentProps, componentState> {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOutletId: 0,
+      selectedOutletId: '',
     };
   }
-  selectOutlet = id => this.setState({ selectedOutletId: id });
+  selectOutlet = (id, stockAvailable) => {
+    const { onSelect } = this.props;
+    this.setState({ selectedOutletId: id });
+    onSelect(id, stockAvailable);
+  };
   render() {
+    const { stocks } = this.props;
+    const { selectedOutletId } = this.state;
     const imageChecked = <Image source={require('./assets/radioButtonOn.png')} width={20} />;
     const imageCheck = <Image source={require('./assets/radioButtonOff.png')} width={20} />;
     return (
       <View style={styles.rowStockContainer}>
-        <View style={styles.rowYellowStokOutlet}>
-          <TouchableWithoutFeedback onPress={() => this.selectOutlet(1)}>
-            <View style={styles.radioButtonContainer}>{imageChecked}</View>
-          </TouchableWithoutFeedback>
-          <Text style={styles.outletName}>Gunung Sahari</Text>
-          <Text style={styles.textStatusStokHabis}>Stok Habis</Text>
-        </View>
-        <View style={styles.rowGreyStokOutlet}>
-          <TouchableWithoutFeedback onPress={() => this.selectOutlet(1)}>
-            <View style={styles.radioButtonContainer}>{imageCheck}</View>
-          </TouchableWithoutFeedback>
-          <Text style={styles.outletName}>Wherehouse</Text>
-          <Text style={{ flex: 6, fontWeight: '600', fontSize: 14 }}>Stok Tersedia</Text>
-        </View>
-        <View style={styles.rowDefaultStokOutlet}>
-          <TouchableWithoutFeedback onPress={() => this.selectOutlet(1)}>
-            <View style={styles.radioButtonContainer}>{imageCheck}</View>
-          </TouchableWithoutFeedback>
-          <Text style={styles.outletName}>Mangga Dua Mall</Text>
-          <Text style={styles.textStatusStokTersedia}>Sisa 5</Text>
-        </View>
-        <View style={styles.rowGreyStokOutlet}>
-          <TouchableWithoutFeedback onPress={() => this.selectOutlet(1)}>
-            <View style={styles.radioButtonContainer}>{imageCheck}</View>
-          </TouchableWithoutFeedback>
-          <Text style={styles.outletName}>Point Square</Text>
-          <Text style={styles.textStatusStokTersedia}>Stok Tersedia</Text>
-        </View>
+        {stocks.map((stock, stockIndex) => {
+          const displayStock = stock.available > 0 ? 'Sisa ' + stock.onHand : 'Stock Habis';
+          const keyStock = stockIndex + '-' + stock.name;
+          let styleStock =
+            stockIndex % 2 == 0 ? styles.rowGreyStokOutlet : styles.rowDefaultStokOutlet;
+          const displayStockStyle = stock.available
+            ? styles.textStatusStokTersedia
+            : styles.textStatusStokHabis;
+          let checkBox = imageCheck;
+          //selected outlet
+          if (stock.locationCode === selectedOutletId) {
+            styleStock = styles.rowYellowStokOutlet;
+            checkBox = imageChecked;
+          }
+          return (
+            <View style={styleStock} key={keyStock}>
+              <TouchableWithoutFeedback
+                // disabled={stock.available === 0}
+                onPress={() => this.selectOutlet(stock.locationCode, stock.available)}
+              >
+                <View style={styles.radioButtonContainer}>{checkBox}</View>
+              </TouchableWithoutFeedback>
+              <Text style={styles.outletName}>{stock.name}</Text>
+              <Text style={displayStockStyle}>{displayStock}</Text>
+            </View>
+          );
+        })}
       </View>
     );
   }

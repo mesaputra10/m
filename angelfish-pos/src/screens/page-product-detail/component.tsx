@@ -49,6 +49,8 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
       bankName: '',
       showListMonth: false,
       selectedMonth: 24,
+      outletLocation: '',
+      stockAvailable: 0,
     };
   }
   componentDidMount() {
@@ -240,6 +242,9 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
       <Image source={require('./assets/check.png')} width={24} height={24} style={styles.check} />
     </View>
   );
+  selectOutlet = (outletLocation: string, stockAvailable: number) => {
+    this.setState({ outletLocation, stockAvailable });
+  };
   render() {
     const { product, loading, specification } = this.state;
     const productImage = this.productImage();
@@ -377,10 +382,21 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
                 <Image source={require('./assets/warehouse.png')} style={styles.iconSection} />
                 <Text style={styles.textSectionTitle}>Stok</Text>
               </View>
-              {this.state.variant && <StokList stocks={this.state.variant.stock} />}
-              <View style={styles.buttonStokHabis}>
-                <Text style={styles.textButtonStokHabis}>STOK HABIS</Text>
-              </View>
+              {this.state.variant && (
+                <StokList stocks={this.state.variant.stock} onSelect={this.selectOutlet} />
+              )}
+              {this.state.stockAvailable === 0 && (
+                <View style={styles.buttonStokHabis}>
+                  <Text style={styles.textButtonStokHabis}>STOK HABIS</Text>
+                </View>
+              )}
+              {this.state.stockAvailable > 0 && (
+                <TouchableWithoutFeedback onPress={() => Alert.alert('beli')}>
+                  <View style={styles.buttonStokTersedia}>
+                    <Text style={styles.textButtonStokTersedia}>BELI</Text>
+                  </View>
+                </TouchableWithoutFeedback>
+              )}
             </View>
             <View style={styles.rowSectionContainerNoBorder}>
               <ProductDescription
