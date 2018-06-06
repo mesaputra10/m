@@ -122,7 +122,7 @@ export const styles = StyleSheet.create({
   },
   productImage: {
     width: 500,
-    height: 500,
+    height: 725,
   },
   productTitle: {
     width: 632,
@@ -160,7 +160,7 @@ export const styles = StyleSheet.create({
     textDecorationLine: 'line-through',
   },
   discountPrice: {
-    width: 35,
+    width: 45,
     height: 20,
     fontSize: 14,
     fontWeight: 'normal',
@@ -215,8 +215,8 @@ export const styles = StyleSheet.create({
   dropdownTextContainer: {
     flex: 9,
     flexDirection: 'row',
-    justifyContent: 'center',
     alignItems: 'center',
+    marginLeft: 16,
   },
   dropdownText: {
     fontSize: 14,
@@ -265,6 +265,7 @@ export const styles = StyleSheet.create({
     shadowRadius: 20,
     shadowOpacity: 1,
     borderRadius: 20,
+    paddingVertical: 4,
   },
   sortContainer: {
     flex: 1,
@@ -290,7 +291,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingRight: 16,
+    paddingRight: 0,
   },
   check: {
     justifyContent: 'center',

@@ -119,7 +119,7 @@ export class ListProductsComponent extends Component<
           }}
         >
           <View style={styles.productItemBox}>
-            <Image source={productImage} style={styles.productItemImage} />
+            <Image source={productImage} style={styles.productItemImage} resizeMode="contain" />
             <View style={styles.productItemPriceContainer}>
               <Text numberOfLines={2} style={styles.productItemName}>
                 {product.productName}
@@ -233,11 +233,6 @@ export class ListProductsComponent extends Component<
         <Image source={require('./assets/check.png')} width={24} height={24} style={styles.check} />
       </View>
     );
-    const marginLeftPalingSesuai = selectedSortBy === 'Paling Sesuai' ? { marginLeft: 35 } : null;
-    const marginLeftAz = selectedSortBy === 'A-Z' ? { marginLeft: 35 } : null;
-    const marginLeftZa = selectedSortBy === 'Z-A' ? { marginLeft: 35 } : null;
-    const marginLeftLowPrice = selectedSortBy === 'Harga Terendah' ? { marginLeft: 35 } : null;
-    const marginLeftHighPrice = selectedSortBy === 'Harga Tertinggi' ? { marginLeft: 35 } : null;
 
     if (this.state.loading || isFetching) {
       return (
@@ -306,7 +301,7 @@ export class ListProductsComponent extends Component<
               <View style={styles.optionsContainer}>
                 <TouchableWithoutFeedback onPress={() => this.selectSortBy()}>
                   <View style={styles.sortContainer}>
-                    <View style={[styles.sectionSortContainer, marginLeftPalingSesuai]}>
+                    <View style={styles.sectionSortContainer}>
                       <Text style={styles.textSort}>Paling Sesuai</Text>
                     </View>
                     {selectedSortBy === 'Paling Sesuai' && checkSelectedSortBy}
@@ -314,7 +309,7 @@ export class ListProductsComponent extends Component<
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => this.selectSortBy('A-Z')}>
                   <View style={styles.sortContainer}>
-                    <View style={[styles.sectionSortContainer, marginLeftAz]}>
+                    <View style={styles.sectionSortContainer}>
                       <Text style={styles.textSort}>A-Z</Text>
                     </View>
                     {selectedSortBy === 'A-Z' && checkSelectedSortBy}
@@ -322,7 +317,7 @@ export class ListProductsComponent extends Component<
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => this.selectSortBy('Z-A')}>
                   <View style={styles.sortContainer}>
-                    <View style={[styles.sectionSortContainer, marginLeftZa]}>
+                    <View style={styles.sectionSortContainer}>
                       <Text style={styles.textSort}>Z-A</Text>
                     </View>
                     {selectedSortBy === 'Z-A' && checkSelectedSortBy}
@@ -330,7 +325,7 @@ export class ListProductsComponent extends Component<
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => this.selectSortBy('Harga Terendah')}>
                   <View style={styles.sortContainer}>
-                    <View style={[styles.sectionSortContainer, marginLeftLowPrice]}>
+                    <View style={styles.sectionSortContainer}>
                       <Text style={styles.textSort}>Harga Terendah</Text>
                     </View>
                     {selectedSortBy === 'Harga Terendah' && checkSelectedSortBy}
@@ -338,7 +333,7 @@ export class ListProductsComponent extends Component<
                 </TouchableWithoutFeedback>
                 <TouchableWithoutFeedback onPress={() => this.selectSortBy('Harga Tertinggi')}>
                   <View style={[styles.sortContainer, styles.noBorderBottom]}>
-                    <View style={[styles.sectionSortContainer, marginLeftHighPrice]}>
+                    <View style={styles.sectionSortContainer}>
                       <Text style={styles.textSort}>Harga Tertinggi</Text>
                     </View>
                     {selectedSortBy === 'Harga Tertinggi' && checkSelectedSortBy}
