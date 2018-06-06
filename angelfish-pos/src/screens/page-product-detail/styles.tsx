@@ -82,7 +82,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     height: 56,
     borderRadius: 5,
-    backgroundColor: config.color.blue,
+    backgroundColor: config.color.yellow,
     marginBottom: 8,
   },
   textButtonStokTersedia: {
@@ -93,7 +93,7 @@ export const styles = StyleSheet.create({
     lineHeight: 22,
     letterSpacing: 0,
     textAlign: 'center',
-    color: config.color.white,
+    color: config.color.text,
   },
   rowContentContainer: {
     paddingLeft: 32,
