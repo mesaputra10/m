@@ -124,7 +124,7 @@ export class Installment {
   bankName: string;
   bankCode: string;
   currency: string;
-  term: { [month: string]: string };
+  term: { [month: string]: number };
 }
 
 export class Category {

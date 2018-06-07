@@ -27,34 +27,57 @@ import {
   fetchProductInstallments,
 } from '../../helpers/fetch-data';
 import numberFormat from '../../helpers/number-format';
+import { Installment } from '../../bmd';
 
 interface PageProductDetailComponentProps extends NavigationScreenProps<any, any> {
   navigation: any;
   sku: string;
 }
 
-export class PageProductDetailComponent extends Component<PageProductDetailComponentProps, any> {
+const initialState = {
+  product: {
+    fullName: '',
+    sku: '',
+    categoryName: '',
+    images: null,
+    brandName: '',
+    price: {
+      bhinneka: {
+        normalPrice: 0,
+        specialPrice: {
+          isActive: false,
+          startDate: '',
+          endDate: '',
+          specialPrice: 0,
+        },
+      },
+    },
+    rating: 0,
+    description: '',
+    warranty: '',
+    offerStatus: '',
+    totalReview: 0,
+  },
+  loading: true,
+  variant: null,
+  specification: [],
+  showListBank: false,
+  bankName: '',
+  showListMonth: false,
+  selectedMonth: 0,
+  cicilan: 0,
+  outletLocation: '',
+  stockAvailable: 0,
+  installments: new Array<Installment>(),
+};
+
+export class PageProductDetailComponent extends Component<
+  PageProductDetailComponentProps,
+  typeof initialState
+> {
   constructor(props) {
     super(props);
-    this.state = {
-      product: {
-        fullName: '',
-        sku: '',
-        categoryName: '',
-        images: null,
-        loading: true,
-      },
-      variant: null,
-      specification: [],
-      showListBank: false,
-      bankName: '',
-      showListMonth: false,
-      selectedMonth: '',
-      cicilan: 0,
-      outletLocation: '',
-      stockAvailable: 0,
-      installments: [],
-    };
+    this.state = initialState;
   }
   componentDidMount() {
     const { params } = this.props.navigation.state;
