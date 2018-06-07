@@ -255,14 +255,15 @@ export const styles = StyleSheet.create({
   filterDropdownContainer: {
     position: 'absolute',
     zIndex: 2,
-    marginTop: 80 * 13.2,
+    marginTop: 80 * 13.5,
     marginLeft: 32,
     backgroundColor: 'rgb(255, 255, 255)',
+    height: 260,
   },
   filterDropdownMonthContainer: {
     position: 'absolute',
     zIndex: 2,
-    marginTop: 80 * 13.2,
+    marginTop: 80 * 13.43,
     marginLeft: 32 * 6,
     backgroundColor: 'rgb(255, 255, 255)',
   },

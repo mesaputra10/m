@@ -147,7 +147,13 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
     return null;
   };
   toggleListBank = (value: boolean, bankName: string = '') => {
-    this.setState({ showListBank: value, bankName, showListMonth: false });
+    this.setState({
+      showListBank: value,
+      bankName,
+      showListMonth: false,
+      selectedMonth: '',
+      cicilan: 0,
+    });
   };
   listDataBank = () => {
     const { installments } = this.state;
@@ -156,25 +162,27 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
         <View style={styles.centilanContainer}>
           <Image source={require('./assets/triangle.png')} />
         </View>
-        <View style={styles.optionsContainer}>
-          {installments.map((bank, bankIndex) => {
-            const noBorder = installments.length - 1 === bankIndex ? styles.noBorderBottom : null;
-            return (
-              <TouchableWithoutFeedback
-                key={bankIndex + '-' + bank.bankName}
-                onPress={() => {
-                  this.toggleListBank(false, bank.bankName);
-                }}
-              >
-                <View style={[styles.sortContainer, noBorder]}>
-                  <View style={styles.sectionSortContainer}>
-                    <Text style={styles.textSort}>{bank.bankName}</Text>
+        <View style={[styles.optionsContainer, { marginTop: 4 }]}>
+          <ScrollView>
+            {installments.map((bank, bankIndex) => {
+              const noBorder = installments.length - 1 === bankIndex ? styles.noBorderBottom : null;
+              return (
+                <TouchableWithoutFeedback
+                  key={bankIndex + '-' + bank.bankName}
+                  onPress={() => {
+                    this.toggleListBank(false, bank.bankName);
+                  }}
+                >
+                  <View style={[styles.sortContainer, noBorder]}>
+                    <View style={styles.sectionSortContainer}>
+                      <Text style={styles.textSort}>{bank.bankName}</Text>
+                    </View>
+                    {this.state.bankName == bank.bankName && this.checkSelectedSortBy()}
                   </View>
-                  {this.state.bankName == bank.bankName && this.checkSelectedSortBy()}
-                </View>
-              </TouchableWithoutFeedback>
-            );
-          })}
+                </TouchableWithoutFeedback>
+              );
+            })}
+          </ScrollView>
         </View>
       </View>
     );
@@ -290,7 +298,7 @@ export class PageProductDetailComponent extends Component<PageProductDetailCompo
               </View>
               <View style={[styles.rowContentContainer, { flexDirection: 'row' }]}>
                 <TouchableWithoutFeedback
-                  onPress={() => this.toggleListBank(!this.state.showListBank, this.state.bankName)}
+                  onPress={() => this.setState({ showListBank: !this.state.showListBank })}
                 >
                   <View style={styles.dropdownContainer}>
                     <View style={styles.dropdownTextContainer}>
