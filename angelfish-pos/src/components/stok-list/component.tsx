@@ -54,16 +54,17 @@ export class StokListComponent extends Component<componentProps, componentState>
             checkBox = imageChecked;
           }
           return (
-            <View style={styleStock} key={keyStock}>
-              <TouchableWithoutFeedback
-                // disabled={stock.available === 0}
-                onPress={() => this.selectOutlet(stock.locationCode, stock.available)}
-              >
+            <TouchableWithoutFeedback
+              key={keyStock}
+              onPress={() => this.selectOutlet(stock.locationCode, stock.available)}
+              // disabled={stock.available === 0}
+            >
+              <View style={styleStock}>
                 <View style={styles.radioButtonContainer}>{checkBox}</View>
-              </TouchableWithoutFeedback>
-              <Text style={styles.outletName}>{stock.name}</Text>
-              <Text style={displayStockStyle}>{displayStock}</Text>
-            </View>
+                <Text style={styles.outletName}>{stock.name}</Text>
+                <Text style={displayStockStyle}>{displayStock}</Text>
+              </View>
+            </TouchableWithoutFeedback>
           );
         })}
       </View>

@@ -255,6 +255,18 @@ export class PageProductDetailComponent extends Component<
   selectOutlet = (outletLocation: string, stockAvailable: number) => {
     this.setState({ outletLocation, stockAvailable });
   };
+  statusButtonBeli = activation => {
+    const { outletLocation, stockAvailable } = this.state;
+    const active = activation === 'published';
+    const warehouse = outletLocation === 'HO';
+    const stock = stockAvailable > 0;
+
+    if (warehouse && active) return true;
+
+    if (!warehouse && active && stock) return true;
+
+    return false;
+  };
   render() {
     const { product, loading, specification } = this.state;
     const productImage = this.productImage();
@@ -394,12 +406,12 @@ export class PageProductDetailComponent extends Component<
               {this.state.variant && (
                 <StokList stocks={this.state.variant.stock} onSelect={this.selectOutlet} />
               )}
-              {this.state.stockAvailable === 0 && (
+              {!this.statusButtonBeli(product.activation) && (
                 <View style={styles.buttonStokHabis}>
                   <Text style={styles.textButtonStokHabis}>STOK HABIS</Text>
                 </View>
               )}
-              {this.state.stockAvailable > 0 && (
+              {this.statusButtonBeli(product.activation) && (
                 <TouchableWithoutFeedback onPress={() => Alert.alert('beli')}>
                   <View style={styles.buttonStokTersedia}>
                     <Text style={styles.textButtonStokTersedia}>BELI</Text>
