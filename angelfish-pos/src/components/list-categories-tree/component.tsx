@@ -15,24 +15,24 @@ interface ListCategoriesTreeComponentProps {
 const colors = {
   1: {
     style: {
-      backgroundColor: '#ffffff'
-    }
+      backgroundColor: '#ffffff',
+    },
   },
   2: {
     style: {
-      backgroundColor: '#ffffff'
-    }
+      backgroundColor: '#ffffff',
+    },
   },
   3: {
     style: {
-      backgroundColor: '#f5f5f6'
-    }
+      backgroundColor: '#f5f5f6',
+    },
   },
   4: {
     style: {
-      backgroundColor: '#e1e3e6'
-    }
-  }
+      backgroundColor: '#e1e3e6',
+    },
+  },
 };
 
 export class ListCategoriesTreeComponent extends Component<ListCategoriesTreeComponentProps, any> {
@@ -40,7 +40,7 @@ export class ListCategoriesTreeComponent extends Component<ListCategoriesTreeCom
     super(props);
     this.state = {
       parentCategory: true,
-      openChild: []
+      openChild: [],
     };
   }
   selecCategory = category => {
@@ -54,7 +54,7 @@ export class ListCategoriesTreeComponent extends Component<ListCategoriesTreeCom
         this.setState({ openChild });
       } else {
         this.setState({
-          openChild: this.state.openChild.concat(category.id)
+          openChild: this.state.openChild.concat(category.id),
         });
       }
     } else {
@@ -70,7 +70,9 @@ export class ListCategoriesTreeComponent extends Component<ListCategoriesTreeCom
             const customBg = colors[level]['style'];
             const chevron =
               level === 4 ? <Image source={require('./assets/chevronRight.png')} /> : null;
-            const plusMinusIcon = this.state.openChild.includes(category.id) ? (
+            const isOpened = this.state.openChild.includes(category.id);
+            const isOpenedStyle = isOpened ? styles.fontBold : null;
+            const plusMinusIcon = isOpened ? (
               <Image source={require('./assets/remove.png')} />
             ) : (
               <Image source={require('./assets/add.png')} />
@@ -89,7 +91,10 @@ export class ListCategoriesTreeComponent extends Component<ListCategoriesTreeCom
                     {level !== 4 && <Text style={styles.plusMinus}>{plusMinusIcon}</Text>}
                     <View style={styles.listLeftCategory}>
                       <View style={[{ flexDirection: 'row' }]}>
-                        <Text style={styles.titleListTextCategory} ellipsizeMode="tail">
+                        <Text
+                          style={[styles.titleListTextCategory, isOpenedStyle]}
+                          ellipsizeMode="tail"
+                        >
                           {category.name} ({category.docCount})
                         </Text>
                       </View>

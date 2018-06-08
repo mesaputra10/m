@@ -111,6 +111,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  fontBold: {
+    fontWeight: 'bold',
+  },
   circleStyle: {
     flex: 1,
   },
