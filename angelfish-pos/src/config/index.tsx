@@ -10,11 +10,12 @@ export const config = {
     textGrey: 'rgb(151, 151, 152)',
     buttonGrey: 'rgb(189, 189, 189)',
     backgroundGrey: 'rgba(248, 248, 248, 0.82)',
-    black: '#000'
+    black: '#000',
+    greySmooth: 'rgb(236, 236, 236)',
   },
   key: {
     historyProductSearch: '@Bhinneka@ProductSearch',
-    historyProductVisited: '@Bhinneka@ProductVisited'
-  }
+    historyProductVisited: '@Bhinneka@ProductVisited',
+  },
 };
 export default config;

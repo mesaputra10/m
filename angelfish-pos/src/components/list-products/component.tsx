@@ -19,6 +19,7 @@ import { searchProduct, FilterParams } from '../../helpers/fetch-data';
 import { Product } from '../../bmd';
 import config from '../../config';
 import { uniqBy } from 'lodash';
+import { LoadStructureProductList } from '../load-structure-product-list';
 
 interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   products?: Product[];
@@ -236,13 +237,7 @@ export class ListProductsComponent extends Component<
     );
 
     if (this.state.loading || isFetching) {
-      return (
-        <Image
-          source={require('./assets/load-structure.png')}
-          resizeMode="stretch"
-          style={styles.loadStructure}
-        />
-      );
+      return <LoadStructureProductList />;
     }
     if (products.length > 0) {
       return (
