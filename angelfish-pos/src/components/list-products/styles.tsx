@@ -102,10 +102,14 @@ export const styles = StyleSheet.create({
     paddingRight: 6,
   },
   filterSortContainer: {
-    paddingRight: 8,
+    justifyContent: 'flex-start',
+  },
+  buttonFilterStyle: {
+    justifyContent: 'flex-end',
   },
   filterContainerSection: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   productBorderBottom: {
     borderBottomWidth: 0.5,
@@ -116,7 +120,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     zIndex: 2,
     marginTop: 30,
-    marginLeft: 258 * 1.65,
+    marginLeft: '60%',
     backgroundColor: 'rgb(255, 255, 255)',
   },
   centilanContainer: {

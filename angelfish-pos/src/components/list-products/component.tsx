@@ -284,6 +284,7 @@ export class ListProductsComponent extends Component<
               <TouchableWithoutFeedback
                 onPress={() => setFilter(!showFilter)}
                 disabled={showFilter}
+                style={styles.buttonFilterStyle}
               >
                 <View style={styles.filterContainer}>
                   <Image source={require('./assets/filter.png')} style={styles.filterIcon} />

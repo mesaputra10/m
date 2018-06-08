@@ -133,7 +133,7 @@ export class PageProductDetailComponent extends Component<
                   <Image
                     source={{ uri: item }}
                     resizeMode="contain"
-                    style={{ width: winWidth, height: 700 }}
+                    style={{ width: winWidth, height: 500 }}
                   />
                 </View>
               );
@@ -174,14 +174,18 @@ export class PageProductDetailComponent extends Component<
       showListBank: value,
       bankName,
       showListMonth: false,
-      selectedMonth: '',
+      selectedMonth: 0,
       cicilan: 0,
     });
   };
   listDataBank = () => {
-    const { installments } = this.state;
+    const { installments, product } = this.state;
+    const marginTop = 80 * 10.7;
+    const additionBottom = product.price.bhinneka.specialPrice.isActive
+      ? { marginTop: marginTop + 20 }
+      : { marginTop };
     return (
-      <View style={styles.filterDropdownContainer}>
+      <View style={[styles.filterDropdownContainer, additionBottom]}>
         <View style={styles.centilanContainer}>
           <Image source={require('./assets/triangle.png')} />
         </View>
@@ -214,10 +218,14 @@ export class PageProductDetailComponent extends Component<
     this.setState({ showListMonth: value, selectedMonth, showListBank: false, cicilan });
   };
   listDataMonth = () => {
-    const { installments } = this.state;
+    const { installments, product } = this.state;
     const bank = installments.find(i => i.bankName === this.state.bankName);
+    const marginTop = 80 * 10.7;
+    const additionBottom = product.price.bhinneka.specialPrice.isActive
+      ? { marginTop: marginTop + 20 }
+      : { marginTop };
     return (
-      <View style={styles.filterDropdownMonthContainer}>
+      <View style={[styles.filterDropdownMonthContainer, additionBottom]}>
         <View style={styles.centilanContainer}>
           <Image source={require('./assets/triangle.png')} />
         </View>
@@ -305,8 +313,6 @@ export class PageProductDetailComponent extends Component<
         >
           <View style={styles.content}>
             <View style={styles.productImageContainer}>{productImage}</View>
-            {this.state.showListBank && this.listDataBank()}
-            {this.state.showListMonth && this.listDataMonth()}
             <Text style={styles.productTitle}>{product.fullName}</Text>
             <View style={styles.productCategorySku}>
               <Text style={styles.categoryText}>
@@ -324,6 +330,8 @@ export class PageProductDetailComponent extends Component<
                 offerStatus={product.offerStatus}
               />
             )}
+            {this.state.showListBank && this.listDataBank()}
+            {this.state.showListMonth && this.listDataMonth()}
             <View style={styles.rowSectionContainer}>
               <View style={styles.rowTitleSectionContainer}>
                 <Image source={require('./assets/bank.png')} style={{ marginRight: 8 }} />
@@ -331,9 +339,12 @@ export class PageProductDetailComponent extends Component<
                   Simulasi cicilan: <Text style={styles.bold}>Rp {totalCicilan} / bulan</Text>
                 </Text>
               </View>
+
               <View style={[styles.rowContentContainer, { flexDirection: 'row' }]}>
                 <TouchableWithoutFeedback
-                  onPress={() => this.setState({ showListBank: !this.state.showListBank })}
+                  onPress={() =>
+                    this.setState({ showListBank: !this.state.showListBank, showListMonth: false })
+                  }
                 >
                   <View style={styles.dropdownContainer}>
                     <View style={styles.dropdownTextContainer}>

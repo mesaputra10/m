@@ -6,10 +6,10 @@ export const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     height: 64,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   contentContainer: {
-    flex: 1
+    flex: 1,
   },
   listContainer: {
     borderBottomWidth: 0.5,
@@ -17,45 +17,45 @@ export const styles = StyleSheet.create({
     padding: 16,
     justifyContent: 'space-between',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   listLeft: {
-    flexDirection: 'column'
+    flexDirection: 'column',
   },
   listRight: {
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   titleListText: {
     fontSize: 16,
-    paddingBottom: 4
+    paddingBottom: 4,
   },
   titleListSelectedDefault: {
     fontSize: 12,
-    color: config.color.grey
+    color: config.color.grey,
   },
   titleListSelected: {
     color: config.color.blue,
-    width: 230
+    width: 230,
   },
   buttonBottomContainer: {
     justifyContent: 'center',
     padding: 16,
     alignItems: 'flex-end',
-    backgroundColor: config.color.backgroundGrey
+    backgroundColor: config.color.backgroundGrey,
   },
   buttonBottomStyle: {
-    width: 275,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: config.color.blue,
-    borderRadius: 5
+    borderRadius: 5,
   },
   buttonBottomText: {
     color: config.color.white,
     fontWeight: 'bold',
     fontSize: 18,
-    padding: 10
+    padding: 10,
   },
   listContainerCategory: {
     borderBottomWidth: 0.5,
@@ -64,61 +64,61 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
     alignItems: 'center',
-    height: 56
+    height: 56,
   },
   listLeftCategory: {
     flexDirection: 'column',
-    flex: 8
+    flex: 8,
   },
   listRightCategory: {
     alignItems: 'flex-end',
-    flex: 1
+    flex: 1,
   },
   titleListTextCategory: {
     fontSize: 14,
-    width: '80%'
+    width: '80%',
   },
   categoryCount: {
     fontSize: 14,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   circleStyle: {
-    flex: 1
+    flex: 1,
   },
   rightColumnTop: {
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   rightColumnContainer: {
     flex: 1,
     paddingTop: 15,
     height: 64,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   headerRightFilterContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   headerRightText: {
     fontWeight: 'bold',
     paddingTop: 15,
-    fontSize: 17
+    fontSize: 17,
   },
   removeButtonContainer: {
-    marginRight: -7
+    marginRight: -7,
   },
   filterCancelText: {
     justifyContent: 'center',
     fontSize: 17,
     paddingTop: 15,
-    color: config.color.blue
+    color: config.color.blue,
   },
   filterDeleteText: {
     justifyContent: 'center',
     paddingTop: 15,
     fontSize: 17,
-    color: config.color.grey
-  }
+    color: config.color.grey,
+  },
 });
 export default styles;
