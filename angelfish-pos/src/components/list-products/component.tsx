@@ -9,6 +9,7 @@ import {
   Modal,
   Alert,
   AsyncStorage,
+  ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
@@ -251,7 +252,7 @@ export class ListProductsComponent extends Component<
           scrollEventThrottle={1000}
           scrollEnabled={!this.state.showFilterSort}
           onScroll={event => {
-            if (this.state.loading) {
+            if (this.state.fetching) {
               return;
             }
             const offset = event.nativeEvent.contentOffset.y;
@@ -358,6 +359,7 @@ export class ListProductsComponent extends Component<
             hasLine={false}
             columnNum={3}
           />
+          {this.state.fetching && <ActivityIndicator />}
         </ScrollView>
       );
     } else {
