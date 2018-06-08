@@ -6,65 +6,65 @@ export const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 15,
     height: 64,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   headerRightContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   rightColumnTop: {
-    justifyContent: 'flex-start'
+    justifyContent: 'flex-start',
   },
   rightColumnContainer: {
     flex: 1,
     paddingTop: 15,
     height: 64,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   headerRightFilterContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingHorizontal: 16
+    paddingHorizontal: 16,
   },
   headerRightText: {
     fontWeight: 'bold',
     paddingTop: 15,
-    fontSize: 17
+    fontSize: 17,
   },
   removeButtonContainer: {
-    marginRight: -7
+    marginRight: -7,
   },
   filterCancelText: {
     justifyContent: 'center',
     fontSize: 17,
     paddingTop: 15,
-    color: config.color.blue
+    color: config.color.blue,
   },
   filterDeleteText: {
     justifyContent: 'center',
     paddingTop: 15,
     fontSize: 17,
-    color: config.color.blue
+    color: config.color.blue,
   },
   buttonBottomContainer: {
     justifyContent: 'center',
     padding: 16,
     alignItems: 'flex-end',
-    backgroundColor: config.color.backgroundGrey
+    backgroundColor: config.color.backgroundGrey,
   },
   buttonBottomStyle: {
-    width: 275,
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: config.color.blue,
-    borderRadius: 5
+    borderRadius: 5,
   },
   buttonBottomText: {
     color: config.color.white,
     fontWeight: 'bold',
     fontSize: 18,
-    padding: 10
-  }
+    padding: 10,
+  },
 });

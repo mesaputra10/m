@@ -143,7 +143,7 @@ export const styles = StyleSheet.create({
   },
   productImage: {
     width: 500,
-    height: 725,
+    height: 541,
   },
   productTitle: {
     width: 632,
@@ -255,7 +255,6 @@ export const styles = StyleSheet.create({
   filterDropdownContainer: {
     position: 'absolute',
     zIndex: 2,
-    marginTop: 80 * 13.5,
     marginLeft: 32,
     backgroundColor: 'rgb(255, 255, 255)',
     height: 260,
@@ -263,7 +262,6 @@ export const styles = StyleSheet.create({
   filterDropdownMonthContainer: {
     position: 'absolute',
     zIndex: 2,
-    marginTop: 80 * 13.43,
     marginLeft: 32 * 6,
     backgroundColor: 'rgb(255, 255, 255)',
   },
