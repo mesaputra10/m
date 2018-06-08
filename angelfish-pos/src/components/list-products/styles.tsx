@@ -76,9 +76,21 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
   },
+  buttonBeliContainerDisabled: {
+    height: 40,
+    borderRadius: 3,
+    backgroundColor: config.color.grey,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonBeliTextDisabled: {
+    color: config.color.white,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
   loadStructure: {
     width: '100%',
-    height: '80%',
+    height: '90%',
   },
   totalProductsText: {
     fontSize: 14,
