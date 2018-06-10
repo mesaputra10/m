@@ -1,5 +1,0 @@
-[22-Mar-2018 19:05:44 Asia/Jakarta] PHP Notice:  Undefined offset: 0 in /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Jpos.php on line 88
-[22-Mar-2018 19:05:44 Asia/Jakarta] PHP Notice:  Undefined index: storeCode in /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Jpos.php on line 89
-[22-Mar-2018 19:05:44 Asia/Jakarta] PHP Notice:  Undefined index: storeName in /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Jpos.php on line 90
-[22-Mar-2018 19:05:44 Asia/Jakarta] PHP Notice:  Undefined index: isBlocked in /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Jpos.php on line 92
-[22-Mar-2018 19:05:44 Asia/Jakarta] PHP Notice:  Undefined index: isDeleted in /home/loyalty-pillar-api/apps/release/2018-02-05-12-48-11/app/libraries/Jpos.php on line 93
