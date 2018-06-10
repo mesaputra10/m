@@ -11,6 +11,8 @@ install:
 script:
   - coverage run tests.py
   - python index.py
+  - docker build . -t testdocker
+  - docker run -d -name=testdocker testdocker
 
 after_success:
   - codecov
