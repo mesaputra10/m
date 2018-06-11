@@ -28,12 +28,12 @@ export class KeranjangComponent extends Component<KeranjangProps, any> {
               onPress={() =>
                 Alert.alert('Konfirmasi!', 'Apakah anda yakin akan keluar?', [
                   { text: 'Ya', onPress: () => this._signOutAsync() },
-                  { text: 'Tidak' }
+                  { text: 'Tidak' },
                 ])
               }
             >
               <View style={styles.buttonBottomStyle}>
-                <Text style={styles.buttonBottomText}>LOGOUT</Text>
+                <Text style={styles.buttonBottomText}>Logout</Text>
               </View>
             </TouchableWithoutFeedback>
           )}

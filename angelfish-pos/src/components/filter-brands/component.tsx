@@ -21,7 +21,7 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
       dataBrands: props.brands,
       keyword: '',
       selectedBrands: props.selectedBrands,
-      showSearchBrands: false
+      showSearchBrands: false,
     };
   }
   clickChildBrand = brand => {
@@ -62,7 +62,7 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
     this.setState({
       showSearchBrands: !this.state.showSearchBrands,
       keyword: '',
-      dataBrands: this.props.brands
+      dataBrands: this.props.brands,
     });
   };
   render() {
@@ -146,7 +146,7 @@ export class FilterBrandsComponent extends Component<FilterBrandsComponentProps,
         <View style={styles.buttonBottomContainer}>
           <TouchableWithoutFeedback onPress={this.onPressTerapkan} disabled={disableTerapkan}>
             <View style={[styles.buttonBottomStyle, disableTerapkanStyle]}>
-              <Text style={styles.buttonBottomText}>TERAPKAN</Text>
+              <Text style={styles.buttonBottomText}>Terapkan</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

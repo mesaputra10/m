@@ -112,7 +112,7 @@ export class SigninComponent extends Component<any, any> {
                 onPress={this._signinAsync}
               >
                 <View style={buttonLoginContainer}>
-                  <Text style={buttonLoginText}>LOGIN</Text>
+                  <Text style={buttonLoginText}>Login</Text>
                 </View>
               </TouchableWithoutFeedback>
             </View>

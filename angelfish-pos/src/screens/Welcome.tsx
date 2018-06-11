@@ -5,7 +5,7 @@ import {
   Text,
   Dimensions,
   ImageBackground,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
 } from 'react-native';
 import config from '../config';
 
@@ -15,7 +15,7 @@ const BG_IMAGE = require('../../assets/images/ilLoginGetAccess.png');
 
 export class Welcome extends React.Component<any, any> {
   static navigationOptions = {
-    header: null
+    header: null,
   };
   constructor(props: any) {
     super(props);
@@ -26,7 +26,7 @@ export class Welcome extends React.Component<any, any> {
         <ImageBackground source={BG_IMAGE} style={styles.bgImage}>
           <TouchableWithoutFeedback onPress={this._signinAsync}>
             <View style={styles.buttonLoginContainer}>
-              <Text style={styles.loginText}>LOGIN</Text>
+              <Text style={styles.loginText}>Login</Text>
             </View>
           </TouchableWithoutFeedback>
         </ImageBackground>
@@ -41,7 +41,7 @@ export class Welcome extends React.Component<any, any> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   },
   bgImage: {
     flex: 1,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     width: SCREEN_WIDTH,
     height: SCREEN_HEIGHT,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   buttonLoginContainer: {
     borderRadius: 5,
@@ -59,12 +59,12 @@ const styles = StyleSheet.create({
     height: 56,
     backgroundColor: config.color.blue,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   loginText: {
     fontWeight: 'bold',
     fontSize: 18,
-    color: config.color.white
-  }
+    color: config.color.white,
+  },
 });
 export default Welcome;

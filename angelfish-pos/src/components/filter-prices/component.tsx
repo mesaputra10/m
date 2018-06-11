@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   TextInput,
   ScrollView,
-  Alert
+  Alert,
 } from 'react-native';
 import { Content, List, ListItem } from 'native-base';
 import styles from './styles';
@@ -25,7 +25,7 @@ export class FilterPricesComponent extends Component<FilterPricesComponentProps,
     super(props);
     this.state = {
       min: props.priceRange.min || 0,
-      max: props.priceRange.max || 0
+      max: props.priceRange.max || 0,
     };
   }
   onPressTerapkan = () => {
@@ -134,7 +134,7 @@ export class FilterPricesComponent extends Component<FilterPricesComponentProps,
         <View style={styles.buttonBottomContainer}>
           <TouchableWithoutFeedback onPress={this.onPressTerapkan} disabled={disableTerapkan}>
             <View style={[styles.buttonBottomStyle, disableTerapkanStyle]}>
-              <Text style={styles.buttonBottomText}>TERAPKAN</Text>
+              <Text style={styles.buttonBottomText}>Terapkan</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>
