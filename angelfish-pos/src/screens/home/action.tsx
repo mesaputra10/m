@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native';
-import { searchProduct, FilterParams, categories } from '../../helpers/fetch-data';
+import { searchProduct, FilterParams, categories, TokenExpired } from '../../helpers/fetch-data';
 import ActionTypes from '../../store/action-types';
 import { SearchResultAction, SearchAction } from './reducer';
 import { FilterProducts } from '../../components/filter-products';
@@ -9,25 +9,25 @@ import { ThunkAction } from 'redux-thunk';
 
 export const startLoading = () => ({
   type: ActionTypes.IS_LOADING,
-  isLoading: true
+  isLoading: true,
 });
 
 export const endLoading = () => ({
   type: ActionTypes.IS_LOADING,
-  isLoading: false
+  isLoading: false,
 });
 
 export function startSearch(keyword): SearchAction {
   return {
     type: ActionTypes.PRODUCTS_SEARCH,
-    keyword
+    keyword,
   };
 }
 
 export const fetchSearch = (
   keyword: string,
   page: number = 1,
-  filterParams: FilterParams = {}
+  filterParams: FilterParams = {},
 ) => dispatch => {
   dispatch(startSearch(keyword));
   return searchProduct(keyword, page, filterParams)
@@ -48,7 +48,7 @@ export const productsData = (keyword, page, filterParams, data): SearchResultAct
   totalPage: data.total.totalPages,
   totalProducts: data.total.totalCount,
   brands: data.facets.aggregationBrand,
-  priceRange: data.facets.aggregationPriceRange
+  priceRange: data.facets.aggregationPriceRange,
 });
 
 export const fetchCategories = () => async dispatch => {
@@ -57,7 +57,8 @@ export const fetchCategories = () => async dispatch => {
     let data = await categories();
     return dispatch({ type: ActionTypes.CATEGORIES_LIST, categories: data });
   } catch (err) {
-    dispatch({ type: ActionTypes.SERVER_ERROR, error: err });
+    if (err instanceof TokenExpired) dispatch({ type: ActionTypes.AUTH_EXPIRED });
+    else dispatch({ type: ActionTypes.SERVER_ERROR, error: err });
   }
 };
 
@@ -67,7 +68,7 @@ export const setRemoveFilter = () => dispatch => {
   dispatch(setValueFilterPrices(0, 0));
   dispatch({
     type: ActionTypes.PRODUCTS_FILTER,
-    showFilter: false
+    showFilter: false,
   });
 };
 
@@ -83,13 +84,13 @@ export const setDefaultFilterCategory = () => dispatch =>
   dispatch({
     type: ActionTypes.SET_FILTER_CATEGORY,
     selectedCategoryId: '',
-    selectedCategoryName: ''
+    selectedCategoryName: '',
   });
 
 export const setDefaultFilterBrand = () => dispatch =>
   dispatch({
     type: ActionTypes.SET_FILTER_BRAND,
-    selectedBrands: []
+    selectedBrands: [],
   });
 
 export const resetProductsList = () => ({ type: ActionTypes.PRODUCTS_RESET });
@@ -102,48 +103,53 @@ export const emptyProductsData = (): SearchResultAction => ({
   totalProducts: 0,
   brands: [],
   page: 0,
-  priceRange: null
+  priceRange: null,
 });
 
 export const setShowFilter = data => dispatch =>
   dispatch({
     type: ActionTypes.PRODUCTS_FILTER,
-    showFilter: data
+    showFilter: data,
   });
 
 export const setFilterBrands = selectedBrands => dispatch =>
   dispatch({
     type: ActionTypes.SET_FILTER_BRAND,
-    selectedBrands
+    selectedBrands,
   });
 
 export const setChildCategory = data => dispatch =>
   dispatch({
     type: ActionTypes.PRODUCT_FILTER_CHILD_CATEGORY,
-    childCategory: data
+    childCategory: data,
   });
 
 export const setChildBrand = data => dispatch =>
   dispatch({
     type: ActionTypes.PRODUCT_FILTER_CHILD_BRAND,
-    childBrand: data
+    childBrand: data,
   });
 
 export const setValueFilterPrices = (min, max) => dispatch =>
   dispatch({
     type: ActionTypes.PRODUCTS_FILTER_PRICES_VALUE,
     minPriceRange: min,
-    maxPriceRange: max
+    maxPriceRange: max,
   });
 
 export const setShowSearchResults = data => dispatch =>
   dispatch({
     type: ActionTypes.SHOW_SEARCH_RESULTS_LIST,
-    showSearchResults: data
+    showSearchResults: data,
   });
 
 export const setShowParentCategory = data => dispatch =>
   dispatch({
     type: ActionTypes.SHOW_CATEGORY_PARENT,
-    showParentCategory: data
+    showParentCategory: data,
   });
+
+export const logout = navigate => dispatch => {
+  dispatch({ type: ActionTypes.ACTION_LOGOUT });
+  navigate.navigate('Welcome');
+};

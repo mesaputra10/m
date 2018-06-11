@@ -10,7 +10,7 @@ import {
   Alert,
   Modal,
   ActivityIndicator,
-  AsyncStorage
+  AsyncStorage,
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 import styles from './styles';
@@ -57,11 +57,13 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   setShowSearchResults?: any;
   setShowParentCategory?: any;
   isServerError: boolean;
+  isTokenExpired: boolean;
+  logout: any;
 }
 
 export class HomeComponent extends React.Component<HomeComponentProps, any> {
   static navigationOptions = {
-    header: null
+    header: null,
   };
   constructor(props: HomeComponentProps) {
     super(props);
@@ -74,7 +76,8 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       categoryName: 'Kategori',
       showSearchHistory: false,
       keyword: '',
-      isPrevServerError: false
+      isPrevServerError: false,
+      isTokenExpired: false,
     };
     this.onChangeTextSearch = this.onChangeTextSearch.bind(this);
   }
@@ -85,6 +88,9 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
     return {};
   }
   componentDidUpdate() {
+    if (this.props.isTokenExpired) {
+      this.props.logout(this.props.navigation);
+    }
     if (this.props.isServerError && !this.state.isPrevServerError) {
       this.setState({ isPrevServerError: true });
       this.props.navigation.navigate('PageServerError', { retry: this.retryServer });
@@ -103,7 +109,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
         searchResults: false,
         showCancelButton: true,
         showSearchHistory: false,
-        keyword: text
+        keyword: text,
       });
       this.props.search(text, 1);
     } else {
@@ -131,7 +137,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
       searchAutoComplete: false,
       searchResults: false,
       showCancelButton: false,
-      keyword: ''
+      keyword: '',
     });
     this.props.setShowFilter(false);
     this.props.setShowSearchResults(false);
@@ -180,7 +186,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
   setShowHeaderCategory = categoryName => {
     this.setState({
       showHeaderCategory: !this.state.showHeaderCategory,
-      categoryName
+      categoryName,
     });
   };
   backCategory = () => {
@@ -211,7 +217,7 @@ export class HomeComponent extends React.Component<HomeComponentProps, any> {
             opacity: 0.8,
             flexDirection: 'row',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
           }}
         >
           <ActivityIndicator color={config.color.white} size="large" />

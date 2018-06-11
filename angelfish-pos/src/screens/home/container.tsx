@@ -14,13 +14,18 @@ import {
   resetProductsList,
   setValueFilterPrices,
   setShowSearchResults,
-  setShowParentCategory
+  setShowParentCategory,
+  logout,
 } from './action';
 import { start } from 'repl';
 import { fetchCategories } from './action';
 
 const mapStateToProps = (state: any) => {
-  return { ...state.homeReducer, isServerError: state.globalReducer.isServerError };
+  return {
+    ...state.homeReducer,
+    isServerError: state.globalReducer.isServerError,
+    isTokenExpired: state.globalReducer.isTokenExpired,
+  };
 };
 
 const mapDispatchToProps = dispatch => ({
@@ -37,7 +42,8 @@ const mapDispatchToProps = dispatch => ({
   setChildBrand: data => dispatch(setChildBrand(data)),
   setValueFilterPrices: (min, max) => dispatch(setValueFilterPrices(min, max)),
   setShowSearchResults: data => dispatch(setShowSearchResults(data)),
-  setShowParentCategory: data => dispatch(setShowParentCategory(data))
+  setShowParentCategory: data => dispatch(setShowParentCategory(data)),
+  logout: navigate => dispatch(logout(navigate)),
 });
 
 export const HomeContainer = connect(mapStateToProps, mapDispatchToProps)(HomeComponent);

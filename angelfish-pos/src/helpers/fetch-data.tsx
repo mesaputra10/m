@@ -150,7 +150,19 @@ const removeUserToken = async () => {
   await AsyncStorage.multiRemove([keyAccessToken, keyRefreshToken]);
 };
 
-class ServerError extends Error {}
+export class ServerError extends Error {
+  constructor(m: string) {
+    super(m);
+    Object.setPrototypeOf(this, ServerError.prototype);
+  }
+}
+
+export class TokenExpired extends Error {
+  constructor(m: string) {
+    super(m);
+    Object.setPrototypeOf(this, TokenExpired.prototype);
+  }
+}
 
 export async function fetchData(
   url: string,
@@ -176,8 +188,12 @@ export async function fetchData(
   } catch (err) {
     if (err.response.status == 401) {
       if (retry > 1) throw Error('Maximum retry reached');
-
-      let newToken = await refreshToken(token.accessToken, token.refreshToken);
+      let newToken: Tokens = null;
+      try {
+        newToken = await refreshToken(token.accessToken, token.refreshToken);
+      } catch (err) {
+        throw new TokenExpired(err);
+      }
       await setUserToken(newToken);
       return fetchData(url, method, inputParams, newToken, retry + 1);
     }
