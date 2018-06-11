@@ -9,6 +9,7 @@ import {
   Modal,
   Alert,
   AsyncStorage,
+  ActivityIndicator,
 } from 'react-native';
 import styles from './styles';
 import numberFormat from '../../helpers/number-format';
@@ -18,6 +19,7 @@ import { searchProduct, FilterParams } from '../../helpers/fetch-data';
 import { Product } from '../../bmd';
 import config from '../../config';
 import { uniqBy } from 'lodash';
+import { LoadStructureProductList } from '../load-structure-product-list';
 
 interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   products?: Product[];
@@ -235,13 +237,7 @@ export class ListProductsComponent extends Component<
     );
 
     if (this.state.loading || isFetching) {
-      return (
-        <Image
-          source={require('./assets/load-structure.png')}
-          resizeMode="stretch"
-          style={styles.loadStructure}
-        />
-      );
+      return <LoadStructureProductList />;
     }
     if (products.length > 0) {
       return (
@@ -251,7 +247,7 @@ export class ListProductsComponent extends Component<
           scrollEventThrottle={1000}
           scrollEnabled={!this.state.showFilterSort}
           onScroll={event => {
-            if (this.state.loading) {
+            if (this.state.fetching) {
               return;
             }
             const offset = event.nativeEvent.contentOffset.y;
@@ -358,6 +354,7 @@ export class ListProductsComponent extends Component<
             hasLine={false}
             columnNum={3}
           />
+          {this.state.fetching && <ActivityIndicator />}
         </ScrollView>
       );
     } else {

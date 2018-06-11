@@ -6,24 +6,24 @@ import config from '../../config';
 const colors = {
   1: {
     style: {
-      backgroundColor: '#ffffff'
-    }
+      backgroundColor: '#ffffff',
+    },
   },
   2: {
     style: {
-      backgroundColor: '#f5f5f6'
-    }
+      backgroundColor: '#f5f5f6',
+    },
   },
   3: {
     style: {
-      backgroundColor: '#eff0f2'
-    }
+      backgroundColor: '#eff0f2',
+    },
   },
   4: {
     style: {
-      backgroundColor: '#e1e3e6'
-    }
-  }
+      backgroundColor: '#e1e3e6',
+    },
+  },
 };
 
 interface FilterCategoriesProps {
@@ -39,7 +39,7 @@ export class FilterCategoriesComponent extends Component<FilterCategoriesProps, 
     this.state = {
       openChild: [],
       selectedCategoryId: props.selectedCategoryId,
-      selectedCategoryName: ''
+      selectedCategoryName: '',
     };
   }
   setFilterCategory = (id, name) => {
@@ -59,7 +59,7 @@ export class FilterCategoriesComponent extends Component<FilterCategoriesProps, 
         this.setState({ openChild });
       } else {
         this.setState({
-          openChild: this.state.openChild.concat(category.id)
+          openChild: this.state.openChild.concat(category.id),
         });
       }
     } else {
@@ -73,7 +73,9 @@ export class FilterCategoriesComponent extends Component<FilterCategoriesProps, 
           {children.map((category, categoryIndex) => {
             const level = category.level !== undefined ? category.level : 4;
             const customBg = colors[level]['style'];
-            const imageChevron = this.state.openChild.includes(category.id)
+            const isOpened = this.state.openChild.includes(category.id);
+            const isOpenedStyle = isOpened ? styles.fontBold : null;
+            const imageChevron = isOpened
               ? require('./assets/chevronUp.png')
               : require('./assets/chevronDown.png');
             const chevron = level !== 4 ? <Image source={imageChevron} /> : null;
@@ -92,7 +94,7 @@ export class FilterCategoriesComponent extends Component<FilterCategoriesProps, 
                     <View style={styles.listLeftCategory}>
                       <View style={{ flexDirection: 'row' }}>
                         <Text
-                          style={styles.titleListTextCategory}
+                          style={[styles.titleListTextCategory, isOpenedStyle]}
                           numberOfLines={3}
                           ellipsizeMode="tail"
                         >
@@ -148,7 +150,7 @@ export class FilterCategoriesComponent extends Component<FilterCategoriesProps, 
               if (this.props.selectedCategoryId != this.state.selectedCategoryId) {
                 this.props.terapkanCategory(
                   this.state.selectedCategoryId,
-                  this.state.selectedCategoryName
+                  this.state.selectedCategoryName,
                 );
               }
               this.props.clickCancelCategories();
