@@ -158,7 +158,7 @@ export class FilterCategoriesComponent extends Component<FilterCategoriesProps, 
             disabled={disableTerapkanCategory}
           >
             <View style={[styles.buttonBottomStyle, disableTerapkanCategoryStyle]}>
-              <Text style={styles.buttonBottomText}>TERAPKAN</Text>
+              <Text style={styles.buttonBottomText}>Terapkan</Text>
             </View>
           </TouchableWithoutFeedback>
         </View>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { View, Text, Image, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { styles } from './styles';
 
 export class RatingComponent extends Component<any, any> {

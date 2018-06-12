@@ -66,7 +66,7 @@ export class FilterProductsComponent extends Component<
       openChild: [],
       showFilterCategory: false,
       showFilterBrands: false,
-      showFilterPrices: false
+      showFilterPrices: false,
     };
   }
   clickCategories = () => {
@@ -74,7 +74,7 @@ export class FilterProductsComponent extends Component<
       dataCategories: this.props.categories,
       showFilterCategory: true,
       showFilterBrands: false,
-      showFilterPrices: false
+      showFilterPrices: false,
     });
   };
   clickChildCategory = (category, children) => {
@@ -91,7 +91,7 @@ export class FilterProductsComponent extends Component<
       dataCategories: this.props.categories,
       showFilterCategory: false,
       showFilterBrands: false,
-      showFilterPrices: false
+      showFilterPrices: false,
     });
   };
   terapkanCategory = (selectedCategoryId, selectedCategoryName) => {
@@ -103,7 +103,7 @@ export class FilterProductsComponent extends Component<
       dataBrands: this.props.brands,
       showFilterCategory: false,
       showFilterBrands: true,
-      showFilterPrices: false
+      showFilterPrices: false,
     });
   };
   clickCancelBrands = () => {
@@ -111,21 +111,21 @@ export class FilterProductsComponent extends Component<
       dataBrands: this.props.brands,
       showFilterCategory: false,
       showFilterBrands: false,
-      showFilterPrices: false
+      showFilterPrices: false,
     });
   };
   clickPrices = () => {
     this.setState({
       showFilterCategory: false,
       showFilterBrands: false,
-      showFilterPrices: true
+      showFilterPrices: true,
     });
   };
   clickCancelPrices = () => {
     this.setState({
       showFilterCategory: false,
       showFilterBrands: false,
-      showFilterPrices: false
+      showFilterPrices: false,
     });
   };
   onPressTerapkan = () => {
@@ -150,7 +150,7 @@ export class FilterProductsComponent extends Component<
       selectedBrands,
       categories,
       minPriceRange,
-      maxPriceRange
+      maxPriceRange,
     } = this.props;
 
     const { showFilterCategory, showFilterBrands, showFilterPrices } = this.state;
@@ -236,7 +236,7 @@ export class FilterProductsComponent extends Component<
           <View style={styles.buttonBottomContainer}>
             <TouchableWithoutFeedback onPress={this.onPressTerapkan} disabled={disableTerapkan}>
               <View style={[styles.buttonBottomStyle, disableTerapkanStyle]}>
-                <Text style={styles.buttonBottomText}>TERAPKAN</Text>
+                <Text style={styles.buttonBottomText}>Terapkan</Text>
               </View>
             </TouchableWithoutFeedback>
           </View>

@@ -419,7 +419,7 @@ export class PageProductDetailComponent extends Component<
               )}
               {!this.statusButtonBeli(product.activation) && (
                 <View style={styles.buttonStokHabis}>
-                  <Text style={styles.textButtonStokHabis}>STOK HABIS</Text>
+                  <Text style={styles.textButtonStokHabis}>BELI</Text>
                 </View>
               )}
               {this.statusButtonBeli(product.activation) && (
