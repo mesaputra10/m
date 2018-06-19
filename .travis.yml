@@ -1,0 +1,22 @@
+language: objective-c
+os: osx
+osx_image: xcode9.3
+node_js: 8
+
+cache:
+- bundler
+- pip
+- yarn
+
+before_install:
+- brew update
+- brew install yarn
+
+before_script:
+- nvm install 8
+- sudo easy_install virtualenv
+- virtualenv ~/virtualenv
+- source ~/virtualenv/bin/activate
+
+script:
+- ls
