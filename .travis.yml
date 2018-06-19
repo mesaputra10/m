@@ -11,7 +11,7 @@ cache:
 before_install:
 - brew update
 - brew install yarn
-
+- ls
 before_script:
 - nvm install 8
 - sudo easy_install virtualenv
