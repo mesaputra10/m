@@ -1,0 +1,26 @@
+language: objective-c
+os: osx
+osx_image: xcode9.3
+node_js: node
+
+cache:
+- bundler
+- pip
+- yarn
+
+before_install:
+- brew update
+- nvm install node
+- cd angelfish-pos
+
+install:
+- npm ci
+
+before_script:
+- sudo easy_install virtualenv
+- virtualenv ~/virtualenv
+- source ~/virtualenv/bin/activate
+
+script:
+- npm test
+

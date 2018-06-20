@@ -6,6 +6,7 @@ import config from '../../config';
 import { Button } from 'native-base';
 import { uniqWith, isEqual } from 'lodash';
 import { SearchBar } from '../../components/search-bar';
+import { Brand } from '../../bmd';
 
 interface FilterBrandsComponentProps {
   brands: any[];
@@ -14,15 +15,27 @@ interface FilterBrandsComponentProps {
   cancelFilterBrands?: any;
 }
 
-export class FilterBrandsComponent extends Component<FilterBrandsComponentProps, any> {
+const componentState = {
+  dataBrands: Array<Brand>(),
+  keyword: '',
+  selectedBrands: Array<Brand>(),
+  showSearchBrands: false,
+};
+
+export class FilterBrandsComponent extends Component<
+  FilterBrandsComponentProps,
+  typeof componentState
+> {
   constructor(props) {
     super(props);
-    this.state = {
-      dataBrands: props.brands,
-      keyword: '',
-      selectedBrands: props.selectedBrands,
-      showSearchBrands: false,
-    };
+    this.state = componentState;
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { brands, selectedBrands } = nextProps;
+    if (brands || selectedBrands) {
+      return { dataBrands: brands, selectedBrands };
+    }
+    return {};
   }
   clickChildBrand = brand => {
     let selectedBrandsNew = [...this.state.selectedBrands];

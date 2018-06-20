@@ -19,14 +19,19 @@ interface FilterPricesComponentProps {
   cancelFilterPrices?: any;
 }
 
-export class FilterPricesComponent extends Component<FilterPricesComponentProps, any> {
+const componentState = {
+  min: 0,
+  max: 0,
+};
+
+export class FilterPricesComponent extends Component<
+  FilterPricesComponentProps,
+  typeof componentState
+> {
   maxInput: {};
   constructor(props) {
     super(props);
-    this.state = {
-      min: props.priceRange.min || 0,
-      max: props.priceRange.max || 0,
-    };
+    this.state = componentState;
   }
   onPressTerapkan = () => {
     const { min, max } = this.state;
@@ -66,14 +71,14 @@ export class FilterPricesComponent extends Component<FilterPricesComponentProps,
     return parseFloat(withOutDot);
   };
   deleteFilter = () => {
-    this.setState({ max: '', min: '' });
+    this.setState({ max: 0, min: 0 });
     this.props.setValueFilterPrices(0, 0);
   };
   render() {
     const { min, max } = this.state;
     const minFloat = this.removeDot(min);
     const maxFloat = this.removeDot(max);
-    const disableTerapkan = min === '' || max === '' || maxFloat < minFloat;
+    const disableTerapkan = min === 0 || max === 0 || maxFloat < minFloat;
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
     const minValue = min > 0 ? `Rp ${numberFormat(min)}` : '';
     const maxValue = max > 0 ? `Rp ${numberFormat(max)}` : '';
