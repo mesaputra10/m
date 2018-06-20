@@ -10,14 +10,13 @@ cache:
 
 before_install:
 - brew update
-- brew install yarn
+- nvm install node
 - cd angelfish-pos
 
 install:
 - npm ci
 
 before_script:
-- nvm install node
 - sudo easy_install virtualenv
 - virtualenv ~/virtualenv
 - source ~/virtualenv/bin/activate
