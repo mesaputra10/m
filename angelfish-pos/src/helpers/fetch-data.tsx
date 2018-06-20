@@ -293,7 +293,7 @@ async function fetchPlankton({
   method?: 'GET' | 'POST';
 }) {
   return axios({
-    baseURL: 'https://plankton.bhinneka.com',
+    baseURL: 'https://api-plankton.bhinneka.com',
     method: 'GET',
     url,
     headers: {
