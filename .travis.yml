@@ -13,6 +13,9 @@ before_install:
 - brew install yarn
 - cd angelfish-pos
 
+install:
+- npm ci
+
 before_script:
 - nvm install 10
 - sudo easy_install virtualenv
