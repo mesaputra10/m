@@ -16,16 +16,14 @@ interface componentProps {
   onSelect: any;
 }
 
-interface componentState {
-  selectedOutletId: string;
-}
+const componentState = {
+  selectedOutletId: '',
+};
 
-export class StokListComponent extends Component<componentProps, componentState> {
+export class StokListComponent extends Component<componentProps, typeof componentState> {
   constructor(props) {
     super(props);
-    this.state = {
-      selectedOutletId: '',
-    };
+    this.state = componentState;
   }
   selectOutlet = (id, stockAvailable) => {
     const { onSelect } = this.props;

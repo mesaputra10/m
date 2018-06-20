@@ -33,14 +33,26 @@ interface FilterCategoriesProps {
   dataCategories?: any[];
 }
 
-export class FilterCategoriesComponent extends Component<FilterCategoriesProps, any> {
+const componentState = {
+  openChild: [],
+  selectedCategoryId: '',
+  selectedCategoryName: '',
+};
+
+export class FilterCategoriesComponent extends Component<
+  FilterCategoriesProps,
+  typeof componentState
+> {
   constructor(props) {
     super(props);
-    this.state = {
-      openChild: [],
-      selectedCategoryId: props.selectedCategoryId,
-      selectedCategoryName: '',
-    };
+    this.state = componentState;
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { selectedCategoryId } = nextProps;
+    if (selectedCategoryId) {
+      return { selectedCategoryId };
+    }
+    return {};
   }
   setFilterCategory = (id, name) => {
     this.setState({ selectedCategoryId: id, selectedCategoryName: name });

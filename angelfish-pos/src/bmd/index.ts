@@ -49,6 +49,7 @@ export class Product {
   offerStatus: string;
   offerSpecialPriceStartDate: string;
   offerSpecialPriceEndDate: string;
+  activation: string;
 
   get isOutofStock(): boolean {
     return this.variantPrice === 0 && this.offerStatus !== 'active';
