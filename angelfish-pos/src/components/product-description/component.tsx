@@ -5,15 +5,17 @@ import config from '../../config';
 import { ContentWrap } from './libraries/content-wrap';
 import { ContentSpecification } from './libraries/content-specification';
 
-export class ProductDescriptionComponent extends Component<any, any> {
+const componentState = {
+  leftActive: true,
+  rightActive: false,
+  selengkapnyaSpec: false,
+  selengkapnyaInfo: false,
+};
+
+export class ProductDescriptionComponent extends Component<any, typeof componentState> {
   constructor(props) {
     super(props);
-    this.state = {
-      leftActive: true,
-      rightActive: false,
-      selengkapnyaSpec: false,
-      selengkapnyaInfo: false,
-    };
+    this.state = componentState;
   }
   toggleTab = () => {
     this.setState({

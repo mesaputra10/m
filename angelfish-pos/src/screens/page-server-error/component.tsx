@@ -6,21 +6,23 @@ import {
   TouchableWithoutFeedback,
   Alert,
   ActivityIndicator,
-  NetInfo
+  NetInfo,
 } from 'react-native';
 import styles from './styles';
 import store from '../../store/store';
 
-export class PageServerErrorComponent extends Component<any, any> {
+const componentState = {
+  loading: false,
+};
+
+export class PageServerErrorComponent extends Component<any, typeof componentState> {
   static navigationOptions = {
     header: null,
-    mode: 'modal'
+    mode: 'modal',
   };
   constructor(props) {
     super(props);
-    this.state = {
-      loading: false
-    };
+    this.state = componentState;
   }
 
   componentDidUpdate() {

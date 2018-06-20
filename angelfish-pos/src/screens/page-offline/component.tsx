@@ -6,22 +6,24 @@ import {
   TouchableWithoutFeedback,
   Alert,
   ActivityIndicator,
-  NetInfo
+  NetInfo,
 } from 'react-native';
 import styles from './styles';
 import store from '../../store/store';
 import { isOffline, registerConnectionChange, isOnline } from '../../helpers/check-connection';
 
-export class PageOfflineComponent extends Component<any, any> {
+const componentState = {
+  loading: false,
+};
+
+export class PageOfflineComponent extends Component<any, typeof componentState> {
   static navigationOptions = {
     header: null,
-    mode: 'modal'
+    mode: 'modal',
   };
   constructor(props) {
     super(props);
-    this.state = {
-      loading: false
-    };
+    this.state = componentState;
   }
   shouldComponentUpdate(nextProps) {
     if (nextProps.isConnected !== this.props.isConnected) {
