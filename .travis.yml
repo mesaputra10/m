@@ -3,6 +3,7 @@ os: osx
 osx_image: xcode9.3
 node_js: 10
 
+
 cache:
 - bundler
 - pip
@@ -11,6 +12,10 @@ cache:
 before_install:
 - brew update
 - brew install yarn
+- cd angelfish-pos
+
+install:
+- npm ci
 
 before_script:
 - nvm install 10
@@ -23,4 +28,4 @@ install:
 - npm
 
 script:
-- ls
+- npm test
