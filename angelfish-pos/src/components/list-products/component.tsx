@@ -32,33 +32,24 @@ interface ListProductsComponentProps extends NavigationScreenProps<any, any> {
   isFetching?: boolean;
 }
 
-interface ListProductsComponentState {
-  loading: boolean;
-  fetching: boolean;
-  page: number;
-  keyword: string;
-  products: Product[];
-  showFilterSort: boolean;
-  sortBy: string;
-  selectedSortBy: string;
-}
+const componentState = {
+  loading: true,
+  fetching: false,
+  page: 1,
+  keyword: '',
+  products: Array<Product>(),
+  showFilterSort: false,
+  sortBy: '',
+  selectedSortBy: 'Paling Sesuai',
+};
 
 export class ListProductsComponent extends Component<
   ListProductsComponentProps,
-  ListProductsComponentState
+  typeof componentState
 > {
   constructor(props) {
     super(props);
-    this.state = {
-      loading: true,
-      fetching: false,
-      page: 1,
-      keyword: props.keyword,
-      products: props.products,
-      showFilterSort: false,
-      sortBy: '',
-      selectedSortBy: 'Paling Sesuai',
-    };
+    this.state = componentState;
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {

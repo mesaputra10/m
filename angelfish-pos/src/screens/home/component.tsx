@@ -61,24 +61,26 @@ interface HomeComponentProps extends NavigationScreenProps<any, any> {
   logout: any;
 }
 
-export class HomeComponent extends React.Component<HomeComponentProps, any> {
+const componentState = {
+  searchAutoComplete: false,
+  searchResults: false,
+  showCancelButton: false,
+  showHeaderCategory: false,
+  categoryName: 'Kategori',
+  showSearchHistory: false,
+  keyword: '',
+  isPrevServerError: false,
+  isTokenExpired: false,
+};
+
+export class HomeComponent extends React.Component<HomeComponentProps, typeof componentState> {
   static navigationOptions = {
     header: null,
   };
   constructor(props: HomeComponentProps) {
     super(props);
     this.props.loadCategories();
-    this.state = {
-      searchAutoComplete: false,
-      searchResults: false,
-      showCancelButton: false,
-      showHeaderCategory: false,
-      categoryName: 'Kategori',
-      showSearchHistory: false,
-      keyword: '',
-      isPrevServerError: false,
-      isTokenExpired: false,
-    };
+    this.state = componentState;
     this.onChangeTextSearch = this.onChangeTextSearch.bind(this);
   }
   static getDerivedStateFromProps(nextProps, prevState) {

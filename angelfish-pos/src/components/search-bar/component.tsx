@@ -13,17 +13,26 @@ interface SearchBarProps {
   keyword?: string;
 }
 
-export class SearchBarComponent extends Component<any, any> {
+const componentState = {
+  keyword: '',
+  showButtonCancel: false,
+};
+
+export class SearchBarComponent extends Component<any, typeof componentState> {
   constructor(props) {
     super(props);
-    this.state = {
-      keyword: props.keyword,
-      showButtonCancel: false
-    };
+    this.state = componentState;
   }
   componentWillReceiveProps(nextProps) {
     const keyword = nextProps.keyword;
     this.setState({ keyword });
+  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { keyword } = nextProps;
+    if (keyword) {
+      return { keyword };
+    }
+    return {};
   }
   actionSearch = text => {
     if (text !== '') {
@@ -94,7 +103,7 @@ SearchBarComponent.defaultProps = {
   actionClear: () => {},
   actionSearch: () => {},
   actionSubmitEditing: () => {},
-  keyword: ''
+  keyword: '',
 };
 
 export default SearchBarComponent;

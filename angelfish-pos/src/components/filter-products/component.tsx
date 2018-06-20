@@ -39,35 +39,26 @@ interface FilterProductsComponentProps {
   deleteFilterPrices?: any;
   setFilterBrands?: any;
 }
-interface FilterProductsComponentState {
-  filterPage: boolean;
-  dataCategories: Category[];
-  childCategory: boolean;
-  dataBrands: Brand[];
-  childBrand: boolean;
-  openChild: any[];
-  showFilterCategory: boolean;
-  showFilterBrands: boolean;
-  showFilterPrices: boolean;
-}
+
+const componentState = {
+  filterPage: true,
+  dataCategories: Array<Category>(),
+  childCategory: false,
+  dataBrands: Array<Brand>(),
+  childBrand: false,
+  openChild: [],
+  showFilterCategory: false,
+  showFilterBrands: false,
+  showFilterPrices: false,
+};
 
 export class FilterProductsComponent extends Component<
   FilterProductsComponentProps,
-  FilterProductsComponentState
+  typeof componentState
 > {
   constructor(props) {
     super(props);
-    this.state = {
-      filterPage: true,
-      dataCategories: [],
-      childCategory: false,
-      dataBrands: [],
-      childBrand: false,
-      openChild: [],
-      showFilterCategory: false,
-      showFilterBrands: false,
-      showFilterPrices: false,
-    };
+    this.state = componentState;
   }
   clickCategories = () => {
     this.setState({
