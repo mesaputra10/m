@@ -11,7 +11,7 @@ const keyRefreshToken = '@KeyRefreshToken';
 const keyAuthorization =
   'Basic NDlmZTc3NTQtZjgyZS00OTA3LTkyMjgtN2MyNmE1Y2Q2MjQ0OkRySkxGMDhDYTR3SUVwUFlHOGl0aUxha3gyU0pZTmdu';
 const headerContentType = 'application/x-www-form-urlencoded';
-const baseURL: string = 'http://api-krab-dev.bhinneka.com:8080';
+const baseURL: string = 'https://api-krab.bhinneka.com';
 const deviceId = Constants.deviceId;
 
 function getUrl(config) {
@@ -88,7 +88,7 @@ export async function login(
   let requestApi = await axios({
     baseURL,
     method: 'POST',
-    url: '/api/v1/auth',
+    url: '/api/auth',
     data: stringify({
       grantType,
       username,
@@ -132,7 +132,7 @@ export async function refreshToken(oldAccessToken: string, refreshToken: string)
   let requestApi = await axios({
     baseURL,
     method: 'POST',
-    url: '/api/v1/auth',
+    url: '/api/auth',
     data: stringify({
       grantType: 'refresh_token',
       oldAccessToken,
@@ -237,7 +237,7 @@ export async function searchProduct(
   if (sort) params['sort'] = sort;
 
   let tokens = await getUserToken();
-  return fetchData('/api/v1/products/search', 'GET', params, tokens);
+  return fetchData('/api/products/search', 'GET', params, tokens);
 }
 
 const MAX_CATEGORY_LEVEL = 4;
@@ -270,12 +270,12 @@ export async function categories(): Promise<Category[]> {
 export async function fetchProduct(sku: string) {
   let tokens = await getUserToken();
   const params = {};
-  return await fetchData(`/api/v1/products/${sku}`, 'GET', params, tokens);
+  return await fetchData(`/api/products/${sku}`, 'GET', params, tokens);
 }
 
 export async function fetchProductInstallments(sku: string) {
   let tokens = await getUserToken();
-  let data = await fetchData('/api/v1/products/installments', 'GET', { sku }, tokens);
+  let data = await fetchData('/api/products/installments', 'GET', { sku }, tokens);
   return {
     sku,
     price: data.price,
@@ -293,7 +293,7 @@ async function fetchPlankton({
   method?: 'GET' | 'POST';
 }) {
   return axios({
-    baseURL: 'http://plankton-api-staging.ap-southeast-1.elasticbeanstalk.com',
+    baseURL: 'https://plankton.bhinneka.com',
     method: 'GET',
     url,
     headers: {
@@ -328,5 +328,5 @@ export async function fetchProductVariant(variantId: string) {
 export async function fetchProductSpecification(sku: string) {
   let tokens = await getUserToken();
   const params = {};
-  return await fetchData(`/api/v1/products/specification/${sku}`, 'GET', params, tokens);
+  return await fetchData(`/api/products/specification/${sku}`, 'GET', params, tokens);
 }
