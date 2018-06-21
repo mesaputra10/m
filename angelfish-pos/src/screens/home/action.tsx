@@ -1,7 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import { searchProduct, FilterParams, categories, TokenExpired } from '../../helpers/fetch-data';
 import ActionTypes from '../../store/action-types';
-import { SearchResultAction, SearchAction } from './reducer';
 import { FilterProducts } from '../../components/filter-products';
 import { Product } from '../../bmd';
 import { Action, ActionCreator, Dispatch } from 'redux';
@@ -17,7 +16,7 @@ export const endLoading = () => ({
   isLoading: false,
 });
 
-export function startSearch(keyword): SearchAction {
+export function startSearch(keyword) {
   return {
     type: ActionTypes.PRODUCTS_SEARCH,
     keyword,
@@ -40,7 +39,7 @@ export const fetchSearch = (
     .catch(err => dispatch({ type: ActionTypes.SERVER_ERROR, error: err }));
 };
 
-export const productsData = (keyword, page, filterParams, data): SearchResultAction => ({
+export const productsData = (keyword, page, filterParams, data) => ({
   type: ActionTypes.PRODUCTS_DATA_LIST,
   keyword,
   page,
@@ -95,7 +94,7 @@ export const setDefaultFilterBrand = () => dispatch =>
 
 export const resetProductsList = () => ({ type: ActionTypes.PRODUCTS_RESET });
 
-export const emptyProductsData = (): SearchResultAction => ({
+export const emptyProductsData = () => ({
   type: ActionTypes.PRODUCTS_DATA_LIST,
   keyword: '',
   products: [],

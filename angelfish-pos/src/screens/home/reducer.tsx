@@ -1,7 +1,5 @@
+import { action, on, props, reducer } from 'ts-action';
 import ActionTypes from '../../store/action-types';
-import { Action } from 'redux';
-import { Brand, Product } from '../../bmd';
-import { setShowParentCategory } from './action';
 
 const initialState = {
   products: [],
@@ -26,208 +24,165 @@ const initialState = {
   categories: [],
   showSearchResults: false,
   showParentCategory: true,
-  isServerError: false
+  isServerError: false,
 };
 
-export interface SearchAction extends Action {
-  type: ActionTypes.PRODUCTS_SEARCH;
-  keyword: string;
-}
-
-export interface SearchResultAction extends Action {
-  type: ActionTypes.PRODUCTS_DATA_LIST;
-  keyword: string;
-  products: Product[];
-  totalPage: number;
-  totalProducts: number;
-  brands: Brand[];
-  page: number;
-  priceRange: { min: string; max: string };
-}
-
-export interface FilterProducts extends Action {
-  type: ActionTypes.PRODUCTS_FILTER;
-  showFilter: boolean;
-}
-
-export interface FilterProductsReset extends Action {
-  type: ActionTypes.PRODUCTS_RESET;
-}
-
-interface ActionFilterCategoryInterface extends Action {
-  type: ActionTypes.SET_FILTER_CATEGORY;
-  selectedCategoryId: string;
-  selectedCategoryName: string;
-}
-
-export interface ActionCategoriesLoadingInterface extends Action {
-  type: ActionTypes.CATEGORIES_LOADING;
-}
-
-export interface ActionCategoriesInterface extends Action {
-  type: ActionTypes.CATEGORIES_LIST;
-  categories: any[];
-}
-
-export interface ActionFilterBrandInterface extends Action {
-  type: ActionTypes.SET_FILTER_BRAND;
-  selectedBrands: any[];
-}
-
-interface ActionChildCategoryInterface extends Action {
-  type: ActionTypes.PRODUCT_FILTER_CHILD_CATEGORY;
-  childCategory: boolean;
-}
-
-interface ActionChildBrandInterface extends Action {
-  type: ActionTypes.PRODUCT_FILTER_CHILD_BRAND;
-  childBrand: boolean;
-}
-
-interface ActionIsLoadingInterface extends Action {
-  type: ActionTypes.IS_LOADING;
-  isLoading: boolean;
-}
-
-interface PriceRangeInterface extends Action {
-  type: ActionTypes.PRODUCTS_FILTER_PRICES_VALUE;
-  minPriceRange: number;
-  maxPriceRange: number;
-}
-
-interface ShowResultInterface extends Action {
-  type: ActionTypes.SHOW_SEARCH_RESULTS_LIST;
-  showSearchResults: boolean;
-}
-
-interface ShowParentCategoryInterface extends Action {
-  type: ActionTypes.SHOW_CATEGORY_PARENT;
-  showParentCategory: boolean;
-}
-
-interface ServerError extends Action {
-  type: ActionTypes.SERVER_ERROR;
-}
-
-const reducer = (
-  state = initialState,
-  action:
-    | SearchAction
-    | SearchResultAction
-    | FilterProductsReset
-    | FilterProducts
-    | ActionFilterCategoryInterface
-    | ActionCategoriesLoadingInterface
-    | ActionCategoriesInterface
-    | ActionFilterBrandInterface
-    | ActionChildCategoryInterface
-    | ActionChildBrandInterface
-    | ActionIsLoadingInterface
-    | PriceRangeInterface
-    | ShowResultInterface
-    | ShowParentCategoryInterface
-    | ServerError
-) => {
-  switch (action.type) {
-    case ActionTypes.PRODUCTS_SEARCH: {
-      return Object.assign({}, state, {
-        isFetching: true,
-        keyword: action.keyword
-      });
-    }
-    case ActionTypes.PRODUCTS_DATA_LIST: {
-      if (state.isFetching && action.keyword === state.keyword) {
-        return Object.assign({}, state, {
-          isFetching: false,
-          products: action.products,
-          totalPage: action.totalPage,
-          totalProducts: action.totalProducts,
-          brands: action.brands,
-          keyword: action.keyword,
-          page: action.page,
-          priceRange: action.priceRange
-        });
-      }
-      return Object.assign({}, state, {
-        isFetching: false
-      });
-    }
-    case ActionTypes.PRODUCTS_RESET: {
-      return {
-        ...state,
-        keyword: '',
-        products: [],
-        totalPage: 0,
-        totalProducts: 0,
-        brands: [],
-        page: 0,
-        priceRange: null,
-        selectedCategoryId: '',
-        selectedBrands: [],
-        minPriceRange: 0,
-        maxPriceRange: 0
-      };
-    }
-    case ActionTypes.PRODUCTS_FILTER: {
-      return Object.assign({}, state, {
-        showFilter: action.showFilter
-      });
-    }
-    case ActionTypes.SET_FILTER_CATEGORY: {
-      return Object.assign({}, state, {
-        selectedCategoryId: action.selectedCategoryId,
-        selectedCategoryName: action.selectedCategoryName
-      });
-    }
-    case ActionTypes.CATEGORIES_LOADING: {
-      return { ...state, isCategoriesLoading: true };
-    }
-    case ActionTypes.CATEGORIES_LIST: {
-      return { ...state, isCategoriesLoading: false, categories: action.categories };
-    }
-    case ActionTypes.SET_FILTER_BRAND: {
-      return Object.assign({}, state, {
-        selectedBrands: action.selectedBrands
-      });
-    }
-    case ActionTypes.PRODUCT_FILTER_CHILD_CATEGORY: {
-      return Object.assign({}, state, {
-        childCategory: action.childCategory
-      });
-    }
-    case ActionTypes.PRODUCT_FILTER_CHILD_BRAND: {
-      return Object.assign({}, state, {
-        childBrand: action.childBrand
-      });
-    }
-    case ActionTypes.IS_LOADING: {
-      return Object.assign({}, state, {
-        isLoading: action.isLoading
-      });
-    }
-    case ActionTypes.PRODUCTS_FILTER_PRICES_VALUE: {
-      return Object.assign({}, state, {
-        minPriceRange: action.minPriceRange,
-        maxPriceRange: action.maxPriceRange
-      });
-    }
-    case ActionTypes.SHOW_SEARCH_RESULTS_LIST: {
-      return Object.assign({}, state, {
-        showSearchResults: action.showSearchResults
-      });
-    }
-    case ActionTypes.SHOW_CATEGORY_PARENT: {
-      return Object.assign({}, state, {
-        showParentCategory: action.showParentCategory
-      });
-    }
-    case ActionTypes.SERVER_ERROR: {
-      return { ...state, isServerError: true };
-    }
-    default: {
-      return state;
-    }
-  }
+const IsLoading = action(ActionTypes.IS_LOADING, props<{ isLoading: boolean }>());
+const ServerError = action(ActionTypes.SERVER_ERROR, props<{ isServerError: boolean }>());
+const ProductSearch = action(
+  ActionTypes.PRODUCTS_SEARCH,
+  props<{ isFetching: boolean; keyword: string }>(),
+);
+const ProductsDataList = action(
+  ActionTypes.PRODUCTS_DATA_LIST,
+  props<{
+    isFetching: boolean;
+    products: any[];
+    totalPage: number;
+    totalProducts: number;
+    brands: any[];
+    keyword: string;
+    page: number;
+    priceRange: number;
+  }>(),
+);
+const stateProductReset = {
+  keyword: '',
+  products: [],
+  totalPage: 0,
+  totalProducts: 0,
+  brands: [],
+  page: 0,
+  priceRange: null,
+  selectedCategoryId: '',
+  selectedBrands: [],
+  minPriceRange: 0,
+  maxPriceRange: 0,
 };
+const ProductReset = action(ActionTypes.PRODUCTS_RESET, props<{ propsProductReset }>());
+const SetFilter = action(ActionTypes.PRODUCTS_FILTER, props<{ showFilter: boolean }>());
+const SetFilterCategory = action(
+  ActionTypes.SET_FILTER_CATEGORY,
+  props<{
+    selectedCategoryId: string;
+    selectedCategoryName: string;
+  }>(),
+);
+const CategoriesLoading = action(
+  ActionTypes.CATEGORIES_LOADING,
+  props<{ isCategoriesLoading: boolean }>(),
+);
+const CategoriesList = action(
+  ActionTypes.CATEGORIES_LIST,
+  props<{
+    isCategoriesLoading: boolean;
+    categories: any[];
+  }>(),
+);
+const SetFilterBrand = action(
+  ActionTypes.SET_FILTER_BRAND,
+  props<{
+    selectedBrands: any[];
+  }>(),
+);
+const ProductFilterChildCategory = action(
+  ActionTypes.PRODUCT_FILTER_CHILD_CATEGORY,
+  props<{
+    childCategory: boolean;
+  }>(),
+);
+const ProductFilterChildBrand = action(
+  ActionTypes.PRODUCT_FILTER_CHILD_BRAND,
+  props<{
+    childBrand: boolean;
+  }>(),
+);
+const ProdcutsFilterPricesValue = action(
+  ActionTypes.PRODUCTS_FILTER_PRICES_VALUE,
+  props<{
+    minPriceRange: number;
+    maxPriceRange: number;
+  }>(),
+);
+const ShowSearchResultsList = action(
+  ActionTypes.SHOW_SEARCH_RESULTS_LIST,
+  props<{
+    showSearchResults: boolean;
+  }>(),
+);
+const ShowCategoryParent = action(
+  ActionTypes.SHOW_CATEGORY_PARENT,
+  props<{
+    showParentCategory: boolean;
+  }>(),
+);
 
-export default reducer;
+export const homeReducer = reducer<typeof initialState>(
+  [
+    on(IsLoading, (state, action) => ({ ...state, isLoading: action.isLoading })),
+    on(ServerError, (state, action) => ({ ...state, isServerError: action.isServerError })),
+    on(ProductSearch, (state, action) => ({
+      ...state,
+      isFetching: true,
+      keyword: action.keyword,
+    })),
+    on(ProductsDataList, (state, action) => ({
+      ...state,
+      isFetching: false,
+      products: action.products,
+      totalPage: action.totalPage,
+      totalProducts: action.totalProducts,
+      brands: action.brands,
+      keyword: action.keyword,
+      page: action.page,
+      priceRange: action.priceRange,
+    })),
+    on(ProductReset, (state, action) => ({ ...state, stateProductReset })),
+    on(SetFilter, (state, action) => ({
+      ...state,
+      showFilter: action.showFilter,
+    })),
+    on(SetFilterCategory, (state, action) => ({
+      ...state,
+      selectedCategoryId: action.selectedCategoryId,
+      selectedCategoryName: action.selectedCategoryName,
+    })),
+    on(CategoriesLoading, (state, action) => ({
+      ...state,
+      isCategoriesLoading: action.isCategoriesLoading,
+    })),
+    on(CategoriesList, (state, action) => ({
+      ...state,
+      isCategoriesLoading: action.isCategoriesLoading,
+      categories: action.categories,
+    })),
+    on(SetFilterBrand, (state, action) => ({
+      ...state,
+      selectedBrands: action.selectedBrands,
+    })),
+    on(ProductFilterChildCategory, (state, action) => ({
+      ...state,
+      childCategory: action.childCategory,
+    })),
+    on(ProductFilterChildBrand, (state, action) => ({
+      ...state,
+      childBrand: action.childBrand,
+    })),
+    on(ProdcutsFilterPricesValue, (state, action) => ({
+      ...state,
+      minPriceRange: action.minPriceRange,
+      maxPriceRange: action.maxPriceRange,
+    })),
+    on(ShowSearchResultsList, (state, action) => ({
+      ...state,
+      showSearchResults: action.showSearchResults,
+    })),
+    on(ShowCategoryParent, (state, action) => ({
+      ...state,
+      showParentCategory: action.showParentCategory,
+    })),
+  ],
+  initialState,
+);
+
+export default homeReducer;
