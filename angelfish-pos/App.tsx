@@ -1,3 +1,5 @@
+import { LocaleProvider } from 'antd';
+import frFR from 'antd/lib/locale-provider/fr_FR';
 import React, { Component, ComponentState } from 'react';
 import store from './src/store/store';
 import { AsyncStorage, ActivityIndicator, StatusBar, StyleSheet, Text, View } from 'react-native';
