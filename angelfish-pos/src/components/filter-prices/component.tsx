@@ -17,26 +17,29 @@ import numberFormat from '../../helpers/number-format';
 interface FilterPricesComponentProps {
   setValueFilterPrices?: any;
   cancelFilterPrices?: any;
+  deleteFilterPrices?: any;
+  minPriceRange?: number;
+  maxPriceRange?: number;
 }
 
-const componentState = {
-  min: 0,
-  max: 0,
-};
+interface componentState {
+  min: number;
+  max: number;
+}
 
-export class FilterPricesComponent extends Component<
-  FilterPricesComponentProps,
-  typeof componentState
-> {
+export class FilterPricesComponent extends Component<FilterPricesComponentProps, componentState> {
   maxInput: {};
   constructor(props) {
     super(props);
-    this.state = componentState;
+    this.state = {
+      min: props.minPriceRange,
+      max: props.maxPriceRange,
+    };
   }
   onPressTerapkan = () => {
     const { min, max } = this.state;
-    const minValue = this.removeDot(min);
-    const maxValue = this.removeDot(max);
+    const minValue = this.removeDot(min.toString());
+    const maxValue = this.removeDot(max.toString());
     if (maxValue === 0) {
       Alert.alert('Error', 'Harga maksimum tidak boleh 0!');
       return null;
@@ -48,27 +51,30 @@ export class FilterPricesComponent extends Component<
     this.props.setValueFilterPrices(minValue, maxValue);
     this.props.cancelFilterPrices();
   };
-  setValueMin = min => {
+  setValueMin = (min: string) => {
     if (min.length <= 3) return null;
     const minString = this.handlePriceEmpty(min);
     const replaceRp = this.replaceRp(minString);
     const val = this.removeDot(replaceRp);
     this.setState({ min: numberFormat(val) });
   };
-  setValueMax = max => {
+  setValueMax = (max: string) => {
     if (max.length <= 3) return null;
     const maxString = this.handlePriceEmpty(max);
     const replaceRp = this.replaceRp(maxString);
     const val = this.removeDot(replaceRp);
     this.setState({ max: numberFormat(val) });
   };
-  handlePriceEmpty = value => {
-    return value.length > 0 ? value : 0;
+  handlePriceEmpty = (value: string) => {
+    return value.length > 0 ? value.toString() : '0';
   };
-  replaceRp = value => value.replace('Rp ', '');
-  removeDot = value => {
-    const withOutDot = value.replace(/[.]/g, '');
-    return parseFloat(withOutDot);
+  replaceRp = (value: string) => value.replace('Rp ', '');
+  removeDot = (value: string) => {
+    if (value.length > 0) {
+      const withOutDot = value.replace(/[.]/g, '');
+      return parseFloat(withOutDot);
+    }
+    return 0;
   };
   deleteFilter = () => {
     this.setState({ max: 0, min: 0 });
@@ -76,12 +82,12 @@ export class FilterPricesComponent extends Component<
   };
   render() {
     const { min, max } = this.state;
-    const minFloat = this.removeDot(min);
-    const maxFloat = this.removeDot(max);
+    const minFloat = this.removeDot(min.toString());
+    const maxFloat = this.removeDot(max.toString());
     const disableTerapkan = min === 0 || max === 0 || maxFloat < minFloat;
     const disableTerapkanStyle = disableTerapkan ? { backgroundColor: config.color.grey } : null;
-    const minValue = min > 0 ? `Rp ${numberFormat(min)}` : '';
-    const maxValue = max > 0 ? `Rp ${numberFormat(max)}` : '';
+    const minValue = `Rp ${numberFormat(min)}`;
+    const maxValue = `Rp ${numberFormat(max)}`;
     const filterDeleteText = disableTerapkan
       ? styles.filterDeleteText
       : [styles.filterDeleteText, { color: config.color.blue }];

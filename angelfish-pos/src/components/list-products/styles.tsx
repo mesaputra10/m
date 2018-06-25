@@ -186,6 +186,8 @@ export const styles = StyleSheet.create({
   check: {
     justifyContent: 'center',
     alignItems: 'center',
+    width: 24,
+    height: 24,
   },
 });
 export default styles;

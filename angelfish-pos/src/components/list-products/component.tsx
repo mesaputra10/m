@@ -223,7 +223,7 @@ export class ListProductsComponent extends Component<
 
     const checkSelectedSortBy = (
       <View style={styles.checkContainer}>
-        <Image source={require('./assets/check.png')} width={24} height={24} style={styles.check} />
+        <Image source={require('./assets/check.png')} style={styles.check} />
       </View>
     );
 
