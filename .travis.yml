@@ -20,5 +20,6 @@ install:
 script:
 - npm install react
 - npm install react-dom
+- ls
 - npm test
 
