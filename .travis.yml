@@ -16,10 +16,6 @@ before_install:
 install:
 - npm ci
 
-before_script:
-- sudo easy_install virtualenv
-- virtualenv ~/virtualenv
-- source ~/virtualenv/bin/activate
 
 script:
 - npm test
